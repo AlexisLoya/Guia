@@ -13,6 +13,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mx.edu.utez.model.estudiante.Estudiante;
+import mx.edu.utez.model.persona.DaoPersona;
+import mx.edu.utez.model.persona.Persona;
 
 /**
  *
@@ -34,19 +37,25 @@ public class registrarUsuario extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        
+
+        String user = request.getParameter("nombre");
+        String password = request.getParameter("password");
+        String paterno = request.getParameter("paterno");
+        String materno = request.getParameter("materno");
+
         //Tomar los paramentros
-        String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
+        DaoPersona daoPersona = new DaoPersona();
+
+        Persona persona = new Persona(0, 1, "H", user,paterno, materno );
+
+        int idPersona = daoPersona.add(persona);
+        persona.setId(idPersona);
+
+        Estudiante estudiante = new Estudiante(0, persona, "20193tn151", "alex@utez.edu.mx", password);
+
+
         
         
-        Consultas co = new Consultas();
-        if(co.registro(user, pass)){
-            response.sendRedirect("index.jsp");
-        }else{
-            response.sendRedirect("registro.jsp");
-        }
 
     }
 
