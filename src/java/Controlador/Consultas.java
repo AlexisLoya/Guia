@@ -20,7 +20,7 @@ public class Consultas extends testConexion {
 
         try {
             String consulta = "select * from email where email = ? and pass = ?";
-            pst = getConexion().prepareStatement(consulta);
+//            pst = getConexion().prepareStatement(consulta);
             pst.setString(1, email);
             pst.setString(2, pass);
             rs = pst.executeQuery();
@@ -32,9 +32,9 @@ public class Consultas extends testConexion {
             System.err.println("1. Error: " + e);
         } finally {
             try {
-                if (getConexion() != null) {
-                    getConexion().close();
-                }
+//                if (getConexion() != null) {
+//                    getConexion().close();
+//                }
                 if (pst != null) {
                     pst.close();
                 }
@@ -54,7 +54,7 @@ public class Consultas extends testConexion {
         PreparedStatement pst = null;
         try {
             String consulta = "insert into persona (email, pass) values (?,?)";
-            pst = getConexion().prepareStatement(consulta);
+//            pst = getConexion().prepareStatement(consulta);
             pst.setString(1, email);
             pst.setString(2, pass);
 
@@ -66,9 +66,9 @@ public class Consultas extends testConexion {
             System.err.println("1. Error: " + e);
         } finally {
             try {
-                if (getConexion() != null) {
-                    getConexion().close();
-                }
+//                if (getConexion() != null) {
+//                    getConexion().close();
+//                }
                 if (pst != null) {
                     pst.close();
                 }

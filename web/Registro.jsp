@@ -30,11 +30,11 @@
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4">Crea una cuenta!</h4>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" action="Registro">
                                         <div class="form-group"><input class="form-control form-control-user" type="text" id="nombre" placeholder="Nombre" name="nombre"></div>
                                         <div class="form-group row">
                                             <div class="col-sm-6"><input class="form-control form-control-user" type="text" id="materno" placeholder="Apellido Materno" name="materno"></div>
-                                            <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="parterno" placeholder="Apellido Paterno" name="parterno"></div>
+                                            <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="paterno" placeholder="Apellido Paterno" name="paterno"></div>
 
                                         </div>
 
