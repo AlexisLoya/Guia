@@ -17,7 +17,7 @@ public class MySQLConnection {
     //Lugar de conexión 
     private static String ipAddress = "localhost";
     //Base de datos
-    private static String dbName = "guiaDB";
+    private static String dbName = "guiabd";
     //Usuario en Mysql
     private static String user = "root";
     //Contraseña en Mysql

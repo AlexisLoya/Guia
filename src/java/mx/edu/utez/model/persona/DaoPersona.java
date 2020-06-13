@@ -21,6 +21,7 @@ public class DaoPersona extends Dao implements DaoInterface<Persona> {
     @Override
     public int add(Persona obj) {
         System.out.println(obj);
+        //Importante
         mySQLRepository("addPersona");
         try {
             preparedStatement.setString(1, obj.getNombre());

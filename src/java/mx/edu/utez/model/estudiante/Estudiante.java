@@ -71,4 +71,11 @@ public class Estudiante {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "Estudiante{" + "id=" + id + ", persona=" + persona + ", matricula=" + matricula + ", correo=" + correo + ", password=" + password + '}';
+    }
+
+    
+    
 }

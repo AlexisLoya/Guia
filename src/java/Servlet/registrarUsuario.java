@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mx.edu.utez.model.estudiante.DaoEstudiante;
 import mx.edu.utez.model.estudiante.Estudiante;
 import mx.edu.utez.model.persona.DaoPersona;
 import mx.edu.utez.model.persona.Persona;
@@ -45,15 +46,16 @@ public class registrarUsuario extends HttpServlet {
 
         //Tomar los paramentros
         DaoPersona daoPersona = new DaoPersona();
+        DaoEstudiante daoEstudiante = new DaoEstudiante();
 
         Persona persona = new Persona(0, 1, "H", user,paterno, materno );
 
         int idPersona = daoPersona.add(persona);
         persona.setId(idPersona);
 
-        Estudiante estudiante = new Estudiante(0, persona, "20193tn151", "alex@utez.edu.mx", password);
+        Estudiante estudiante = new Estudiante(0, persona, "123", "456", "789");
 
-
+        int idEstudiante = daoEstudiante.add(estudiante);
         
         
 
