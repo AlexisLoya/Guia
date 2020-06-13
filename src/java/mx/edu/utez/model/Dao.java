@@ -18,7 +18,7 @@ import mx.edu.utez.utils.MySQLConnection;
  *
  * @author alexl
  */
-public class Dao {
+public abstract class Dao {
     
     
     protected ResourceBundle sqlSentences;

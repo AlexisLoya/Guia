@@ -13,6 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mx.edu.utez.model.empleado.DaoEmpleado;
+import mx.edu.utez.model.empleado.Empleado;
 import mx.edu.utez.model.estudiante.DaoEstudiante;
 import mx.edu.utez.model.estudiante.Estudiante;
 import mx.edu.utez.model.persona.DaoPersona;
@@ -38,7 +40,7 @@ public class registrarUsuario extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
+        
         String user = request.getParameter("nombre");
         String password = request.getParameter("password");
         String paterno = request.getParameter("paterno");
@@ -46,19 +48,18 @@ public class registrarUsuario extends HttpServlet {
 
         //Tomar los paramentros
         DaoPersona daoPersona = new DaoPersona();
-        DaoEstudiante daoEstudiante = new DaoEstudiante();
-
-        Persona persona = new Persona(0, 1, "H", user,paterno, materno );
-
+        Persona persona = new Persona(0, 1, "H", user, paterno, materno);
         int idPersona = daoPersona.add(persona);
         persona.setId(idPersona);
-
+        
+        DaoEstudiante daoEstudiante = new DaoEstudiante();
         Estudiante estudiante = new Estudiante(0, persona, "123", "456", "789");
-
         int idEstudiante = daoEstudiante.add(estudiante);
+        estudiante.setId(idEstudiante);
         
+        DaoEmpleado daoEmpleado = new DaoEmpleado();
+//        Empleado empleado = new Empleado(1, persona, "guzman", "111", roles);
         
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
