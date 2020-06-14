@@ -11,6 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mx.edu.utez.model.Dao;
 import mx.edu.utez.model.DaoInterface;
+import mx.edu.utez.model.carrera.Carrera;
+import mx.edu.utez.model.cuatrimestre.Cuatrimestre;
+import mx.edu.utez.model.grado.Grado;
 
 /**
  *
@@ -61,9 +64,9 @@ public class DaoGrupo extends Dao implements DaoInterface<Grupo> {
                 list.add(
                         new Grupo(
                                 resultSet.getInt("id_grupo"),
-                                resultSet.getInt("id_carrera"),
-                                resultSet.getInt("id_cuatrimestre"),
-                                resultSet.getInt("id_grado"),
+                                new Carrera(resultSet.getInt()),
+                                new Cuatrimestre(),
+                                new Grado(),
                                 resultSet.getString("nombre")
                         )
                 );
