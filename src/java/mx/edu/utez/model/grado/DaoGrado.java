@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mx.edu.utez.model.materia;
+package mx.edu.utez.model.grado;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,23 +16,18 @@ import mx.edu.utez.model.DaoInterface;
  *
  * @author alexl
  */
-public class DaoMateria extends Dao implements DaoInterface<Materia>{
+public class DaoGrado extends Dao implements DaoInterface<Grado>{
 
     @Override
-    public int add(Materia obj) {
-        
+    public int add(Grado obj) {
+        mySQLRepository("addGrado");
         try {
-            preparedStatement.setString(1, obj.getNombre());
-            preparedStatement.setString(2, obj.getGrado().getNumero());
-            preparedStatement.setString(3, obj.getCarrera().getNombre());
+            preparedStatement.setString(1, obj.getNumero());
             preparedStatement.executeUpdate();
-            resultSet= preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            }
+            resultSet = preparedStatement.getGeneratedKeys();
         } catch (SQLException ex) {
-            Logger.getLogger(DaoMateria.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+            Logger.getLogger(DaoGrado.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
             closeAllConnections();
         }
         return 0;
@@ -44,17 +39,17 @@ public class DaoMateria extends Dao implements DaoInterface<Materia>{
     }
 
     @Override
-    public boolean update(Materia obj) {
+    public boolean update(Grado obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ArrayList<Materia> findAll() {
+    public ArrayList<Grado> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Materia findOne(int id) {
+    public Grado findOne(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

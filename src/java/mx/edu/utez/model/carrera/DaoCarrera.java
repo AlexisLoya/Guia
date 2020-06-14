@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mx.edu.utez.model.materia;
+package mx.edu.utez.model.carrera;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,22 +16,21 @@ import mx.edu.utez.model.DaoInterface;
  *
  * @author alexl
  */
-public class DaoMateria extends Dao implements DaoInterface<Materia>{
+public class DaoCarrera extends Dao implements DaoInterface<Carrera>{
 
     @Override
-    public int add(Materia obj) {
-        
+    public int add(Carrera obj) {
+        //Importante
+        mySQLRepository("addCarrera");
         try {
-            preparedStatement.setString(1, obj.getNombre());
-            preparedStatement.setString(2, obj.getGrado().getNumero());
-            preparedStatement.setString(3, obj.getCarrera().getNombre());
+            preparedStatement.setString(1,obj.getNombre());
             preparedStatement.executeUpdate();
-            resultSet= preparedStatement.getGeneratedKeys();
+            resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 return resultSet.getInt(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DaoMateria.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DaoCarrera.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeAllConnections();
         }
@@ -44,18 +43,20 @@ public class DaoMateria extends Dao implements DaoInterface<Materia>{
     }
 
     @Override
-    public boolean update(Materia obj) {
+    public boolean update(Carrera obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ArrayList<Materia> findAll() {
+    public ArrayList<Carrera> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Materia findOne(int id) {
+    public Carrera findOne(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
     
 }

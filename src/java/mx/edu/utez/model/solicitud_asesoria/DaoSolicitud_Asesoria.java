@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mx.edu.utez.model.materia;
+package mx.edu.utez.model.solicitud_asesoria;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mx.edu.utez.model.Dao;
 import mx.edu.utez.model.DaoInterface;
 
@@ -16,26 +13,11 @@ import mx.edu.utez.model.DaoInterface;
  *
  * @author alexl
  */
-public class DaoMateria extends Dao implements DaoInterface<Materia>{
+public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud_Asesoria >{
 
     @Override
-    public int add(Materia obj) {
-        
-        try {
-            preparedStatement.setString(1, obj.getNombre());
-            preparedStatement.setString(2, obj.getGrado().getNumero());
-            preparedStatement.setString(3, obj.getCarrera().getNombre());
-            preparedStatement.executeUpdate();
-            resultSet= preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DaoMateria.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            closeAllConnections();
-        }
-        return 0;
+    public int add(Solicitud_Asesoria obj) {
+        preparedStatement.set
     }
 
     @Override
@@ -44,17 +26,17 @@ public class DaoMateria extends Dao implements DaoInterface<Materia>{
     }
 
     @Override
-    public boolean update(Materia obj) {
+    public boolean update(Solicitud_Asesoria obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ArrayList<Materia> findAll() {
+    public ArrayList<Solicitud_Asesoria> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Materia findOne(int id) {
+    public Solicitud_Asesoria findOne(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
