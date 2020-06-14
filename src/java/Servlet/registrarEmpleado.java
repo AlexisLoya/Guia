@@ -5,9 +5,9 @@
  */
 package Servlet;
 
-import Controlador.Consultas;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,17 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mx.edu.utez.model.empleado.DaoEmpleado;
 import mx.edu.utez.model.empleado.Empleado;
-import mx.edu.utez.model.estudiante.DaoEstudiante;
-import mx.edu.utez.model.estudiante.Estudiante;
 import mx.edu.utez.model.persona.DaoPersona;
 import mx.edu.utez.model.persona.Persona;
+import mx.edu.utez.model.rol.Rol;
 
 /**
  *
  * @author alexl
  */
-@WebServlet(name = "registrarUsuario", urlPatterns = {"/Registro"})
-public class registrarUsuario extends HttpServlet {
+@WebServlet(name = "registrarEmpleado", urlPatterns = {"/Registro-E"})
+public class registrarEmpleado extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,28 +37,26 @@ public class registrarUsuario extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        String user = request.getParameter("nombre");
-        String password = request.getParameter("password");
+
+        String nombre = request.getParameter("nombre");
         String paterno = request.getParameter("paterno");
         String materno = request.getParameter("materno");
+        String email = request.getParameter("email");
+        String sexo = request.getParameter("sexoOption");
 
-        //Tomar los paramentros
+        String password = request.getParameter("password");
+        int    status = 1;
+
+        //Tomar los paramentros de persona
         DaoPersona daoPersona = new DaoPersona();
-        Persona persona = new Persona(0, 1, "H", user, paterno, materno);
+        Persona persona = new Persona(0, status, sexo, nombre, paterno, materno);
         int idPersona = daoPersona.add(persona);
         persona.setId(idPersona);
-        
-        DaoEstudiante daoEstudiante = new DaoEstudiante();
-        Estudiante estudiante = new Estudiante(0, persona, "123", "456", "789");
-        int idEstudiante = daoEstudiante.add(estudiante);
-        estudiante.setId(idEstudiante);
-        
+        //Tomar los paramentros de estudiante
         DaoEmpleado daoEmpleado = new DaoEmpleado();
-//        Empleado empleado = new Empleado(1, persona, "guzman", "111", roles);
-        
+        Empleado empleado = new Empleado(status, persona, nombre, password, ArrayList<Rol>);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -100,4 +97,5 @@ public class registrarUsuario extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

@@ -38,7 +38,15 @@
                                             <div class="col-sm-6"><input class="form-control form-control-user" type="text" id="materno" placeholder="Apellido Materno" name="materno"></div>
                                         </div>
                                         <div class="form-group"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Correo electronico" name="email"></div>
-                                        <div class="form-group"><input class="form-control form-control-user" type="text" id="matricula" placeholder="Matricula" name="matricula"></div>
+                                        <div class="form-group">
+                                            <select id="inputState" class="form-control form-control-user">
+                                        <option selected value="Docente">Docente</option>
+                                        <option>...</option>
+                                        <option>...</option>
+                                        <option>...</option>
+                                        <option>...</option>
+                                    </select>
+                                        </div>
 
                                         <div class="form-group">
                                             <label class="col-sm-6 mb-3 mb-sm-0 form-group-label">Sexo</label>
