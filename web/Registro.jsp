@@ -30,7 +30,7 @@
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4">Crea una cuenta!</h4>
                                     </div>
-                                    <form class="user" action="Registro">
+                                    <form class="user" action="Registro" method="post">
                                         <div class="form-group"><input class="form-control form-control-user" type="text" id="nombre" placeholder="Nombre" name="nombre"></div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="paterno" placeholder="Apellido Paterno" name="paterno">
@@ -62,7 +62,7 @@
                                     <div class="text-center"><a class="small" href="forgot-password.html">¿Olvidaste tu
                                     contraseña?</a>
                                     </div>
-                                    <div class="text-center"><a class="small" href="login.html">¿Ya tienes una cuenta? ¡Iniciar
+                                    <div class="text-center"><a class="small" href="Iniciar Sesion.jsp">¿Ya tienes una cuenta? ¡Iniciar
                                     sesión!</a></div>
                                 </div>
                             </div>

@@ -17,6 +17,7 @@ import mx.edu.utez.model.empleado.DaoEmpleado;
 import mx.edu.utez.model.empleado.Empleado;
 import mx.edu.utez.model.persona.DaoPersona;
 import mx.edu.utez.model.persona.Persona;
+import mx.edu.utez.model.rol.DaoRol;
 import mx.edu.utez.model.rol.Rol;
 
 /**
@@ -54,8 +55,11 @@ public class registrarEmpleado extends HttpServlet {
         int idPersona = daoPersona.add(persona);
         persona.setId(idPersona);
         //Tomar los paramentros de estudiante
+        DaoRol daoRoles = new DaoRol();
+        daoRoles.findAll();
         DaoEmpleado daoEmpleado = new DaoEmpleado();
-        Empleado empleado = new Empleado(status, persona, nombre, password, ArrayList<Rol>);
+        ArrayList Rol = new ArrayList();
+      //  Empleado empleado = new Empleado(status, persona, nombre, password, ArrayList<Rol>);
 
     }
 

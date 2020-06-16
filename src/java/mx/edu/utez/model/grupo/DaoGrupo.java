@@ -64,7 +64,7 @@ public class DaoGrupo extends Dao implements DaoInterface<Grupo> {
                 list.add(
                         new Grupo(
                                 resultSet.getInt("id_grupo"),
-                                new Carrera(resultSet.getInt()),
+                                new Carrera(),
                                 new Cuatrimestre(),
                                 new Grado(),
                                 resultSet.getString("nombre")

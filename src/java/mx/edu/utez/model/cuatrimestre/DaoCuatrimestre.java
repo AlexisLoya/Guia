@@ -52,23 +52,7 @@ public class DaoCuatrimestre extends Dao implements DaoInterface<Cuatrimestre> {
     public ArrayList<Cuatrimestre> findAll() {
         mySQLRepository("showCuatrimestre");
 
-        try {
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                list.add(
-                        new Cuatrimestre(
-                                resultSet.getInt("id_rol"),
-                                resultSet.getInt("id_periodo"),
-                                resultSet.getInt("id_anio")
-                        )
-                );
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DaoCuatrimestre.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            closeAllConnections();
-        }
-        return list;
+        return null;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class Consultas extends testConexion {
         ResultSet rs = null;
 
         try {
-            String consulta = "select * from email where email = ? and pass = ?";
+            String consulta = "select * from estudiante where email = ? and pass = ?";
 //            pst = getConexion().prepareStatement(consulta);
             pst.setString(1, email);
             pst.setString(2, pass);

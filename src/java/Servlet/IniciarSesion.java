@@ -5,7 +5,6 @@
  */
 package Servlet;
 
-import Controlador.Consultas;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,12 +12,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import mx.edu.utez.utils.Consulta;
 
 /**
  *
  * @author alexl
  */
-public class InicioSesion extends HttpServlet {
+public class IniciarSesion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,16 +35,19 @@ public class InicioSesion extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         //Tomar los paramentros
-        String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
+        String email = request.getParameter("email");
+        String pass = request.getParameter("password");
         
-        Consultas co = new Consultas();
-        if(co.autentificacion(user, pass)){
-            HttpSession sesionUsuario = request.getSession(true);
-            sesionUsuario.setAttribute("user", user);
-            response.sendRedirect("menu.jsp");
+        
+        //Validar si existe en la base de datos
+        
+        Consulta co = new Consulta();
+        if(co.autentificacion(email, pass)){
+            //HttpSession sesionUsuario = request.getSession(true);
+            //sesionUsuario.setAttribute("user", email);
+            response.sendRedirect("Inicio.jsp");
         }else{
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("Iniciar Sesion.jsp");
         }
 
     }
