@@ -56,7 +56,34 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
 
     @Override
     public ArrayList<Estudiante> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //importante
+        mySQLRepository("estudianteFindAll");
+        ArrayList<Estudiante> list = new ArrayList();
+        try {
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+
+                list.add(
+                        new Estudiante(
+                                resultSet.getInt("id_estudiante"),
+                                new Persona(
+                                        resultSet.getInt("id_persona"),
+                                        resultSet.getInt("id_status"),
+                                        resultSet.getString("sexo"),
+                                        resultSet.getString("nombre"),
+                                        resultSet.getString("materno"),
+                                        resultSet.getString("paterno")),
+                                resultSet.getString("matricula"),
+                                resultSet.getString("correo"),
+                                "")
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+        return list;
     }
 
     @Override
@@ -71,17 +98,15 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
     public static void main(String[] args) {
         DaoEstudiante estudianteRepo = new DaoEstudiante();
         DaoPersona personaRepo = new DaoPersona();
-        
+
         Persona persona = new Persona(0, 1, "H", "Chocobo", "materno", "De Jesus");
         persona.setId(personaRepo.add(persona));
-        
-        
+
         Estudiante estudiante = new Estudiante(0, persona, "sdfsdfsdf", "sdfgsdth", "sdfdfg");
         estudiante.setId(estudianteRepo.add(estudiante));
-        
+
         System.out.println(estudiante);
-             
-        
+
     }
 
 }

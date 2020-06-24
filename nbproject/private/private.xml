@@ -3,15 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/disponibilidad/Disponibilidad.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/SQLRepository.properties</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/grupo/DaoGrupo.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/persona/DaoPersona.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/solicitud_asesoria/Solicitud_Asesoria.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/grupo/Grupo.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/rol/DaoRol.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/solicitud_asesoria/DaoSolicitud_Asesoria.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/carrera/Carrera.java</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/Iniciar%20Sesion.jsp</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/Dao.java</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/utils/MySQLConnection.java</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/utils/Consulta.java</file>
         </group>
     </open-files>
 </project-private>

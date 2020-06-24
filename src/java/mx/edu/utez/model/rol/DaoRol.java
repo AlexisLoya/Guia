@@ -64,7 +64,7 @@ public class DaoRol extends Dao implements DaoInterface<Rol> {
         DaoRol rolRepo =  new DaoRol();
         
         for (Rol rol : rolRepo.findAll()) {
-            System.out.println("name" + rol.getName());
+            System.out.println("name: " + rol.getName());
         }
     }
 
