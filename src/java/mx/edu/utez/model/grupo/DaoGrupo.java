@@ -23,7 +23,7 @@ public class DaoGrupo extends Dao implements DaoInterface<Grupo> {
 
     @Override
     public int add(Grupo obj) {
-        mySQLRepository("addGrupo");
+        mySQLRepository("grupoRepository","grupoAdd");
         try {
             preparedStatement.setInt(1, obj.getCarrera().getId());
             preparedStatement.setInt(2, obj.getCarrera().getId());
@@ -56,7 +56,7 @@ public class DaoGrupo extends Dao implements DaoInterface<Grupo> {
 
     @Override
     public ArrayList<Grupo> findAll() {
-        mySQLRepository("showGrupo");
+        mySQLRepository("grupoRepository","grupoFindAll");
         ArrayList<Grupo> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();

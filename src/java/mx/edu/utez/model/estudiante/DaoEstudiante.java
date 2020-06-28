@@ -24,7 +24,7 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
     public int add(Estudiante obj) {
         System.out.println(obj);
         //Importante
-        mySQLRepository("addEstudiante");
+        mySQLRepository("estudianteRepository", "addEstudiante");
         try {
             preparedStatement.setInt(1, obj.getPersona().getId());
             preparedStatement.setString(2, obj.getMatricula());
@@ -57,7 +57,7 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
     @Override
     public ArrayList<Estudiante> findAll() {
         //importante
-        mySQLRepository("estudianteFindAll");
+        mySQLRepository("estudianteRepository", "estudianteFindAll");
         ArrayList<Estudiante> list = new ArrayList();
         try {
             resultSet = preparedStatement.executeQuery();
@@ -89,7 +89,7 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
     @Override
     public Estudiante findOne(int id) {
         //importante
-        mySQLRepository("estudianteFindOne");
+        mySQLRepository("estudianteRepository", "estudianteFindOne");
         Estudiante estudiante = null;
         try {
             preparedStatement.setInt(1, id);
@@ -110,7 +110,7 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             closeAllConnections();
         }
         return estudiante;
@@ -125,7 +125,7 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
 //
 //        Estudiante estudiante = new Estudiante(0, persona, "sdfsdfsdf", "sdfgsdth", "sdfdfg");
 //        estudiante.setId(estudianteRepo.add(estudiante));
-    
+
         System.out.println(estudianteRepo.findOne(1));
 
     }

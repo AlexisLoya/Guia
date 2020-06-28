@@ -20,7 +20,7 @@ public class DaoCuatrimestre extends Dao implements DaoInterface<Cuatrimestre> {
 
     @Override
     public int add(Cuatrimestre obj) {
-        mySQLRepository("addCuatrimestre");
+        mySQLRepository("cuatrimestreRepository","addCuatrimestre");
         try {
             preparedStatement.setInt(1, obj.getPeriodo().getId());
             preparedStatement.setInt(2, obj.getAnio().getId());
@@ -50,7 +50,7 @@ public class DaoCuatrimestre extends Dao implements DaoInterface<Cuatrimestre> {
 
     @Override
     public ArrayList<Cuatrimestre> findAll() {
-        mySQLRepository("showCuatrimestre");
+        mySQLRepository("cuatimestreRepository","showCuatrimestre");
 
         return null;
     }

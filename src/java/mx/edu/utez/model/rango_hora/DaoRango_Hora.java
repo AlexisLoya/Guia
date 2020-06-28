@@ -17,9 +17,10 @@ import mx.edu.utez.model.DaoInterface;
  * @author alexl
  */
 public class DaoRango_Hora extends Dao implements DaoInterface<Rango_Hora> {
-
+    
     @Override
     public int add(Rango_Hora obj) {
+        mySQLRepository("rango_horaRepository", "rango_horaAdd");
         try {
             preparedStatement.setInt(1, obj.getRango_Hora());
             preparedStatement.setString(2, obj.getInicio());
@@ -50,7 +51,7 @@ public class DaoRango_Hora extends Dao implements DaoInterface<Rango_Hora> {
 
     @Override
     public ArrayList<Rango_Hora> findAll() {
-        mySQLRepository("showRango_Hora");
+        mySQLRepository("rango_horaRepository","rango_horaFindAll");
         ArrayList<Rango_Hora> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();

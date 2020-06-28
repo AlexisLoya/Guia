@@ -20,7 +20,7 @@ public class DaoGrado extends Dao implements DaoInterface<Grado>{
 
     @Override
     public int add(Grado obj) {
-        mySQLRepository("addGrado");
+        mySQLRepository("gradoRepository","gradoAdd");
         try {
             preparedStatement.setString(1, obj.getNumero());
             preparedStatement.executeUpdate();
