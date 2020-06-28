@@ -24,7 +24,7 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
     public int add(Estudiante obj) {
         System.out.println(obj);
         //Importante
-        mySQLRepository("estudianteRepository", "addEstudiante");
+        mySQLRepository("estudianteRepository", "estudianteAdd");
         try {
             preparedStatement.setInt(1, obj.getPersona().getId());
             preparedStatement.setString(2, obj.getMatricula());
@@ -116,6 +116,26 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
         return estudiante;
     }
 
+    public boolean autentificacion(String email, String password) {
+        //consulta
+        mySQLRepository("estudianteRepository","checkAccess");
+        try {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            resultSet= preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+        
+        
+     return false;
+    }
+    
     public static void main(String[] args) {
         DaoEstudiante estudianteRepo = new DaoEstudiante();
 //        DaoPersona personaRepo = new DaoPersona();

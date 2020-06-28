@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package mx.edu.utez.model;
-import Controlador.testConexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

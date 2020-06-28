@@ -8,16 +8,20 @@ package Servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import mx.edu.utez.model.estudiante.DaoEstudiante;
+import mx.edu.utez.model.estudiante.Estudiante;
 import mx.edu.utez.utils.Consulta;
 
 /**
  *
  * @author alexl
  */
+@WebServlet(name = "IniciarSesion", urlPatterns = {"/Iniciar"})
 public class IniciarSesion extends HttpServlet {
 
     /**
@@ -31,6 +35,7 @@ public class IniciarSesion extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
@@ -41,13 +46,16 @@ public class IniciarSesion extends HttpServlet {
         
         //Validar si existe en la base de datos
         
-        Consulta co = new Consulta();
-        if(co.autentificacion(email, pass)){
+        DaoEstudiante est = new DaoEstudiante();
+        if(est.autentificacion(email, pass)){
             //HttpSession sesionUsuario = request.getSession(true);
             //sesionUsuario.setAttribute("user", email);
             response.sendRedirect("Inicio.jsp");
+            System.out.println("jalóoo");
         }else{
             response.sendRedirect("Iniciar Sesion.jsp");
+                    System.out.println("errorr");
+
         }
 
     }

@@ -6,11 +6,11 @@
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/Iniciar%20Sesion.jsp</file>
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/Dao.java</file>
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/utils/MySQLConnection.java</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/rango_hora/DaoRango_Hora.java</file>
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/SQLRepository.properties</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/empleado/DaoEmpleado.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/empleadoRepository.properties</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/rango_horaRepository.properties</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/estudianteRepository.properties</file>
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/utils/Consulta.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/anioRepository.properties</file>
         </group>
     </open-files>
 </project-private>

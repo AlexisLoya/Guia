@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author alexl
- */
+ 
 public class testConexion {
 
     public static Connection getConnection() throws SQLException {
@@ -50,3 +50,4 @@ public class testConexion {
         }
     }
 }
+**/
