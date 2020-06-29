@@ -39,15 +39,7 @@
                                     </div>
                                     <div class="form-group"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Correo electronico" name="email"></div>
                                     <div class="form-group">
-                                        <select id="inputState" class="form-control form-control-user">
-                                            <option selected value="Docente">Docente</option>                                 
-                                            <option value="Docente">Pepe</option>
-
-                                            <%
-
-
-                                            %>
-                                        </select>
+                                       <input class="form-control form-control-user" type="text" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Código" name="codigo">
                                     </div>
 
                                     <div class="form-group">
