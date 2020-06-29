@@ -35,7 +35,7 @@ public class DaoRol extends Dao implements DaoInterface<Rol> {
 
     @Override
     public ArrayList<Rol> findAll() {
-        mySQLRepository("showRoles");
+        mySQLRepository("rolRepository", "rolesShowAll");
         ArrayList<Rol> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();
@@ -57,14 +57,30 @@ public class DaoRol extends Dao implements DaoInterface<Rol> {
 
     @Override
     public Rol findOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //importante
+        mySQLRepository("rolRepository", "rolesShowOne");
+        Rol list = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                list = new Rol(
+                        resultSet.getInt("id_rol"),
+                        resultSet.getString("nombre"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoRol.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return list;
     }
-    
+
     public static void main(String[] args) {
-        DaoRol rolRepo =  new DaoRol();
-        
+        DaoRol rolRepo = new DaoRol();
+
         for (Rol rol : rolRepo.findAll()) {
-            System.out.println("name" + rol.getName());
+            System.out.println("name: " + rol.getName());
         }
     }
 

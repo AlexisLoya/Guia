@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 /**
  *
  * @author alexl
- */
+
 public class Consultas extends testConexion {
 
     public boolean autentificacion(String email, String pass) {
@@ -84,3 +84,4 @@ public class Consultas extends testConexion {
     
 
 }
+ */

@@ -22,7 +22,7 @@ public class DaoNotificacion extends Dao implements DaoInterface<Notificacion>{
     @Override
     public int add(Notificacion obj) {
         //Importante
-        mySQLRepository("addNotificacion");
+        mySQLRepository("notificacionesRepository","notificacionAdd");
         try {
             preparedStatement.setString(1, obj.getMensaje());
             preparedStatement.executeUpdate();
@@ -51,7 +51,7 @@ public class DaoNotificacion extends Dao implements DaoInterface<Notificacion>{
 
     @Override
     public ArrayList<Notificacion> findAll() {
-         mySQLRepository("showNotificacion");
+         mySQLRepository("notificacionesRepository","notificacionFindAll");
         ArrayList<Notificacion> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();

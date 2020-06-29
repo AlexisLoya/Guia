@@ -7,7 +7,6 @@ package mx.edu.utez.utils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import Controlador.testConexion;
 import mx.edu.utez.model.Dao;
 import mx.edu.utez.model.DaoInterface;
 import java.sql.SQLException;

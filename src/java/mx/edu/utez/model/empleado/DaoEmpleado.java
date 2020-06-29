@@ -22,7 +22,7 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado>{
     public int add(Empleado obj) {
         System.out.println(obj);
         //sentenciaSQl
-        mySQLRepository("addEmpleado");
+        mySQLRepository("empleadoRepository","empleadoAdd");
         
         try {
             preparedStatement.setInt(1, obj.getPersona().getId());

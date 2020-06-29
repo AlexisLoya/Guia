@@ -5,7 +5,6 @@
  */
 package Servlet;
 
-import Controlador.Consultas;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -38,7 +37,8 @@ public class registrarEstudiante extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+       // response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
         String nombre = request.getParameter("nombre");
@@ -61,8 +61,6 @@ public class registrarEstudiante extends HttpServlet {
         int idEstudiante = daoEstudiante.add(estudiante);
         estudiante.setId(idEstudiante);
 
-        DaoEmpleado daoEmpleado = new DaoEmpleado();
-//        Empleado empleado = new Empleado(1, persona, "guzman", "111", roles);
 
     }
 

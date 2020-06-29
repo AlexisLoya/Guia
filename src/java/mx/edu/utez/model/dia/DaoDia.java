@@ -35,7 +35,7 @@ public class DaoDia extends Dao implements DaoInterface<Dia> {
 
     @Override
     public ArrayList<Dia> findAll() {
-        mySQLRepository("showDia");
+        mySQLRepository("diaRepository","diaFindAll");
         ArrayList<Dia> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();

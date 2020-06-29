@@ -31,7 +31,7 @@
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4">Welcome Back!</h4>
                                     </div>
-                                    <form class="user" action="Iniciar-Sesion" method="post">
+                                    <form class="user" action="Iniciar" method="post">
                                         <div class="form-group"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." name="email"></div>
                                         <div class="form-group"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password"></div>
                                         <div class="form-group">
@@ -41,8 +41,8 @@
                                         </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Login</button>
                                         
                                     </form>
-                                    <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
-                                    <div class="text-center"><a class="small" href="register.html">Create an Account!</a></div>
+                                    <div class="text-center"><a class="small" href="Registro-E.jsp">Forgot Password?</a></div>
+                                    <div class="text-center"><a class="small" href="Registro.jsp">Create an Account!</a></div>
                                 </div>
                             </div>
                         </div>

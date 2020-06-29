@@ -35,7 +35,7 @@ public class DaoAnio extends Dao implements DaoInterface<Anio>{
 
     @Override
     public ArrayList<Anio> findAll() {
-     mySQLRepository("showAnio");
+     mySQLRepository("anioRepository","showAnio");
         ArrayList<Anio> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();

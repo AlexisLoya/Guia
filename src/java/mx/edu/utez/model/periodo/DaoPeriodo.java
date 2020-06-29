@@ -36,7 +36,7 @@ public class DaoPeriodo extends Dao implements DaoInterface<Periodo>{
     @Override
     public ArrayList<Periodo> findAll() {
 
-     mySQLRepository("showPeriodo");
+     mySQLRepository("periodoRepository","periodoFindAll");
         ArrayList<Periodo> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();
