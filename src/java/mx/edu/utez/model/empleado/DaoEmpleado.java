@@ -30,6 +30,7 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado>{
             preparedStatement.setString(3, obj.getPassword());
             resultSet = preparedStatement.getGeneratedKeys();
         if(resultSet.next()){
+            mySQLRepository("claveRepository", "claveDelete");
             return resultSet.getInt(1);
         }
         
@@ -60,4 +61,22 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado>{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public boolean checkClave(String clave){
+        mySQLRepository("claveRepository","claveValidate");
+        try {
+            preparedStatement.setString(1, clave);
+            resultSet=preparedStatement.executeQuery();
+            if (resultSet.next()){
+                resultSet.getString("caducidad");
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            closeAllConnections();
+        }
+        return false;
+    } 
 }

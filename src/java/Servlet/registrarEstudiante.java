@@ -60,7 +60,7 @@ public class registrarEstudiante extends HttpServlet {
         Estudiante estudiante = new Estudiante(0, persona,matricula, email,password);
         int idEstudiante = daoEstudiante.add(estudiante);
         estudiante.setId(idEstudiante);
-
+        response.sendRedirect("Iniciar Sesion.jsp");
 
     }
 
