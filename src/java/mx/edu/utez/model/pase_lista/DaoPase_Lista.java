@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mx.edu.utez.model.carrera;
+package mx.edu.utez.model.pase_lista;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mx.edu.utez.model.Dao;
 import mx.edu.utez.model.DaoInterface;
 
@@ -16,25 +13,11 @@ import mx.edu.utez.model.DaoInterface;
  *
  * @author alexl
  */
-public class DaoCarrera extends Dao implements DaoInterface<Carrera>{
+public class DaoPase_Lista extends Dao implements DaoInterface<Pase_Lista>{
 
     @Override
-    public int add(Carrera obj) {
-        //Importante
-        mySQLRepository("carreraRepository","carreraAdd");
-        try {
-            preparedStatement.setString(1,obj.getNombre());
-            preparedStatement.executeUpdate();
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt(1);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DaoCarrera.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            closeAllConnections();
-        }
-        return 0;
+    public int add(Pase_Lista obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -43,20 +26,18 @@ public class DaoCarrera extends Dao implements DaoInterface<Carrera>{
     }
 
     @Override
-    public boolean update(Carrera obj) {
+    public boolean update(Pase_Lista obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ArrayList<Carrera> findAll() {
+    public ArrayList<Pase_Lista> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Carrera findOne(int id) {
+    public Pase_Lista findOne(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
     
 }

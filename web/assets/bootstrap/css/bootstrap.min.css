@@ -11,8 +11,6 @@
  * Copyright 2011-2020 The Bootstrap Authors
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-
-
  */
 
 :root {
@@ -472,8 +470,7 @@ hr {
 .small,
 small {
     font-size: 80%;
-    font-weight: 400;
-    color: #5A5C69;
+    font-weight: 400
 }
 
 .mark,
@@ -2485,16 +2482,16 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #0C8069;
-    border-color: rgb(13, 100, 83)
+    background-color: #4e73df;
+    border-color: #4e73df
 }
 
 .btn-primary.focus,
 .btn-primary:focus,
 .btn-primary:hover {
     color: #fff;
-    background-color: rgb(13, 100, 83);
-    border-color: rgb(13, 100, 83);
+    background-color: #2e59d9;
+    border-color: #2653d4
 }
 
 .btn-primary.focus,
@@ -10185,14 +10182,14 @@ a:focus {
 }
 
 .bg-gradient-primary {
-    background-color: #010823;
-    background-image: linear-gradient(180deg, #010823 10%, #224abe);
+    background-color: #094670;
+    background-image: linear-gradient(180deg, #094670 10%, #062e49);
     background-size: cover
 }
 
 .bg-gradient-secondary {
-    background-color: #858796;
-    background-image: linear-gradient(180deg, #858796 10%, #60616f);
+    background-color: #00ab84;
+    background-image: linear-gradient(180deg, #00ab84 10%, #00ab84);
     background-size: cover
 }
 
@@ -10204,7 +10201,7 @@ a:focus {
 
 .bg-gradient-info {
     background-color: #36b9cc;
-    background-image: linear-gradient(180deg, #cc3686 10%, #258391);
+    background-image: linear-gradient(180deg, #36b9cc 10%, #258391);
     background-size: cover
 }
 
@@ -11115,11 +11112,7 @@ a:focus {
 .bg-password-image,
 .bg-register-image {
     background-position: 50%;
-    background-size: cover;
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 10px;
-    width: 50px;
+    background-size: cover
 }
 
 form.user .custom-checkbox.small label {

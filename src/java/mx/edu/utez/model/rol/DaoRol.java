@@ -76,6 +76,12 @@ public class DaoRol extends Dao implements DaoInterface<Rol> {
         return list;
     }
 
+    public int asignacion (){
+        
+        
+        return 2;
+    }
+    
     public static void main(String[] args) {
         DaoRol rolRepo = new DaoRol();
 

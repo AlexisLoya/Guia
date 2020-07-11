@@ -13,6 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mx.edu.utez.model.clave.Clave;
+import mx.edu.utez.model.clave.DaoClave;
 import mx.edu.utez.model.empleado.DaoEmpleado;
 import mx.edu.utez.model.empleado.Empleado;
 import mx.edu.utez.model.persona.DaoPersona;
@@ -44,6 +46,7 @@ public class registrarEmpleado extends HttpServlet {
         String paterno = request.getParameter("paterno");
         String materno = request.getParameter("materno");
         String email = request.getParameter("email");
+        String codigo = request.getParameter("codigo");
         String sexo = request.getParameter("sexoOption");
 
         String password = request.getParameter("password");
@@ -54,13 +57,20 @@ public class registrarEmpleado extends HttpServlet {
         Persona persona = new Persona(0, status, sexo, nombre, paterno, materno);
         int idPersona = daoPersona.add(persona);
         persona.setId(idPersona);
-        //Tomar los paramentros de estudiante
-        DaoRol daoRoles = new DaoRol();
-        daoRoles.findAll();
+        
+        //Tomar los paramentros de empleado
+        ArrayList roles = new ArrayList();
+        DaoRol rol = new DaoRol();
+        
+        //rol.
         DaoEmpleado daoEmpleado = new DaoEmpleado();
-        ArrayList Rol = new ArrayList();
-      //  Empleado empleado = new Empleado(status, persona, nombre, password, ArrayList<Rol>);
-
+        Empleado empleado = new Empleado(status, persona, nombre, password, roles);
+        if(daoEmpleado.checkClave(codigo)){
+            daoEmpleado.add(empleado);
+        }
+        
+        //Validar codigo    
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
