@@ -32,10 +32,10 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado> {
             preparedStatement.setInt(1, obj.getPersona().getId());
             preparedStatement.setString(2, obj.getCorreo());
             preparedStatement.setString(3, obj.getPassword());
+            preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                mySQLRepository("claveRepository", "claveDelete");
-                return resultSet.getInt(1);
+                return resultSet.getInt(1   );
             }
 
         } catch (SQLException ex) {
@@ -91,25 +91,6 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado> {
         }
     }
 
-    public boolean checkClave(String clave) {
-        mySQLRepository("claveRepository", "claveValidate");
-        try {
-            preparedStatement.setString(1, clave);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                resultSet.getString("caducidad");
-                return true;
-            } else {
-                return false;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DaoEmpleado.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            closeAllConnections();
-        }
-        return false;
-    }
-
     public Integer checkAccess(String email, String password) {
         mySQLRepository(REPOSITORY, "checkAccess");
 
@@ -129,6 +110,27 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado> {
         return null;
     }
 
+    
+    public boolean autentificacion(String email, String password) {
+        //consulta
+        mySQLRepository(REPOSITORY,"checkAccess");
+        try {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            resultSet= preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+        
+        
+     return false;
+    }
+    
     public static void main(String[] args) {
         DaoEmpleado daoEmpleado = new DaoEmpleado();
         int idEmpleado = daoEmpleado.checkAccess("alex@gmail.com", "123");

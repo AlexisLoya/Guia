@@ -28,9 +28,9 @@
                         <div class="col-lg-7">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h4 class="text-dark mb-4">Crea una cuenta!</h4>
+                                    <h4 class="text-dark mb-4">¡Crea una cuenta!</h4>
                                 </div>
-                                <form class="user" action="Registro">
+                                <form class="user" action="Registro-E" method="Post">
                                     <div class="form-group"><input class="form-control form-control-user" type="text" id="nombre" placeholder="Nombre" name="nombre"></div>
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="paterno" placeholder="Apellido Paterno" name="paterno">
@@ -42,24 +42,24 @@
                                        <input class="form-control form-control-user" type="text" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Código" name="codigo">
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-sm-6 mb-3 mb-sm-0 form-group-label">Sexo</label>
-                                        <div class="form-check form-check">
-                                            <input class="form-check-input ml-1" type="radio" name="sexoOption" id="masculino" value="H">
-                                            <label class="form-check-label col-sm-6 mb-3 mb-sm-0 ml-2" for="inlineRadio1">Masculino</label>
+                                     <div class="form-group">
+                                            <label class="col-sm-6 mb-3 mb-sm-0 form-group-label">Sexo</label>
+                                            <div class="form-check form-check">
+                                                <input class="form-check-input " type="radio" name="sexoOption" id="masculino" value="H">
+                                                <label class="form-check-label col-sm-6 mb-3 mb-sm-0" for="inlineRadio1">Masculino</label>
+                                            </div>
+                                            <div class="form-check form-check">
+                                                <input class="form-check-input" type="radio" name="sexoOption" id="femenino" value="M">
+                                                <label class="form-check-label col-sm-6" for="inlineRadio2">Femenino</label>
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="password" id="password" placeholder="Contraseña" name="password">
+                                                    </div>
+                                                    <div class="col-sm-6"><input class="form-control form-control-user" type="password" id="password_repeat" placeholder="Contraseña" name="password_repeat"></div>
+                                                </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Registrar Cuenta</button>
+                                            </div>
                                         </div>
-                                        <div class="form-check form-check">
-                                            <input class="form-check-input ml-1" type="radio" name="sexoOption" id="femenino" value="M">
-                                            <label class="form-check-label col-sm-6 ml-2" for="inlineRadio2">Femenino</label>
-                                        </div>
-                                        <div class="form-group mt-3">
-                                            <div class="form-group row">
-                                                <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="password" id="password" placeholder="Contraseña" name="password">
-                                                </div>
-                                                <div class="col-sm-6"><input class="form-control form-control-user" type="password" id="password_repeat" placeholder="Contraseña" name="password_repeat"></div>
-                                            </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Registrar Cuenta</button>
-                                        </div>
-                                    </div>
                                 </form>
                                 <div class="text-center"><a class="small" href="forgot-password.html">¿Olvidaste tu
                                         contraseña?</a>

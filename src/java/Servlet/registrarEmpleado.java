@@ -40,6 +40,7 @@ public class registrarEmpleado extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 
         String nombre = request.getParameter("nombre");
@@ -51,7 +52,14 @@ public class registrarEmpleado extends HttpServlet {
 
         String password = request.getParameter("password");
         int    status = 1;
-
+        
+        // Verificar su Codigo
+        Clave clave = null;
+        DaoClave daoClave = new DaoClave();
+        clave = daoClave.searchOne(codigo);
+        //daoClave.checkClave(clave.getId(), clave.getCaducidad());
+        
+        
         //Tomar los paramentros de persona
         DaoPersona daoPersona = new DaoPersona();
         Persona persona = new Persona(0, status, sexo, nombre, paterno, materno);
@@ -61,19 +69,21 @@ public class registrarEmpleado extends HttpServlet {
         //Tomar los paramentros de empleado
         ArrayList roles = new ArrayList();
         DaoRol rol = new DaoRol();
-        
-        //rol.
+        roles.add(rol.findOne(1));
+     
         DaoEmpleado daoEmpleado = new DaoEmpleado();
-        Empleado empleado = new Empleado(status, persona, nombre, password, roles);
-        if(daoEmpleado.checkClave(codigo)){
-            daoEmpleado.add(empleado);
-        }
+        Empleado empleado = new Empleado(0, persona, email, password, roles);
+        int newId = daoEmpleado.add(empleado);
+        empleado.setId(newId);
+        //daoEmpleado.findOne(status)
+        rol.setRolEmpleado(empleado.getId(), rol.findOne(1).getId());
+        response.sendRedirect("Iniciar Sesion.jsp");
+        
         
         //Validar codigo    
     
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+ // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -111,5 +121,5 @@ public class registrarEmpleado extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
+

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import mx.edu.utez.model.empleado.DaoEmpleado;
 import mx.edu.utez.model.estudiante.DaoEstudiante;
 import mx.edu.utez.model.estudiante.Estudiante;
 import mx.edu.utez.utils.Consulta;
@@ -43,20 +44,22 @@ public class IniciarSesion extends HttpServlet {
         String email = request.getParameter("email");
         String pass = request.getParameter("password");
         
-        
+    
         //Validar si existe en la base de datos
-        
-        DaoEstudiante est = new DaoEstudiante();
-        if(est.autentificacion(email, pass)){
-            //HttpSession sesionUsuario = request.getSession(true);
-            //sesionUsuario.setAttribute("user", email);
-            response.sendRedirect("Inicio.jsp");
-            System.out.println("jalóoo");
+        DaoEstudiante estudiante = new DaoEstudiante();
+        DaoEmpleado empleado = new DaoEmpleado();
+        if(estudiante.autentificacion(email, pass)){
+            response.sendRedirect("views/alumno/inicio_alumno.jsp");
+           
+        }else if (empleado.autentificacion(email,pass)){
+            response.sendRedirect("views/profesor/index.html");
+                    
+
         }else{
             response.sendRedirect("Iniciar Sesion.jsp");
-                    System.out.println("errorr");
-
         }
+            
+            
 
     }
 

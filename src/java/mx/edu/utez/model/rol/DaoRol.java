@@ -17,7 +17,8 @@ import mx.edu.utez.model.DaoInterface;
  * @author alexl
  */
 public class DaoRol extends Dao implements DaoInterface<Rol> {
-
+    private final String REPOSITORY = "rolRepository";
+    
     @Override
     public int add(Rol obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -35,7 +36,7 @@ public class DaoRol extends Dao implements DaoInterface<Rol> {
 
     @Override
     public ArrayList<Rol> findAll() {
-        mySQLRepository("rolRepository", "rolesShowAll");
+        mySQLRepository(REPOSITORY, "rolesShowAll");
         ArrayList<Rol> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();
@@ -58,7 +59,7 @@ public class DaoRol extends Dao implements DaoInterface<Rol> {
     @Override
     public Rol findOne(int id) {
         //importante
-        mySQLRepository("rolRepository", "rolesShowOne");
+        mySQLRepository(REPOSITORY, "rolesShowOne");
         Rol list = null;
         try {
             preparedStatement.setInt(1, id);
@@ -75,12 +76,24 @@ public class DaoRol extends Dao implements DaoInterface<Rol> {
         }
         return list;
     }
-
-    public int asignacion (){
-        
-        
-        return 2;
+    public boolean setRolEmpleado(int id, int rol){
+        mySQLRepository(REPOSITORY, "rolesEmpleadoAdd");
+        try {
+            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(2, rol);
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoRol.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }       
+        return false;
     }
+    
     
     public static void main(String[] args) {
         DaoRol rolRepo = new DaoRol();
