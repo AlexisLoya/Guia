@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%String path = request.getContextPath();%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,11 +30,11 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h4 class="text-dark mb-4">Welcome Back!</h4>
+                                        <h4 class="text-dark mb-4">Inicio de Sesión</h4>
                                     </div>
                                     <form class="user" action="Iniciar" method="post">
-                                        <div class="form-group"><input class="form-control form-control-user" type="email" id="Email" aria-describedby="emailHelp" placeholder="Correo electronico" name="email"></div>
-                                        <div class="form-group"><input class="form-control form-control-user" type="password" id="Password" placeholder="Password" name="password"></div>
+                                        <div class="form-group"><input class="form-control form-control-user" type="email" id="Email" aria-describedby="emailHelp" placeholder="Tu Correo electronico" name="email"></div>
+                                        <div class="form-group"><input class="form-control form-control-user" type="password" id="Password" placeholder="Tu contraseña" name="password"></div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label></div>
@@ -41,8 +42,8 @@
                                         </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Login</button>
                                         
                                     </form>
-                                    <div class="text-center"><a class="small" href="Registro-E.jsp">Forgot Password?</a></div>
-                                    <div class="text-center"><a class="small" href="Registro.jsp">Create an Account!</a></div>
+                                    <div class="text-center"><a class="small" href="Registro-E.jsp">¿Olvidaste tu contraseña?</a></div>
+                                    <div class="text-center"><a class="small" href="<%=path%>/Registro">Registrate en la Aplicación</a></div>
                                 </div>
                             </div>
                         </div>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlet;
+package controller.http;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,19 +12,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mx.edu.utez.model.empleado.DaoEmpleado;
-import mx.edu.utez.model.empleado.Empleado;
-import mx.edu.utez.model.estudiante.DaoEstudiante;
-import mx.edu.utez.model.estudiante.Estudiante;
-import mx.edu.utez.model.persona.DaoPersona;
-import mx.edu.utez.model.persona.Persona;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alexl
  */
-@WebServlet(name = "registrarUsuario", urlPatterns = {"/Registro"})
-public class registrarEstudiante extends HttpServlet {
+@WebServlet(name = "CerrarSesion", urlPatterns = {"/CerrarSesion"})
+public class CerrarSesion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,30 +32,10 @@ public class registrarEstudiante extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-       // response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        String nombre = request.getParameter("nombre");
-        String paterno = request.getParameter("paterno");
-        String materno = request.getParameter("materno");
-        String email = request.getParameter("email");
-        String matricula = request.getParameter("matricula");
-        String sexo = request.getParameter("sexoOption");
-        String password = request.getParameter("password");
-        int    status = 1;
-
-        //Tomar los paramentros de persona
-        DaoPersona daoPersona = new DaoPersona();
-        Persona persona = new Persona(0, status, sexo, nombre, paterno, materno);
-        int idPersona = daoPersona.add(persona);
-        persona.setId(idPersona);
-        //Tomar los paramentros de estudiante
-        DaoEstudiante daoEstudiante = new DaoEstudiante();
-        Estudiante estudiante = new Estudiante(0, persona,matricula, email,password);
-        int idEstudiante = daoEstudiante.add(estudiante);
-        estudiante.setId(idEstudiante);
-        response.sendRedirect("Iniciar Sesion.jsp");
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession sesionUsuario = request.getSession();
+        sesionUsuario.removeAttribute("usuario");
+        request.getRequestDispatcher("index.jsp").forward(request, response);
 
     }
 
@@ -102,4 +77,5 @@ public class registrarEstudiante extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }
