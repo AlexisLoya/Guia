@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author alexl
  */
-@WebServlet(name = "CerrarSesion", urlPatterns = {"/finSesion"})
+@WebServlet(name = "CerrarSesion", urlPatterns = {"/CerrarSesion"})
 public class CerrarSesion extends HttpServlet {
 
     /**
@@ -34,7 +34,7 @@ public class CerrarSesion extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
      HttpSession sesionUsuario = request.getSession();
-      sesionUsuario.removeAttribute("user");
+      sesionUsuario.removeAttribute("usuario");
       request.getRequestDispatcher("index.jsp").forward(request, response);
 
         

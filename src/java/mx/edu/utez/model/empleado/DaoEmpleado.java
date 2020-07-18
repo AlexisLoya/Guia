@@ -35,7 +35,7 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado> {
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                return resultSet.getInt(1   );
+                return resultSet.getInt(1);
             }
 
         } catch (SQLException ex) {
@@ -111,7 +111,25 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado> {
     }
 
     
-    public boolean autentificacion(String email, String password) {
+    public int autentificacion(String email, String password) {
+        //consulta
+        mySQLRepository(REPOSITORY,"checkAccess");
+        try {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            resultSet= preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+     return 0;
+    }
+    
+    public boolean check(String email, String password) {
         //consulta
         mySQLRepository(REPOSITORY,"checkAccess");
         try {
@@ -130,6 +148,7 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado> {
         
      return false;
     }
+    
     
     public static void main(String[] args) {
         DaoEmpleado daoEmpleado = new DaoEmpleado();

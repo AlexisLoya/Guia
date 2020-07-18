@@ -116,7 +116,26 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
         return estudiante;
     }
 
-    public boolean autentificacion(String email, String password) {
+    public int autentificacion(String email, String password) {
+        //consulta
+        mySQLRepository(REPOSITORY,"checkAccess");
+        try {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            resultSet= preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+     return 0;
+    }
+    
+    
+    public boolean check(String email, String password) {
         //consulta
         mySQLRepository(REPOSITORY,"checkAccess");
         try {
@@ -138,9 +157,8 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
         DaoEstudiante estudianteRepo = new DaoEstudiante();
         DaoPersona personaRepo = new DaoPersona();
         Estudiante estudiante = estudianteRepo.findOne(1);
-        System.out.println(estudiante);
-        System.out.println("1.- "+estudiante.getCorreo()+""
-                + "2.- "+estudiante.getMatricula());
+        System.out.println(estudianteRepo.findOne(estudianteRepo.autentificacion("alexloy117@gmail.com","123")));
+        
     }
 
 }

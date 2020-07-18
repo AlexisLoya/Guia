@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import mx.edu.utez.model.empleado.DaoEmpleado;
+import mx.edu.utez.model.empleado.Empleado;
 import mx.edu.utez.model.estudiante.DaoEstudiante;
 import mx.edu.utez.model.estudiante.Estudiante;
+import mx.edu.utez.model.usuario.Usuario;
 import mx.edu.utez.utils.Consulta;
 
 /**
@@ -42,19 +44,36 @@ public class IniciarSesion extends HttpServlet {
 
         //Tomar los paramentros
         String email = request.getParameter("email");
-        String pass = request.getParameter("password");
+        String password = request.getParameter("password");
         
     
         //Validar si existe en la base de datos
-        DaoEstudiante estudiante = new DaoEstudiante();
-        DaoEmpleado empleado = new DaoEmpleado();
-        if(estudiante.autentificacion(email, pass)){
+        DaoEstudiante daoEstudiante = new DaoEstudiante();
+        Estudiante estudiante = null;
+        
+        DaoEmpleado daoEmpleado = new DaoEmpleado();
+        Empleado empleado = null;
+        
+        
+        if(daoEstudiante.check(email, password)){
+            estudiante = daoEstudiante.findOne(daoEstudiante.autentificacion(email, password));
+            Usuario usuario= new Usuario(email, password,estudiante.getPersona());
+            // Creación de Sesión para el usuario
+            HttpSession objSession = request.getSession(true); 
+            objSession.setAttribute("usuario", usuario);
+            //request.getRequestDispatcher("inicio_alumno.jsp").forward(request, response);
+            //Redireccionar a su inicio
             response.sendRedirect("views/alumno/inicio_alumno.jsp");
            
-        }else if (empleado.autentificacion(email,pass)){
-            response.sendRedirect("views/profesor/index.html");
-                    
-
+        }else if (daoEmpleado.check(email,password)){
+            empleado = daoEmpleado.findOne(daoEmpleado.autentificacion(email, password));
+            Usuario usuario = new Usuario(email, password, empleado.getPersona());
+            //Crear sesión para el empleado
+            HttpSession objSession = request.getSession(true); 
+            objSession.setAttribute("usuario", usuario);
+            //request.getRequestDispatcher("inicio_alumno.jsp").forward(request, response);
+            //Redireccionar a su inicio         
+            response.sendRedirect("views/profesor/agenda.jsp");
         }else{
             response.sendRedirect("Iniciar Sesion.jsp");
         }
