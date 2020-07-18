@@ -3,31 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlet;
+package controller.http;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mx.edu.utez.model.clave.Clave;
-import mx.edu.utez.model.clave.DaoClave;
-import mx.edu.utez.model.empleado.DaoEmpleado;
-import mx.edu.utez.model.empleado.Empleado;
-import mx.edu.utez.model.persona.DaoPersona;
-import mx.edu.utez.model.persona.Persona;
-import mx.edu.utez.model.rol.DaoRol;
-import mx.edu.utez.model.rol.Rol;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alexl
  */
-@WebServlet(name = "registrarEmpleado", urlPatterns = {"/Registro-E"})
-public class registrarEmpleado extends HttpServlet {
+@WebServlet(name = "CerrarSesion", urlPatterns = {"/CerrarSesion"})
+public class CerrarSesion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,37 +32,11 @@ public class registrarEmpleado extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession sesionUsuario = request.getSession();
+        sesionUsuario.removeAttribute("usuario");
+        request.getRequestDispatcher("index.jsp").forward(request, response);
 
-        String nombre = request.getParameter("nombre");
-        String paterno = request.getParameter("paterno");
-        String materno = request.getParameter("materno");
-        String email = request.getParameter("email");
-        String codigo = request.getParameter("codigo");
-        String sexo = request.getParameter("sexoOption");
-
-        String password = request.getParameter("password");
-        int    status = 1;
-
-        //Tomar los paramentros de persona
-        DaoPersona daoPersona = new DaoPersona();
-        Persona persona = new Persona(0, status, sexo, nombre, paterno, materno);
-        int idPersona = daoPersona.add(persona);
-        persona.setId(idPersona);
-        
-        //Tomar los paramentros de empleado
-        ArrayList roles = new ArrayList();
-        DaoRol rol = new DaoRol();
-        
-        //rol.
-        DaoEmpleado daoEmpleado = new DaoEmpleado();
-        Empleado empleado = new Empleado(status, persona, nombre, password, roles);
-        if(daoEmpleado.checkClave(codigo)){
-            daoEmpleado.add(empleado);
-        }
-        
-        //Validar codigo    
-    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

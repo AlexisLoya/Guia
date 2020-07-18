@@ -70,6 +70,12 @@ public class Empleado {
     public void setRoles(ArrayList<Rol> roles) {
         this.roles = roles;
     }
+
+    @Override
+    public String toString() {
+        return "Empleado{" + "id=" + id + ", persona=" + persona + ", correo=" + correo + ", password=" + password + ", roles=" + roles + '}';
+    }
+
     
     
 

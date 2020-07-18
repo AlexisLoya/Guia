@@ -8,9 +8,11 @@ package mx.edu.utez.model.clave;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,17 +25,20 @@ import mx.edu.utez.model.DaoInterface;
  */
 public class DaoClave extends Dao implements DaoInterface<Clave> {
 
+    private final String REPOSITORY = "claveRepository";
+
     @Override
     public int add(Clave obj) {
-        mySQLRepository("claveRepository", "claveAdd");
-        
+        mySQLRepository(REPOSITORY, "claveAdd");
+
         try {
             preparedStatement.setString(1, obj.getClave());
             preparedStatement.setInt(2, obj.getStatus());
-            preparedStatement.setString(3, obj.getRol());
-            preparedStatement.setString(4, obj.getCaducidad());
+            preparedStatement.setString(3, obj.getCaducidad());
+            preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
+              
                 return resultSet.getInt(1);
             }
         } catch (SQLException ex) {
@@ -46,7 +51,17 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY, "claveDelete");
+        try {
+            preparedStatement.setInt(1, id);
+            status = preparedStatement.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoClave.class.getName()).log(Level.SEVERE, null, ex);
+            status = false;
+        } finally {
+            closeAllConnections();
+        }
+        return status;
     }
 
     @Override
@@ -74,22 +89,72 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
         return code;
     }
 
-    public String dateCaducidad(String cantidad) {
-        int numDias = Integer.parseInt(cantidad);
+    public Clave searchOne(String codigo) {
+        mySQLRepository(REPOSITORY, "claveFindOne");
+        Clave clave = null;
+        try {
+            preparedStatement.setString(1, codigo);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                clave = new Clave(
+                        resultSet.getInt("id_clave"),
+                        resultSet.getString("clave"),
+                        resultSet.getInt("status"),
+                        resultSet.getString("caducidad"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoClave.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+
+        return clave;
+    }
+
+    public boolean checkClave(int id, String caducidad){
+        mySQLRepository(REPOSITORY, "claveValidate");
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Calendar fechaActual = Calendar.getInstance();
+                Calendar fechaCaducidad = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+                //fechaCaducidad.setTime(sdf.parse(caducidad));
+                
+                if (fechaCaducidad.getTimeInMillis() >= fechaActual.getTimeInMillis()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                System.out.println("Error");
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoClave.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return false;
+    }
+
+    public long dateCaducidad(int cantidad) {
+        int numDias = (cantidad);
         Calendar fecha = Calendar.getInstance();
         fecha.add(Calendar.DATE, numDias);
-        Date code = new Date(fecha.getTimeInMillis());
-        return ""+code;
+        return fecha.getTimeInMillis();
     }
 
     public static void main(String[] args) {
         DaoClave dao = new DaoClave();
-        Clave clave = new Clave(0, dao.generator(7), 1, "empleado", dao.dateCaducidad("7"));
-        dao.add(clave);
-        System.out.println(clave.getClave());
-        System.out.println(clave.getStatus());
-        System.out.println(clave.getRol());
-        System.out.println(clave.getCaducidad());
+        Calendar fechaActual = Calendar.getInstance();
+        Calendar fecha = Calendar.getInstance();
+        fecha.set(Calendar.MONTH, Calendar.FEBRUARY);
+        Clave clave = new Clave(0, dao.generator(7), 1, "2020-07-14 10:33:44");
+        //dao.add(clave);
+        //dao.delete(2);
+        //dao.checkClave(2,"")
     }
 
 }

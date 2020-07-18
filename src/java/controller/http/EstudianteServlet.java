@@ -3,23 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlet;
+package controller.http;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import mx.edu.utez.model.usuario.Usuario;
 
 /**
  *
  * @author alexl
  */
-@WebServlet(name = "CerrarSesion", urlPatterns = {"/finSesion"})
-public class CerrarSesion extends HttpServlet {
+@WebServlet(name = "EstudianteServlet", urlPatterns = {"/EstudianteServlet"})
+public class EstudianteServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,11 +35,11 @@ public class CerrarSesion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-     HttpSession sesionUsuario = request.getSession();
-      sesionUsuario.removeAttribute("user");
-      request.getRequestDispatcher("index.jsp").forward(request, response);
-
-        
+        RequestDispatcher redirect = null;
+        HttpSession session = request.getSession();
+        request.setAttribute("estudiante", session.getAttribute("estudiante"));
+        redirect = request.getRequestDispatcher("views/alumno/inicio_alumno.jsp");
+            redirect.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

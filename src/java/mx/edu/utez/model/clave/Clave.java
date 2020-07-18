@@ -16,17 +16,15 @@ public class Clave {
     private int id;
     private String clave;
     private int status;
-    private String rol;
     private String caducidad;
 
     public Clave() {
     }
     
-    public Clave(int id, String clave, int status, String rol, String caducidad) {
+    public Clave(int id, String clave, int status,String caducidad) {
         this.id = id;
         this.clave = clave;
         this.status = status;
-        this.rol = rol;
         this.caducidad = caducidad;
     }
 
@@ -55,20 +53,17 @@ public class Clave {
         this.status = status;
     }
 
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
-    public String getCaducidad() {
+       public String getCaducidad() {
         return caducidad;
     }
 
     public void setCaducidad(String caducidad) {
         this.caducidad = caducidad;
+    }
+
+    @Override
+    public String toString() {
+        return "Clave{" + "id=" + id + ", clave=" + clave + ", status=" + status + ", caducidad=" + caducidad + '}';
     }
     
 }
