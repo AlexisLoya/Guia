@@ -71,6 +71,11 @@ public class Disponibilidad {
     public void setCuatrimestre(Cuatrimestre cuatrimestre) {
         this.cuatrimestre = cuatrimestre;
     }
+
+    @Override
+    public String toString() {
+        return "Disponibilidad{" + "id=" + id + ", empleado=" + empleado + ", dia=" + dia + ", rango_hora=" + rango_hora + ", cuatrimestre=" + cuatrimestre + '}';
+    }
     
     
     

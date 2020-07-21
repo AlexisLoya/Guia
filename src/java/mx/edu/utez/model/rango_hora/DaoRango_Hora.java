@@ -17,12 +17,14 @@ import mx.edu.utez.model.DaoInterface;
  * @author alexl
  */
 public class DaoRango_Hora extends Dao implements DaoInterface<Rango_Hora> {
-    
+
+    private final String REPOSITORY = "rango_horaRepository";
+
     @Override
     public int add(Rango_Hora obj) {
-        mySQLRepository("rango_horaRepository", "rango_horaAdd");
+        mySQLRepository(REPOSITORY, "rango_horaAdd");
         try {
-            preparedStatement.setInt(1, obj.getRango_Hora());
+            preparedStatement.setInt(1, obj.getId());
             preparedStatement.setString(2, obj.getInicio());
             preparedStatement.setString(3, obj.getFin());
             preparedStatement.executeUpdate();
@@ -51,7 +53,7 @@ public class DaoRango_Hora extends Dao implements DaoInterface<Rango_Hora> {
 
     @Override
     public ArrayList<Rango_Hora> findAll() {
-        mySQLRepository("rango_horaRepository","rango_horaFindAll");
+        mySQLRepository(REPOSITORY, "rango_horaFindAll");
         ArrayList<Rango_Hora> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();
@@ -74,7 +76,25 @@ public class DaoRango_Hora extends Dao implements DaoInterface<Rango_Hora> {
 
     @Override
     public Rango_Hora findOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY, "rango_horaFindOne");
+        Rango_Hora rango_hora = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                rango_hora = new Rango_Hora(
+                        resultSet.getInt("id_rango_hora"),
+                        resultSet.getString("inicio"),
+                        resultSet.getString("fin")
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoRango_Hora.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return rango_hora;
     }
 
 }

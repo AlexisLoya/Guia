@@ -10,25 +10,25 @@ package mx.edu.utez.model.rango_hora;
  * @author alexl
  */
 public class Rango_Hora {
-    private int Rango_Hora;
+    private int id;
     private String inicio;
     private String fin;
 
     public Rango_Hora() {
     }
 
-    public Rango_Hora(int Rango_Hora, String inicio, String fin) {
-        this.Rango_Hora = Rango_Hora;
+    public Rango_Hora(int id, String inicio, String fin) {
+        this.id = id;
         this.inicio = inicio;
         this.fin = fin;
     }
 
-    public int getRango_Hora() {
-        return Rango_Hora;
+    public int getId() {
+        return id;
     }
 
-    public void setRango_Hora(int Rango_Hora) {
-        this.Rango_Hora = Rango_Hora;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getInicio() {
@@ -45,6 +45,11 @@ public class Rango_Hora {
 
     public void setFin(String fin) {
         this.fin = fin;
+    }
+
+    @Override
+    public String toString() {
+        return "Rango_Hora{" + "id=" + id + ", inicio=" + inicio + ", fin=" + fin + '}';
     }
     
     

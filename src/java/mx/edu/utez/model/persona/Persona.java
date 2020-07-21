@@ -12,16 +12,17 @@ package mx.edu.utez.model.persona;
 public class Persona {
 
     private int id;
-    private int status;
-    private String sexo;
     private String nombre;
-    private String materno;
     private String paterno;
+    private String materno;
+    private String sexo;
+    private int status;
+
 
     public Persona() {
     }
 
-    public Persona(int id, int status, String sexo, String nombre, String materno, String paterno) {
+    public Persona(int id, String nombre, String paterno, String materno,String sexo,int status ) {
         this.id = id;
         this.status = status;
         this.sexo = sexo;

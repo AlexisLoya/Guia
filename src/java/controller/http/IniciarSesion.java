@@ -41,6 +41,7 @@ public class IniciarSesion extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("text/html;charset=UTF-8");
+        
         RequestDispatcher redirect = null;
 
         //Tomar los paramentros

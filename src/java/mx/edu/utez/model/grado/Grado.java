@@ -36,6 +36,11 @@ public class Grado {
     public void setNumero(String numero) {
         this.numero = numero;
     }
+
+    @Override
+    public String toString() {
+        return "Grado{" + "id=" + id + ", numero=" + numero + '}';
+    }
     
     
 }

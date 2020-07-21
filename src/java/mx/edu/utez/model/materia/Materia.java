@@ -59,6 +59,11 @@ public class Materia {
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
     }
+
+    @Override
+    public String toString() {
+        return "Materia{" + "id=" + id + ", nombre=" + nombre + ", grado=" + grado + ", carrera=" + carrera + '}';
+    }
     
     
     

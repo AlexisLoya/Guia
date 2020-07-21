@@ -14,21 +14,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mx.edu.utez.model.empleado.DaoEmpleado;
-import mx.edu.utez.model.empleado.Empleado;
-import mx.edu.utez.model.estudiante.DaoEstudiante;
-import mx.edu.utez.model.estudiante.Estudiante;
-import mx.edu.utez.model.grado.Grado;
-import mx.edu.utez.model.grupo.Grupo;
-import mx.edu.utez.model.persona.DaoPersona;
-import mx.edu.utez.model.persona.Persona;
+import javax.servlet.http.HttpSession;
+import mx.edu.utez.model.materia.DaoMateria;
+import mx.edu.utez.model.materia.Materia;
 
 /**
  *
  * @author alexl
  */
-@WebServlet(name = "registrarUsuario", urlPatterns = {"/Registro"})
-public class registrarEstudiante extends HttpServlet {
+@WebServlet(name = "registro_asesoriaServlet", urlPatterns = {"/Agendar-asesoria"})
+public class registro_asesoriaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,49 +36,20 @@ public class registrarEstudiante extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        // response.setContentType("text/html;charset=UTF-8");
-        String action = request.getParameter("acction");
+        response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher redirect = null;
-        
-        if (action == null) {
-            ArrayList<Grado> grados = new ArrayList<>();
-            grados.add(new Grado(1, "1ro"));
-            grados.add(new Grado(2, "2do"));
-            grados.add(new Grado(3, "3er"));
-            grados.add(new Grado(4, "4to"));
+
+            DaoMateria daoMateria = new DaoMateria();
+            ArrayList<Materia> materias = daoMateria.findAll();
             
-            request.setAttribute("grados", grados);
-            redirect = request.getRequestDispatcher("Registro.jsp");
+            request.setAttribute("materias",materias);       
+      
+        HttpSession session = request.getSession();
+        request.setAttribute("estudiante", session.getAttribute("estudiante"));
+        redirect = request.getRequestDispatcher("views/alumno/registro_asesoria.jsp");
             redirect.forward(request, response);
         }
-
-        else if (action.equalsIgnoreCase("regisotroEstudiante")) {
-            String nombre = request.getParameter("nombre");
-            String paterno = request.getParameter("paterno");
-            String materno = request.getParameter("materno");
-            String email = request.getParameter("email");
-            String matricula = request.getParameter("matricula");
-            String sexo = request.getParameter("sexoOption");
-            String password = request.getParameter("password");
-            int status = 1;
-
-            //Tomar los paramentros de persona
-            DaoPersona daoPersona = new DaoPersona();
-            
-            
-            Persona persona = new Persona(0,nombre, paterno, materno, sexo, status);
-            int idPersona = daoPersona.add(persona);
-            persona.setId(idPersona);
-            //Tomar los paramentros de estudiante
-            DaoEstudiante daoEstudiante = new DaoEstudiante();
-            Estudiante estudiante = new Estudiante(0, persona, matricula, email, password);
-            int idEstudiante = daoEstudiante.add(estudiante);
-            estudiante.setId(idEstudiante);
-            response.sendRedirect("Iniciar Sesion.jsp");
-        }
-
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -123,4 +89,5 @@ public class registrarEstudiante extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

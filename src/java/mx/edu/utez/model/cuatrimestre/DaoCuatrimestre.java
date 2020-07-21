@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mx.edu.utez.model.Dao;
 import mx.edu.utez.model.DaoInterface;
+import mx.edu.utez.model.anio.DaoAnio;
+import mx.edu.utez.model.periodo.DaoPeriodo;
 
 /**
  *
@@ -18,9 +20,11 @@ import mx.edu.utez.model.DaoInterface;
  */
 public class DaoCuatrimestre extends Dao implements DaoInterface<Cuatrimestre> {
 
+    private final String REPOSITORY = "cuatrimestreRepository";
+
     @Override
     public int add(Cuatrimestre obj) {
-        mySQLRepository("cuatrimestreRepository","addCuatrimestre");
+        mySQLRepository(REPOSITORY, "cuatrimestreAdd");
         try {
             preparedStatement.setInt(1, obj.getPeriodo().getId());
             preparedStatement.setInt(2, obj.getAnio().getId());
@@ -50,14 +54,39 @@ public class DaoCuatrimestre extends Dao implements DaoInterface<Cuatrimestre> {
 
     @Override
     public ArrayList<Cuatrimestre> findAll() {
-        mySQLRepository("cuatimestreRepository","showCuatrimestre");
-
+        mySQLRepository(REPOSITORY, "cuatrimestreFindAll");
+        ArrayList<Cuatrimestre> list = new ArrayList();
+        try {
+            resultSet = preparedStatement.executeQuery();
+            DaoCuatrimestre daoCuatrimestre = new DaoCuatrimestre();
+            while(resultSet.next()){
+                list.add(daoCuatrimestre.findOne(resultSet.getInt("id_cuatrimestre")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoCuatrimestre.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
     }
 
     @Override
     public Cuatrimestre findOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY, "cuatrimestreFindOne");
+        Cuatrimestre cuatrimestre = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                DaoPeriodo daoPeriodo = new DaoPeriodo();
+                DaoAnio daoAnio = new DaoAnio();
+                cuatrimestre = new Cuatrimestre(
+                        resultSet.getInt("id_cuatrimestre"),
+                        daoPeriodo.findOne(resultSet.getInt("id_periodo")),
+                        daoAnio.findOne(resultSet.getInt("id_anio")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoCuatrimestre.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cuatrimestre;
     }
 
 }

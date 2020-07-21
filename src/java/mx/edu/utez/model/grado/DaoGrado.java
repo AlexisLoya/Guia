@@ -17,10 +17,10 @@ import mx.edu.utez.model.DaoInterface;
  * @author alexl
  */
 public class DaoGrado extends Dao implements DaoInterface<Grado>{
-
+private final String REPOSITORY = "gradoRepository";
     @Override
     public int add(Grado obj) {
-        mySQLRepository("gradoRepository","gradoAdd");
+        mySQLRepository(REPOSITORY,"gradoAdd");
         try {
             preparedStatement.setString(1, obj.getNumero());
             preparedStatement.executeUpdate();
@@ -50,7 +50,22 @@ public class DaoGrado extends Dao implements DaoInterface<Grado>{
 
     @Override
     public Grado findOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY, "gradoFindOne");
+        Grado grado = null;
+    try {
+        preparedStatement.setInt(1, id);
+        resultSet=preparedStatement.executeQuery();
+        if(resultSet.next()){
+            grado = new Grado(
+                    resultSet.getInt("id_grado"),
+                    resultSet.getString("numero"));
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(DaoGrado.class.getName()).log(Level.SEVERE, null, ex);
+    } finally{
+        closeAllConnections();
     }
+    return grado;
+    }    
     
 }

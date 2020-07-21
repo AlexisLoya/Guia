@@ -18,6 +18,8 @@ import mx.edu.utez.model.DaoInterface;
  */
 public class DaoDia extends Dao implements DaoInterface<Dia> {
 
+    private final String REPOSITORY = "diaRepository";
+
     @Override
     public int add(Dia obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -35,7 +37,7 @@ public class DaoDia extends Dao implements DaoInterface<Dia> {
 
     @Override
     public ArrayList<Dia> findAll() {
-        mySQLRepository("diaRepository","diaFindAll");
+        mySQLRepository("diaRepository", "diaFindAll");
         ArrayList<Dia> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();
@@ -54,12 +56,29 @@ public class DaoDia extends Dao implements DaoInterface<Dia> {
 
     @Override
     public Dia findOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY,"diaFindOne");
+        Dia dia = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+               dia  = new Dia(
+                       resultSet.getInt("id_dia"),
+                       resultSet.getString("nombre")               
+               );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoDia.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+        return dia;
     }
+
     public static void main(String[] args) {
         DaoDia diarepo = new DaoDia();
         for (Dia dia : diarepo.findAll()) {
-            System.out.println("Día:"+dia.getNombre());
+            System.out.println("Día:" + dia.getNombre());
         }
     }
 }
