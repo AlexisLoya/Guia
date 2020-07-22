@@ -18,7 +18,9 @@ import mx.edu.utez.model.empleado.DaoEmpleado;
 import mx.edu.utez.model.empleado.Empleado;
 import mx.edu.utez.model.estudiante.DaoEstudiante;
 import mx.edu.utez.model.estudiante.Estudiante;
+import mx.edu.utez.model.grado.DaoGrado;
 import mx.edu.utez.model.grado.Grado;
+import mx.edu.utez.model.grupo.DaoGrupo;
 import mx.edu.utez.model.grupo.Grupo;
 import mx.edu.utez.model.persona.DaoPersona;
 import mx.edu.utez.model.persona.Persona;
@@ -43,17 +45,14 @@ public class registrarEstudiante extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         // response.setContentType("text/html;charset=UTF-8");
-        String action = request.getParameter("acction");
+        String action = request.getParameter("action");
         RequestDispatcher redirect = null;
         
         if (action == null) {
-            ArrayList<Grado> grados = new ArrayList<>();
-            grados.add(new Grado(1, "1ro"));
-            grados.add(new Grado(2, "2do"));
-            grados.add(new Grado(3, "3er"));
-            grados.add(new Grado(4, "4to"));
-            
-            request.setAttribute("grados", grados);
+            //iterar los grupos en la aplicación
+            DaoGrupo daoGrupo = new DaoGrupo();
+            ArrayList<Grupo> grupos = daoGrupo.findAll();
+            request.setAttribute("grupos", grupos);
             redirect = request.getRequestDispatcher("Registro.jsp");
             redirect.forward(request, response);
         }
@@ -66,12 +65,11 @@ public class registrarEstudiante extends HttpServlet {
             String matricula = request.getParameter("matricula");
             String sexo = request.getParameter("sexoOption");
             String password = request.getParameter("password");
+            int id_grupo= Integer.valueOf(request.getParameter("grupo"));
             int status = 1;
 
             //Tomar los paramentros de persona
             DaoPersona daoPersona = new DaoPersona();
-            
-            
             Persona persona = new Persona(0,nombre, paterno, materno, sexo, status);
             int idPersona = daoPersona.add(persona);
             persona.setId(idPersona);
@@ -79,7 +77,11 @@ public class registrarEstudiante extends HttpServlet {
             DaoEstudiante daoEstudiante = new DaoEstudiante();
             Estudiante estudiante = new Estudiante(0, persona, matricula, email, password);
             int idEstudiante = daoEstudiante.add(estudiante);
+            //Tomar los parametros del Grupo
+            DaoGrupo daoGrupo = new DaoGrupo();
             estudiante.setId(idEstudiante);
+            System.out.println(id_grupo);
+            daoGrupo.grupoEstudiante(id_grupo,estudiante.getId());
             response.sendRedirect("Iniciar Sesion.jsp");
         }
 

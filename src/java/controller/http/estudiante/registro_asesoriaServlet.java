@@ -15,8 +15,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import mx.edu.utez.model.empleado.DaoEmpleado;
+import mx.edu.utez.model.empleado.Empleado;
 import mx.edu.utez.model.materia.DaoMateria;
 import mx.edu.utez.model.materia.Materia;
+import mx.edu.utez.model.rango_hora.DaoRango_Hora;
+import mx.edu.utez.model.rango_hora.Rango_Hora;
 
 /**
  *
@@ -37,19 +41,29 @@ public class registro_asesoriaServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String action = request.getParameter("action");
         RequestDispatcher redirect = null;
-
+        if (action == null) {
+            //Iterar materias 
             DaoMateria daoMateria = new DaoMateria();
             ArrayList<Materia> materias = daoMateria.findAll();
+            request.setAttribute("materias", materias);
             
-            request.setAttribute("materias",materias);       
-      
-        HttpSession session = request.getSession();
-        request.setAttribute("estudiante", session.getAttribute("estudiante"));
-        redirect = request.getRequestDispatcher("views/alumno/registro_asesoria.jsp");
+            //Iterar empleados 
+            DaoEmpleado daoEmpleado = new DaoEmpleado();
+            ArrayList<Empleado> empleados = daoEmpleado.findAll();
+            request.setAttribute("empleados", empleados);
+            
+            //Iterar Horarios disponibles
+            DaoRango_Hora rangoHora = new DaoRango_Hora();
+            ArrayList<Rango_Hora> horarios = rangoHora.findAll();
+            request.setAttribute("horarios", horarios);
+            
+            redirect = request.getRequestDispatcher("views/alumno/registro_asesoria.jsp");
             redirect.forward(request, response);
         }
-    
+
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

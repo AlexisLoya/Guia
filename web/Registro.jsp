@@ -7,6 +7,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%String path = request.getContextPath();%>
 <!DOCTYPE html>
 <html>
 
@@ -25,14 +26,14 @@
                 <div class="card-body p-0">
                     <div class="row">
                         <div class="col-lg-5 d-none d-lg-flex">
-                            <div class="flex-grow-1 bg-register-image" style="background-image: url(&quot;assets/img/dogs/register.svg&quot;) ;"></div>
+                            <div class="flex-grow-1 bg-register-image" style="background-image: url(&quot;assets/img/background/reading.svg&quot;) ;"></div>
                         </div>
                         <div class="col-lg-7">
                             <div class="p-5">
                                 <div class="text-center">
                                     <h4 class="text-dark mb-4">Crea una cuenta!</h4>
                                 </div>
-                                <form class="user" action="Registro" method="post">
+                                <form class="user" action="<%=path%>/Registro" method="post">
                                     <input type="hidden" name="action" value="regisotroEstudiante">
                                     <div class="form-group"><input class="form-control form-control-user" type="text" id="nombre" placeholder="Nombre" name="nombre"></div>
                                     <div class="form-group row">
@@ -43,12 +44,13 @@
                                     <div class="form-group"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Correo electronico" name="email"></div>
                                     <div class="form-group"><input class="form-control form-control-user" type="text" id="matricula" placeholder="Matricula" name="matricula"></div>
                                     <div class="form-group">
-                                        <select class="form-control form-control-user" id="grado" name="grado" placeholder="Grado">
-                                            <c:forEach items="${grados}" var="grado">
-                                                <option value="${grado.id}">${grado.numero}</option>
+                                       
+                                        <select class="form-control mb-2 " id="grupo" name="grupo">
+                                            <option value="null" selected="selected">Carrera</option>
+                                            <c:forEach items="${grupos}" var="grupo">
+                                                <option value="${grupo.id}">${grupo.carrera.nombre} grado ${grupo.grado.numero}° grupo ${grupo.letra}</option>
                                             </c:forEach>
                                         </select>
-                                        
                                     </div>
                                     
                                     <div class="form-group">
@@ -66,7 +68,8 @@
                                                 <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="password" id="password" placeholder="Contraseña" name="password">
                                                 </div>
                                                 <div class="col-sm-6"><input class="form-control form-control-user" type="password" id="password_repeat" placeholder="Contraseña" name="password_repeat"></div>
-                                            </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Registrar Cuenta</button>
+                                            </div>
+                                            <button class="btn btn-primary btn-block text-white btn-user" type="submit">Registrar Cuenta</button>
                                         </div>
                                     </div>
                                 </form>
