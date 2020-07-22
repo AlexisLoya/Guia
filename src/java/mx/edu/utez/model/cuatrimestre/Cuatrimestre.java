@@ -49,5 +49,10 @@ public class Cuatrimestre {
     public void setAnio(Anio anio) {
         this.anio = anio;
     }
+
+    @Override
+    public String toString() {
+        return "Cuatrimestre{" + "id=" + id + ", periodo=" + periodo + ", anio=" + anio + '}';
+    }
     
 }

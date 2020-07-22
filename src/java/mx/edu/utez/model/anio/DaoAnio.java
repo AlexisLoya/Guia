@@ -16,7 +16,9 @@ import mx.edu.utez.model.DaoInterface;
  *
  * @author alexl
  */
-public class DaoAnio extends Dao implements DaoInterface<Anio>{
+public class DaoAnio extends Dao implements DaoInterface<Anio> {
+
+    private final String REPOSITORY = "anioRepository";
 
     @Override
     public int add(Anio obj) {
@@ -35,16 +37,13 @@ public class DaoAnio extends Dao implements DaoInterface<Anio>{
 
     @Override
     public ArrayList<Anio> findAll() {
-     mySQLRepository("anioRepository","showAnio");
+        mySQLRepository(REPOSITORY, "showAnio");
         ArrayList<Anio> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();
+            DaoAnio daoAnio = new DaoAnio();
             while (resultSet.next()) {
-                list.add(new Anio(
-                                resultSet.getInt("id_anio"),
-                                resultSet.getInt("numero")
-                        )
-                );
+                list.add(daoAnio.findOne(resultSet.getInt("id_anio")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoAnio.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,13 +55,28 @@ public class DaoAnio extends Dao implements DaoInterface<Anio>{
 
     @Override
     public Anio findOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY, "anioFindOne");
+        Anio anio = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                anio = new Anio(
+                        resultSet.getInt("id_anio"),
+                        resultSet.getInt("numero"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoAnio.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+        return anio;
     }
-    
+
     public static void main(String[] args) {
         DaoAnio anio = new DaoAnio();
         for (Anio anios : anio.findAll()) {
-            System.out.println("Año: "+anios.getNumero());
+            System.out.println("Año: " + anios.getNumero());
         }
     }
 }

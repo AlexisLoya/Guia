@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.http;
+package controller.http.estudiante;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,17 +17,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import mx.edu.utez.model.empleado.DaoEmpleado;
 import mx.edu.utez.model.empleado.Empleado;
-import mx.edu.utez.model.estudiante.DaoEstudiante;
-import mx.edu.utez.model.estudiante.Estudiante;
-import mx.edu.utez.model.usuario.Usuario;
-import mx.edu.utez.utils.Consulta;
+import mx.edu.utez.model.materia.DaoMateria;
+import mx.edu.utez.model.materia.Materia;
+import mx.edu.utez.model.rango_hora.DaoRango_Hora;
+import mx.edu.utez.model.rango_hora.Rango_Hora;
 
 /**
  *
  * @author alexl
  */
-@WebServlet(name = "IniciarSesion", urlPatterns = {"/Iniciar"})
-public class IniciarSesion extends HttpServlet {
+@WebServlet(name = "registro_asesoriaServlet", urlPatterns = {"/Agendar-asesoria"})
+public class registro_asesoriaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,48 +40,27 @@ public class IniciarSesion extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setContentType("text/html;charset=UTF-8");
-        
+        String action = request.getParameter("action");
         RequestDispatcher redirect = null;
-
-        //Tomar los paramentros
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-
-        //Validar si existe en la base de datos
-        DaoEstudiante daoEstudiante = new DaoEstudiante();
-        Estudiante estudiante = null;
-
-        DaoEmpleado daoEmpleado = new DaoEmpleado();
-        Empleado empleado = null;
-
-        if (daoEstudiante.check(email, password)) {
-            estudiante = daoEstudiante.findOne(daoEstudiante.autentificacion(email, password));
-            Usuario usuario = new Usuario(email, password, estudiante.getPersona());
-            // Creación de Sesión para el usuario
-            HttpSession session = request.getSession(true);
-            session.setAttribute("usuario", usuario);
-            session.setAttribute("estudiante", estudiante);
-            request.setAttribute("message", "Bienvenido(a) a Guia!");
-            request.setAttribute("type", "success");
+        if (action == null) {
+            //Iterar materias 
+            DaoMateria daoMateria = new DaoMateria();
+            ArrayList<Materia> materias = daoMateria.findAll();
+            request.setAttribute("materias", materias);
             
+            //Iterar empleados 
+            DaoEmpleado daoEmpleado = new DaoEmpleado();
+            ArrayList<Empleado> empleados = daoEmpleado.findAll();
+            request.setAttribute("empleados", empleados);
             
-            //Redireccionar a su inicio
-            redirect = request.getRequestDispatcher("/EstudianteServlet");
+            //Iterar Horarios disponibles
+            DaoRango_Hora rangoHora = new DaoRango_Hora();
+            ArrayList<Rango_Hora> horarios = rangoHora.findAll();
+            request.setAttribute("horarios", horarios);
+            
+            redirect = request.getRequestDispatcher("views/alumno/registro_asesoria.jsp");
             redirect.forward(request, response);
-
-        } else if (daoEmpleado.check(email, password)) {
-            empleado = daoEmpleado.findOne(daoEmpleado.autentificacion(email, password));
-            Usuario usuario = new Usuario(email, password, empleado.getPersona());
-            //Crear sesión para el empleado
-            HttpSession objSession = request.getSession(true);
-            objSession.setAttribute("usuario", usuario);
-            //request.getRequestDispatcher("inicio_alumno.jsp").forward(request, response);
-            //Redireccionar a su inicio         
-            response.sendRedirect("views/profesor/agenda.jsp");
-        } else {
-            response.sendRedirect("Iniciar Sesion.jsp");
         }
 
     }

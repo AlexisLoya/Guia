@@ -19,7 +19,9 @@ import mx.edu.utez.model.persona.Persona;
  * @author alexl
  */
 public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
+
     private final String REPOSITORY = "estudianteRepository";
+
     @Override
     public int add(Estudiante obj) {
         System.out.println(obj);
@@ -68,11 +70,11 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
                                 resultSet.getInt("id_estudiante"),
                                 new Persona(
                                         resultSet.getInt("id_persona"),
-                                        resultSet.getInt("status"),
-                                        resultSet.getString("sexo"),
                                         resultSet.getString("nombre"),
                                         resultSet.getString("materno"),
-                                        resultSet.getString("paterno")),
+                                        resultSet.getString("paterno"),
+                                        resultSet.getString("sexo"),
+                                        resultSet.getInt("status")),
                                 resultSet.getString("matricula"),
                                 resultSet.getString("correo"),
                                 "")
@@ -99,11 +101,11 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
                         resultSet.getInt("id_estudiante"),
                         new Persona(
                                 resultSet.getInt("id_persona"),
-                                resultSet.getInt("status"),
-                                resultSet.getString("sexo"),
                                 resultSet.getString("nombre"),
+                                resultSet.getString("paterno"),
                                 resultSet.getString("materno"),
-                                resultSet.getString("paterno")),
+                                resultSet.getString("sexo"),
+                                resultSet.getInt("status")),
                         resultSet.getString("matricula"),
                         resultSet.getString("correo"),
                         "");
@@ -118,47 +120,46 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
 
     public int autentificacion(String email, String password) {
         //consulta
-        mySQLRepository(REPOSITORY,"checkAccess");
+        mySQLRepository(REPOSITORY, "checkAccess");
         try {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
-            resultSet= preparedStatement.executeQuery();
-            if(resultSet.next()){
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
                 return resultSet.getInt(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             closeAllConnections();
         }
-     return 0;
+        return 0;
     }
-    
-    
+
     public boolean check(String email, String password) {
         //consulta
-        mySQLRepository(REPOSITORY,"checkAccess");
+        mySQLRepository(REPOSITORY, "checkAccess");
         try {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
-            resultSet= preparedStatement.executeQuery();
-            if(resultSet.next()){
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
                 return true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             closeAllConnections();
         }
-     return false;
+        return false;
     }
-    
+
     public static void main(String[] args) {
         DaoEstudiante estudianteRepo = new DaoEstudiante();
         DaoPersona personaRepo = new DaoPersona();
         Estudiante estudiante = estudianteRepo.findOne(1);
-        System.out.println(estudianteRepo.findOne(estudianteRepo.autentificacion("alexloy117@gmail.com","123")));
-        
+        System.out.println(estudianteRepo.findOne(estudianteRepo.autentificacion("alexloy117@gmail.com", "123")));
+
     }
 
 }

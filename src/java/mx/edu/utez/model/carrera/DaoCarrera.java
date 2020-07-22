@@ -16,14 +16,16 @@ import mx.edu.utez.model.DaoInterface;
  *
  * @author alexl
  */
-public class DaoCarrera extends Dao implements DaoInterface<Carrera>{
+public class DaoCarrera extends Dao implements DaoInterface<Carrera> {
+
+    private final String REPOSITORY = "carreraRepository";
 
     @Override
     public int add(Carrera obj) {
         //Importante
-        mySQLRepository("carreraRepository","carreraAdd");
+        mySQLRepository(REPOSITORY, "carreraAdd");
         try {
-            preparedStatement.setString(1,obj.getNombre());
+            preparedStatement.setString(1, obj.getNombre());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -49,14 +51,47 @@ public class DaoCarrera extends Dao implements DaoInterface<Carrera>{
 
     @Override
     public ArrayList<Carrera> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY,"carreraFindAll");
+        ArrayList<Carrera> carreras = new ArrayList();
+        try {
+            resultSet= preparedStatement.executeQuery();
+            DaoCarrera daoCarrea = new DaoCarrera();
+            while(resultSet.next()) {
+                carreras.add(daoCarrea.findOne(resultSet.getInt("id_carrera")));
+            } 
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoCarrera.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+        return carreras;
     }
 
     @Override
     public Carrera findOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY, "carreraFindOne");
+        Carrera carrera = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                carrera = new Carrera(
+                        resultSet.getInt("id_carrera"),
+                        resultSet.getString("nombre"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoCarrera.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+        return carrera;
     }
-    
-    
-    
+    public static void main(String[] args) {
+        DaoCarrera daoCarrera = new DaoCarrera();
+        for (Carrera carrera : daoCarrera.findAll()) {
+            System.out.println(carrera);
+            
+        }
+    }
 }

@@ -16,18 +16,20 @@ import mx.edu.utez.model.DaoInterface;
  *
  * @author alexl
  */
-public class DaoGrado extends Dao implements DaoInterface<Grado>{
+public class DaoGrado extends Dao implements DaoInterface<Grado> {
+
+    private final String REPOSITORY = "gradoRepository";
 
     @Override
     public int add(Grado obj) {
-        mySQLRepository("gradoRepository","gradoAdd");
+        mySQLRepository(REPOSITORY, "gradoAdd");
         try {
             preparedStatement.setString(1, obj.getNumero());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
         } catch (SQLException ex) {
             Logger.getLogger(DaoGrado.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             closeAllConnections();
         }
         return 0;
@@ -45,12 +47,40 @@ public class DaoGrado extends Dao implements DaoInterface<Grado>{
 
     @Override
     public ArrayList<Grado> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY, "gradoFindAll");
+        ArrayList<Grado> list = new ArrayList();
+        DaoGrado daoGrado = new DaoGrado();
+        try {
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(daoGrado.findOne(resultSet.getInt("id_grado")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoGrado.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return list;
     }
 
     @Override
     public Grado findOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY, "gradoFindOne");
+        Grado grado = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                grado = new Grado(
+                        resultSet.getInt("id_grado"),
+                        resultSet.getString("numero"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoGrado.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return grado;
     }
-    
+
 }

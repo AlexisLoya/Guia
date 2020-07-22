@@ -38,4 +38,9 @@ public class Anio {
         this.numero = numero;
     }
 
+    @Override
+    public String toString() {
+        return "Anio{" + "id=" + id + ", numero=" + numero + '}';
+    }
+
 }

@@ -36,6 +36,11 @@ public class Periodo {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    @Override
+    public String toString() {
+        return "Periodo{" + "id=" + id + ", nombre=" + nombre + '}';
+    }
     
     
       

@@ -17,7 +17,7 @@ import mx.edu.utez.model.DaoInterface;
  * @author alexl
  */
 public class DaoPeriodo extends Dao implements DaoInterface<Periodo>{
-
+ private final String REPOSITORY = "periodoRepository";
     @Override
     public int add(Periodo obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -36,7 +36,7 @@ public class DaoPeriodo extends Dao implements DaoInterface<Periodo>{
     @Override
     public ArrayList<Periodo> findAll() {
 
-     mySQLRepository("periodoRepository","periodoFindAll");
+     mySQLRepository(REPOSITORY,"periodoFindAll");
         ArrayList<Periodo> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();
@@ -58,7 +58,21 @@ public class DaoPeriodo extends Dao implements DaoInterface<Periodo>{
 
     @Override
     public Periodo findOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY, "periodoFindOne");
+        Periodo periodo = null; 
+     try {
+         preparedStatement.setInt(1, id);
+         resultSet = preparedStatement.executeQuery();
+         if(resultSet.next()){
+             periodo = new Periodo(resultSet.getInt("id_periodo"),resultSet.getString("nombre"));
+         }
+     } catch (SQLException ex) {
+         Logger.getLogger(DaoPeriodo.class.getName()).log(Level.SEVERE, null, ex);
+     } finally{
+         closeAllConnections();
+     }
+        
+return periodo;
     }
     
     

@@ -58,7 +58,21 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado> {
 
     @Override
     public ArrayList<Empleado> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY, "empleadoFindAll");
+        ArrayList<Empleado> list = new ArrayList();
+        try {
+            resultSet = preparedStatement.executeQuery();
+            DaoEmpleado daoEmpleado = new DaoEmpleado();
+            while (resultSet.next()) {
+                list.add(daoEmpleado.findOne(resultSet.getInt("e.id_empleado")));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return list;
     }
 
     @Override
@@ -110,59 +124,49 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado> {
         return null;
     }
 
-    
     public int autentificacion(String email, String password) {
         //consulta
-        mySQLRepository(REPOSITORY,"checkAccess");
+        mySQLRepository(REPOSITORY, "checkAccess");
         try {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
-            resultSet= preparedStatement.executeQuery();
-            if(resultSet.next()){
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
                 return resultSet.getInt(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoEmpleado.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             closeAllConnections();
         }
-     return 0;
+        return 0;
     }
-    
+
     public boolean check(String email, String password) {
         //consulta
-        mySQLRepository(REPOSITORY,"checkAccess");
+        mySQLRepository(REPOSITORY, "checkAccess");
         try {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
-            resultSet= preparedStatement.executeQuery();
-            if(resultSet.next()){
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
                 return true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoEmpleado.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             closeAllConnections();
         }
-        
-        
-     return false;
+
+        return false;
     }
-    
-    
+
     public static void main(String[] args) {
         DaoEmpleado daoEmpleado = new DaoEmpleado();
-        int idEmpleado = daoEmpleado.checkAccess("alex@gmail.com", "123");
-        Empleado docente =  daoEmpleado.findOne(idEmpleado);
-        
-        for (Rol role : docente.getRoles()) {
-            if (role.getName().equalsIgnoreCase("profesor")) {
-                System.out.println("Eres profe");
-            }
-            if (role.getName().equalsIgnoreCase("tutor")) {
-                System.out.println("Eres tutor");
-            }
-            
+        System.out.println(daoEmpleado.findOne(2));
+        ArrayList<Empleado> empleados = daoEmpleado.findAll();
+        for (Empleado empleado : empleados) {
+            System.out.println(empleado);
         }
     }
 }

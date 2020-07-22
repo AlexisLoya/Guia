@@ -18,11 +18,13 @@ import mx.edu.utez.model.DaoInterface;
  */
 public class DaoPersona extends Dao implements DaoInterface<Persona> {
 
+    private final String REPOSITORY = "personaRepository";
+
     @Override
     public int add(Persona obj) {
         System.out.println(obj);
         //Importante
-        mySQLRepository("personaRepository","personaAdd");
+        mySQLRepository(REPOSITORY, "personaAdd");
         try {
             preparedStatement.setString(1, obj.getNombre());
             preparedStatement.setString(2, obj.getPaterno());
@@ -55,12 +57,77 @@ public class DaoPersona extends Dao implements DaoInterface<Persona> {
 
     @Override
     public ArrayList<Persona> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Consulta
+        mySQLRepository(REPOSITORY, "personaFindAll");
+        ArrayList<Persona> list = new ArrayList();
+        try {
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(
+                        new Persona(
+                                resultSet.getInt("id_persona"),
+                                resultSet.getString("nombre"),
+                                resultSet.getString("paterno"),
+                                resultSet.getString("materno"),
+                                resultSet.getString("sexo"),
+                                resultSet.getInt("status"))
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoPersona.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return list;
     }
 
     @Override
     public Persona findOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Consulta
+        mySQLRepository(REPOSITORY, "personaFindOne");
+        Persona persona = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                persona = new Persona(
+                        resultSet.getInt("id_persona"),
+                        resultSet.getString("nombre"),
+                        resultSet.getString("paterno"),
+                        resultSet.getString("materno"),
+                        resultSet.getString("sexo"),
+                        resultSet.getInt("status")
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoPersona.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+        return persona;
     }
 
+    public String gender(int id) {
+        //consulta
+        mySQLRepository(REPOSITORY, "personaGender");
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getString("sexo");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoPersona.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+               return "";
+    }
+
+    public static void main(String[] args) {
+        DaoPersona daoPersona = new DaoPersona();
+        System.out.println("Sexo: "+daoPersona.gender(2));
+        Persona persona = daoPersona.findOne(2);
+        System.out.println(persona.getSexo());
+    }
 }

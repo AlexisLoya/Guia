@@ -70,5 +70,10 @@ public class Grupo {
     public void setLetra(String letra) {
         this.letra = letra;
     }
+
+    @Override
+    public String toString() {
+        return "Grupo{" + "id=" + id + ", carrera=" + carrera + ", cuatrimestre=" + cuatrimestre + ", grado=" + grado + ", letra=" + letra + '}';
+    }
     
 }
