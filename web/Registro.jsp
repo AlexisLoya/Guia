@@ -57,11 +57,11 @@
                                         <label class="col-sm-6 mb-3 mb-sm-0 form-group-label">Sexo</label>
                                         <div class="form-check form-check">
                                             <input class="form-check-input " type="radio" name="sexoOption" id="masculino" value="H">
-                                            <label class="form-check-label col-sm-6 mb-3 mb-sm-0" for="inlineRadio1">Masculino</label>
+                                            <label class="form-check-label col-sm-6 mb-3 mb-sm-0" for="masculino">Masculino</label>
                                         </div>
                                         <div class="form-check form-check">
                                             <input class="form-check-input" type="radio" name="sexoOption" id="femenino" value="M">
-                                            <label class="form-check-label col-sm-6" for="inlineRadio2">Femenino</label>
+                                            <label class="form-check-label col-sm-6" for="femenino">Femenino</label>
                                         </div>
                                         <div class="form-group mt-3">
                                             <div class="form-group row">

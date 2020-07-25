@@ -5,6 +5,7 @@
  */
 package controller.http.estudiante;
 
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -15,24 +16,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import mx.edu.utez.model.empleado.DaoEmpleado;
-import mx.edu.utez.model.empleado.Empleado;
 import mx.edu.utez.model.estudiante.DaoEstudiante;
 import mx.edu.utez.model.estudiante.Estudiante;
-import mx.edu.utez.model.materia.DaoMateria;
-import mx.edu.utez.model.materia.Materia;
-import mx.edu.utez.model.rango_hora.DaoRango_Hora;
-import mx.edu.utez.model.rango_hora.Rango_Hora;
 import mx.edu.utez.model.solicitud_asesoria.DaoSolicitud_Asesoria;
 import mx.edu.utez.model.solicitud_asesoria.Solicitud_Asesoria;
-import mx.edu.utez.model.usuario.Usuario;
 
 /**
  *
  * @author alexl
  */
-@WebServlet(name = "registro_asesoriaServlet", urlPatterns = {"/Agendar-asesoria"})
-public class registro_asesoriaServlet extends HttpServlet {
+@WebServlet(name = "asesorias_pendientesServlet", urlPatterns = {"/asesorias_pendientes"})
+public class asesorias_pendientesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,50 +43,18 @@ public class registro_asesoriaServlet extends HttpServlet {
         String action = request.getParameter("action");
         RequestDispatcher redirect = null;
         if (action == null) {
-            //Iterar materias 
-            DaoMateria daoMateria = new DaoMateria();
-            ArrayList<Materia> materias = daoMateria.findAll();
-            request.setAttribute("materias", materias);
-
-            //Iterar empleados 
-            DaoEmpleado daoEmpleado = new DaoEmpleado();
-            ArrayList<Empleado> empleados = daoEmpleado.findAll();
-            request.setAttribute("empleados", empleados);
-
-            //Iterar Horarios disponibles
-            DaoRango_Hora rangoHora = new DaoRango_Hora();
-            ArrayList<Rango_Hora> horarios = rangoHora.findAll();
-            request.setAttribute("horarios", horarios);
-
-            redirect = request.getRequestDispatcher("views/alumno/registro_asesoria.jsp");
-            redirect.forward(request, response);
-        } else if (action.equalsIgnoreCase("registrarAsesoria")) {
-            //Tomar los paramentros
-            String empleado = request.getParameter("empleado");
-            String materia = request.getParameter("materia");
-            String horario = request.getParameter("horario");
-            String tema = request.getParameter("tema");
-            
-            //Objetos necesarios
-            HttpSession sesionUsuario = request.getSession();
+            HttpSession sesionUsuario = request.getSession(true);
             Estudiante estudiante = null;
             estudiante = (Estudiante) sesionUsuario.getAttribute("estudiante");
-            DaoEmpleado daoEmpleado = new DaoEmpleado();
-            DaoMateria daoMateria = new DaoMateria();
-            DaoEstudiante daoEstudiante = new DaoEstudiante();
+            DaoEstudiante dao = new DaoEstudiante();
+            //Iterar Asesorias
             DaoSolicitud_Asesoria daoAsesoria = new DaoSolicitud_Asesoria();
-            // Construir la asesoría 
-            Solicitud_Asesoria solicitud = new Solicitud_Asesoria(0, daoEmpleado.findOne(Integer.parseInt(empleado)), daoMateria.findOne(Integer.parseInt(materia)), tema, estudiante, daoAsesoria.fechaActual(), 2);
-            //Añadirla a la base de datos 
-            daoAsesoria.add(solicitud);
-            
-            //Redireacionar
-            request.setAttribute("message", "asesoría registrada correctamente!");
-            request.setAttribute("type", "success");
-            redirect = request.getRequestDispatcher("views/alumno/registro_asesoria.jsp");
+            ArrayList<Solicitud_Asesoria> asesorias = daoAsesoria.alumnoAsesoria(dao.findOne(estudiante.getId()).getId());
+            request.setAttribute("asesorias", asesorias);
+
+            redirect = request.getRequestDispatcher("views/alumno/asesorias_pendientes.jsp");
             redirect.forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -133,5 +95,4 @@ public class registro_asesoriaServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

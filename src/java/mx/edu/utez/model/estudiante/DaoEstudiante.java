@@ -53,7 +53,24 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
 
     @Override
     public boolean update(Estudiante obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY,"estudianteUpdate");
+        try {
+            preparedStatement.setString(1,obj.getCorreo());
+            preparedStatement.setString(2,obj.getPersona().getNombre());
+            preparedStatement.setString(1,obj.getPersona().getPaterno());
+            preparedStatement.setString(1,obj.getPersona().getMaterno());
+            preparedStatement.setString(1,obj.getPersona().getSexo());
+            resultSet =  preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return true;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+        return false;        
     }
 
     @Override

@@ -41,46 +41,59 @@ public class IniciarSesion extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("text/html;charset=UTF-8");
-        
+        String action = request.getParameter("action");
         RequestDispatcher redirect = null;
-
-        //Tomar los paramentros
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-
-        //Validar si existe en la base de datos
-        DaoEstudiante daoEstudiante = new DaoEstudiante();
-        Estudiante estudiante = null;
-
-        DaoEmpleado daoEmpleado = new DaoEmpleado();
-        Empleado empleado = null;
-
-        if (daoEstudiante.check(email, password)) {
-            estudiante = daoEstudiante.findOne(daoEstudiante.autentificacion(email, password));
-            Usuario usuario = new Usuario(email, password, estudiante.getPersona());
-            // Creación de Sesión para el usuario
-            HttpSession session = request.getSession(true);
-            session.setAttribute("usuario", usuario);
-            session.setAttribute("estudiante", estudiante);
-            request.setAttribute("message", "Bienvenido(a) a Guia!");
-            request.setAttribute("type", "success");
-            
-            
-            //Redireccionar a su inicio
-            redirect = request.getRequestDispatcher("/EstudianteServlet");
+        if (action == null) {
+            redirect = request.getRequestDispatcher("Iniciar Sesion.jsp");
             redirect.forward(request, response);
+        } else if (action.equalsIgnoreCase("iniciarSesion")) {
+            //Tomar los paramentros
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
 
-        } else if (daoEmpleado.check(email, password)) {
-            empleado = daoEmpleado.findOne(daoEmpleado.autentificacion(email, password));
-            Usuario usuario = new Usuario(email, password, empleado.getPersona());
-            //Crear sesión para el empleado
-            HttpSession objSession = request.getSession(true);
-            objSession.setAttribute("usuario", usuario);
-            //request.getRequestDispatcher("inicio_alumno.jsp").forward(request, response);
-            //Redireccionar a su inicio         
-            response.sendRedirect("views/profesor/agenda.jsp");
-        } else {
-            response.sendRedirect("Iniciar Sesion.jsp");
+            //Validar si existe en la base de datos
+            DaoEstudiante daoEstudiante = new DaoEstudiante();
+            DaoEmpleado daoEmpleado = new DaoEmpleado();
+
+            if (daoEstudiante.check(email, password)) {
+                String rol = "Estudiante";
+                Estudiante estudiante = daoEstudiante.findOne(daoEstudiante.autentificacion(email, password));
+                Usuario usuario = new Usuario(email, password, estudiante.getPersona(), rol);
+                // Creación de Sesión para el usuario
+                HttpSession session = request.getSession(true);
+                session.setAttribute("usuario", usuario);
+                session.setAttribute("estudiante", estudiante);
+                session.setAttribute("rol", rol);
+                request.setAttribute("message", "Bienvenido(a) a Guia!");
+                request.setAttribute("type", "success");
+
+                //Redireccionar a su inicio
+                redirect = request.getRequestDispatcher("/EstudianteServlet");
+                redirect.forward(request, response);
+
+            } else if (daoEmpleado.check(email, password)) {
+                //Crear sesión para el empleado
+                String rol = "Profesor";
+                Empleado empleado = daoEmpleado.findOne(daoEmpleado.autentificacion(email, password));
+                Usuario usuario = new Usuario(email, password, empleado.getPersona(), rol);
+
+                // Creación de Sesión para el usuario
+                HttpSession session = request.getSession(true);
+                session.setAttribute("usuario", usuario);
+                session.setAttribute("empleado", empleado);
+                session.setAttribute("rol", rol);
+                request.setAttribute("message", "Bienvenido(a) a Guia!");
+                request.setAttribute("type", "success");
+                //Redireccionar a su inicio
+                redirect = request.getRequestDispatcher("/Agenda");
+                redirect.forward(request, response);
+            } else {
+                request.setAttribute("message", "Usuario o Contraseña Incorrecto");
+                request.setAttribute("type", "warning");
+                redirect = request.getRequestDispatcher("Iniciar Sesion.jsp");
+                redirect.forward(request, response);
+
+            }
         }
 
     }
