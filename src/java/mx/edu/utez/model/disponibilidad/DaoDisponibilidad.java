@@ -33,7 +33,7 @@ public class DaoDisponibilidad extends Dao implements DaoInterface<Disponibilida
             preparedStatement.setInt(3, obj.getRango_hora().getId());
             preparedStatement.setInt(4, obj.getCuatrimestre().getId());
             preparedStatement.executeUpdate();
-            resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 return resultSet.getInt(1);
             }
@@ -59,6 +59,24 @@ public class DaoDisponibilidad extends Dao implements DaoInterface<Disponibilida
         mySQLRepository(REPOSITORY, "disponibilidadFindAll");
         ArrayList<Disponibilidad> list = new ArrayList();
         try {
+            resultSet = preparedStatement.executeQuery();
+            DaoDisponibilidad daoDisponibilidad = new DaoDisponibilidad();
+            while (resultSet.next()) {
+                list.add(daoDisponibilidad.findOne(resultSet.getInt("id_disponibilidad")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoDisponibilidad.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return list;
+    }
+    public ArrayList<Disponibilidad> findEmpleado(int id ) {
+        mySQLRepository(REPOSITORY, "disponibilidadFindEmpleado");
+        ArrayList<Disponibilidad> list = new ArrayList();
+        try {
+            preparedStatement.setInt(1, id);
+            
             resultSet = preparedStatement.executeQuery();
             DaoDisponibilidad daoDisponibilidad = new DaoDisponibilidad();
             while (resultSet.next()) {
@@ -97,10 +115,9 @@ public class DaoDisponibilidad extends Dao implements DaoInterface<Disponibilida
     }
 
     public static void main(String[] args) {
-        System.out.println("222");
+        
         DaoDisponibilidad db = new DaoDisponibilidad();
-        System.out.println(db.findOne(1));
-        for (Disponibilidad disponibilidad : db.findAll()) {
+        for (Disponibilidad disponibilidad : db.findEmpleado(1)) {
             System.out.println(disponibilidad);
         }
     }
