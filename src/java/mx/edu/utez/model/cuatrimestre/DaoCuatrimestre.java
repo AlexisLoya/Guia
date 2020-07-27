@@ -65,7 +65,7 @@ public class DaoCuatrimestre extends Dao implements DaoInterface<Cuatrimestre> {
         } catch (SQLException ex) {
             Logger.getLogger(DaoCuatrimestre.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return list;
     }
 
     @Override
@@ -89,4 +89,11 @@ public class DaoCuatrimestre extends Dao implements DaoInterface<Cuatrimestre> {
         return cuatrimestre;
     }
 
+    public static void main(String[] args) {
+        DaoCuatrimestre dao = new DaoCuatrimestre();
+        System.out.println(dao.findOne(2));
+        for (Cuatrimestre cuatrimestre : dao.findAll()) {
+            System.out.println(cuatrimestre);
+        }
+    }
 }

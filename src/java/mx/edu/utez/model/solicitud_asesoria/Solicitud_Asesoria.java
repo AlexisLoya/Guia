@@ -90,6 +90,11 @@ public class Solicitud_Asesoria {
     public void setTotal(int total) {
         this.total = total;
     }
+
+    @Override
+    public String toString() {
+        return "Solicitud_Asesoria{" + "id=" + id + ", empleado=" + empleado + ", materia=" + materia + ", tema=" + tema + ", estudiante=" + estudiante + ", fecha=" + fecha + ", total=" + total + '}';
+    }
     
     
 }

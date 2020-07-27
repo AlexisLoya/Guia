@@ -57,14 +57,9 @@ public class DaoRango_Hora extends Dao implements DaoInterface<Rango_Hora> {
         ArrayList<Rango_Hora> list = new ArrayList<>();
         try {
             resultSet = preparedStatement.executeQuery();
+            DaoRango_Hora daoRangoHora = new DaoRango_Hora();
             while (resultSet.next()) {
-                list.add(
-                        new Rango_Hora(
-                                resultSet.getInt("Rango_Hora"),
-                                resultSet.getString("inicio"),
-                                resultSet.getString("fin")
-                        )
-                );
+                list.add(daoRangoHora.findOne(resultSet.getInt("id_rango_hora")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoRango_Hora.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,5 +91,10 @@ public class DaoRango_Hora extends Dao implements DaoInterface<Rango_Hora> {
         }
         return rango_hora;
     }
-
+    public static void main(String[] args) {
+        DaoRango_Hora db = new DaoRango_Hora();
+        for (Rango_Hora rango_Hora : db.findAll()) {
+            System.out.println(rango_Hora);
+        }
+    }
 }

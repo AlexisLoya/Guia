@@ -71,12 +71,42 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
 
     @Override
     public ArrayList<Clave> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY,"claveFindAll");
+        ArrayList<Clave> list = new ArrayList();
+        try {
+            resultSet = preparedStatement.executeQuery();
+            DaoClave daoClave = new DaoClave();
+            while(resultSet.next()){
+                list.add(daoClave.findOne(resultSet.getInt("id_clave")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoClave.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+       return list;
     }
 
     @Override
     public Clave findOne(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY,"claveFindOne");
+        Clave clave = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                clave = new Clave(
+                        resultSet.getInt("id_clave"),
+                        resultSet.getString("clave"),
+                        resultSet.getInt("status"),
+                        resultSet.getString("caducidad"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoClave.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            closeAllConnections();
+        }
+        return clave;
     }
 
     public String generator(int longitud) {
@@ -90,7 +120,7 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
     }
 
     public Clave searchOne(String codigo) {
-        mySQLRepository(REPOSITORY, "claveFindOne");
+        mySQLRepository(REPOSITORY, "claveFindClave");
         Clave clave = null;
         try {
             preparedStatement.setString(1, codigo);
@@ -111,22 +141,27 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
         return clave;
     }
 
-    public boolean checkClave(int id, String caducidad){
+    public boolean checkClave(Clave obj){
         mySQLRepository(REPOSITORY, "claveValidate");
         try {
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, obj.getId());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 Calendar fechaActual = Calendar.getInstance();
                 Calendar fechaCaducidad = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-                //fechaCaducidad.setTime(sdf.parse(caducidad));
+                String fecha = resultSet.getString("caducidad");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+                try {
+                    fechaCaducidad.setTime(sdf.parse(fecha));
+                } catch (ParseException ex) {
+                    Logger.getLogger(DaoClave.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println("Fecha Caducidad: "+fechaCaducidad.getTime());
+                System.out.println("Fecha Actual: "+fechaActual.getTime());
                 
                 if (fechaCaducidad.getTimeInMillis() >= fechaActual.getTimeInMillis()) {
                     return true;
-                } else {
-                    return false;
-                }
+                } 
             } else {
                 System.out.println("Error");
                 return false;
@@ -151,10 +186,12 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
         Calendar fechaActual = Calendar.getInstance();
         Calendar fecha = Calendar.getInstance();
         fecha.set(Calendar.MONTH, Calendar.FEBRUARY);
-        Clave clave = new Clave(0, dao.generator(7), 1, "2020-07-14 10:33:44");
-        //dao.add(clave);
-        //dao.delete(2);
-        //dao.checkClave(2,"")
+        Clave clave = new Clave(2, dao.generator(7), 1, "2020-06-25 10:33:44");
+        System.out.println(dao.searchOne("sih7p9q"));
+        
+//        System.out.println(dao.findOne(2));
+//        System.out.println("Resultado: "+dao.checkClave(clave));
+//        
     }
 
 }

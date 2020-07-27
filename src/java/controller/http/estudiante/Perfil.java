@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.http;
+package controller.http.estudiante;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,14 +14,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import mx.edu.utez.model.usuario.Usuario;
+import mx.edu.utez.model.estudiante.DaoEstudiante;
+import mx.edu.utez.model.estudiante.Estudiante;
 
 /**
  *
  * @author alexl
  */
-@WebServlet(name = "EstudianteServlet", urlPatterns = {"/EstudianteServlet"})
-public class EstudianteServlet extends HttpServlet {
+@WebServlet(name = "Perfil", urlPatterns = {"/Perfil"})
+public class Perfil extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,11 +36,21 @@ public class EstudianteServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String action = request.getParameter("action");
         RequestDispatcher redirect = null;
-        HttpSession session = request.getSession();
-        request.setAttribute("estudiante", session.getAttribute("estudiante"));
-        redirect = request.getRequestDispatcher("views/alumno/inicio_alumno.jsp");
-            redirect.forward(request, response);
+        if(action == "cambiarDatos"){
+            //Tomar los parametros a modificar
+            String correo = request.getParameter("correo");
+            String nombre = request.getParameter("nombre");
+            String paterno = request.getParameter("paterno");
+            String materno = request.getParameter("materno");
+            String sexo = request.getParameter("sexo");
+            DaoEstudiante daoEstudiante = new DaoEstudiante();
+            HttpSession sesionUsuario = request.getSession();
+            System.out.println(sesionUsuario.getId()); 
+            daoEstudiante.update((Estudiante) sesionUsuario.getAttribute("estudiante"));
+             redirect = request.getRequestDispatcher("views/alumno/perfil_asesoria.jsp");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
