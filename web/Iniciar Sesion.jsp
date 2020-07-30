@@ -56,8 +56,9 @@
                                             </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Iniciar Sesión</button>
 
                                         </form>
-                                        <div class="text-center"><a class="small" href="<%=path%>/Registro-E">¿Olvidaste tu contraseña?</a></div>
+                                        <div class="text-center"><a class="small" href="">¿Olvidaste tu contraseña?</a></div>
                                         <div class="text-center"><a class="small" href="<%=path%>/Registro">Registrate en la Aplicación</a></div>
+                                        <div class="text-center"><a class="small" href="<%=path%>/Registro-E">Registrate en la Aplicación</a></div>
                                     </div>
                                 </div>
                             </div>
