@@ -53,9 +53,9 @@ public class AdministradorServlet extends HttpServlet {
         for (int i = 0; i < 10; i++) {
             DaoClave daoclave = new DaoClave();
             
-            Clave clave = new Clave(0, daoclave.generator(7), 1, rol, daoclave.dateCaducidad("7"));
+            //Clave clave = new Clave(0, daoclave.generator(7), 1, rol, daoclave.dateCaducidad("7"));
 
-            daoclave.add(clave);
+            //daoclave.add(clave);
         }
 
     }

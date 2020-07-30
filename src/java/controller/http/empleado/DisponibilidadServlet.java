@@ -58,7 +58,7 @@ public class DisponibilidadServlet extends HttpServlet {
             //iterar las horas en la aplicación
             DaoRango_Hora daoHora = new DaoRango_Hora();
             ArrayList<Rango_Hora> horas = daoHora.findAll();
-            request.setAttribute("horas", horas);
+            request.setAttribute("horas", horas);   
 
             //iterar los cuatrimestres en la aplicación
             DaoCuatrimestre daoCutrimestre = new DaoCuatrimestre();
@@ -66,7 +66,7 @@ public class DisponibilidadServlet extends HttpServlet {
             request.setAttribute("cuatrimestres", cuatrimestres);
 
             DaoDisponibilidad daoDisponibilidad = new DaoDisponibilidad();
-            ArrayList<Disponibilidad> asesorias = daoDisponibilidad.findEmpleado(empleado.getId());
+            ArrayList<Disponibilidad> asesorias = daoDisponibilidad.findEmpleado(2);
             request.setAttribute("asesorias", asesorias);
 
             redirect = request.getRequestDispatcher("views/profesor/disponibilidad.jsp");

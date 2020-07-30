@@ -31,6 +31,7 @@
                         <div class="col-lg-7">
                             <div class="p-5">
                                 <div class="text-center">
+                                    <a href=""><img src="<%=path%>/assets/img/logoGuiaV2.png" width="40" height="40" class="d-inline-block align-top mt-0 "></a>
                                     <h4 class="text-dark mb-4">Crea una cuenta!</h4>
                                 </div>
                                 <form class="user" action="<%=path%>/Registro" method="post">
