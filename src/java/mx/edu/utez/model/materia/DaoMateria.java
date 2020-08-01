@@ -101,11 +101,11 @@ public class DaoMateria extends Dao implements DaoInterface<Materia> {
     }
 
     //tabla Empleado-Materia    
-    public int addEmpleado(Materia obj, Empleado obj2) {
+    public int addEmpleado(int idMateria,int idEmpleado) {
         mySQLRepository(REPOSITORY, "empleadoMateriaAdd");
         try {
-            preparedStatement.setInt(1, obj.getId());
-            preparedStatement.setInt(2, obj2.getId());
+            preparedStatement.setInt(1, idMateria);
+            preparedStatement.setInt(2, idEmpleado);
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -121,7 +121,6 @@ public class DaoMateria extends Dao implements DaoInterface<Materia> {
 
     public boolean deleteEmpleado(int id) {
         mySQLRepository(REPOSITORY, "empleadoMateriaDelete");
-
         try {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -141,7 +140,26 @@ public class DaoMateria extends Dao implements DaoInterface<Materia> {
             resultSet = preparedStatement.executeQuery();
             DaoMateria daoMateria = new DaoMateria();
             while (resultSet.next()) {
-                list.add(daoMateria.findOneEmpleado(resultSet.getInt("id_materia")));
+                list.add(daoMateria.findOneEmpleado(resultSet.getInt("id_empleado_materia")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoMateria.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return list;
+    }
+    
+    
+    public ArrayList<EmpleadoMateria> findAllAsesorias(int id) {
+        mySQLRepository(REPOSITORY, "empleadoAsesoriaFindAll");
+        ArrayList<EmpleadoMateria> list = new ArrayList();
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            DaoMateria daoMateria = new DaoMateria();
+            while (resultSet.next()) {
+                list.add(daoMateria.findOneEmpleado(resultSet.getInt("id_empleado_materia")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoMateria.class.getName()).log(Level.SEVERE, null, ex);
@@ -178,9 +196,11 @@ public class DaoMateria extends Dao implements DaoInterface<Materia> {
         DaoMateria daoMateria = new DaoMateria();
         
         DaoEmpleado daoEmpleado = new DaoEmpleado();
-        Empleado empleado = daoEmpleado.findOne(3);
-                
-        System.out.println(daoMateria.deleteEmpleado(16));
+        
+        for (EmpleadoMateria empleadoMateria : daoMateria.findAllAsesorias(6)) {
+            System.out.println(empleadoMateria);
+        }
+        
     }
 
 }

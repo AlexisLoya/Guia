@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/disponibilidadRepository.properties</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/materia/DaoMateria.java</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/materiaRepository.properties</file>
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/controller/http/estudiante/registro_asesoriaServlet.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/controller/http/empleado/DisponibilidadServlet.java</file>
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/disponibilidad/DaoDisponibilidad.java</file>
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/profesor/disponibilidad.jsp</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/componets/NavEmpleado.jsp</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/controller/http/administrador/AdministradorServlet.java</file>
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/alumno/registro_asesoria.jsp</file>
         </group>
     </open-files>

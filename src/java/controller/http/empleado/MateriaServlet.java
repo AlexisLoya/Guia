@@ -46,37 +46,40 @@ public class MateriaServlet extends HttpServlet {
         HttpSession sesionUsuario = request.getSession(true);
         Usuario usuario = (Usuario) sesionUsuario.getAttribute("usuario");
         Empleado empleado = (Empleado) sesionUsuario.getAttribute("empleado");
-        if (usuario == null || usuario.getRol() != "Profesor") {
-            response.sendRedirect("/Iniciar Sesion.jsp");
+        if (usuario == null) {
+            response.sendRedirect("index.jsp");
+            redirect.forward(request, response);
+
         }
         if (action == null) {
-            DaoMateria daoMateria = new DaoMateria();
-            ArrayList<Materia> materias = daoMateria.findAll();
-            request.setAttribute("materias", materias);
 
-            ArrayList<EmpleadoMateria> asesorias = daoMateria.findAllEmpleado(empleado.getId());
-            request.setAttribute("asesorias", asesorias);
-            redirect = request.getRequestDispatcher("views/profesor/materias.jsp");
-            redirect.forward(request, response);
-
-        } else if (action.equalsIgnoreCase("eliminar")) {
-            int id = Integer.parseInt(request.getParameter("id_a"));
+        } else if (action.equals("eliminar")) {
+            int id = Integer.parseInt(request.getParameter("id"));
             DaoMateria daoMateria = new DaoMateria();
             daoMateria.deleteEmpleado(id);
-            redirect = request.getRequestDispatcher("views/profesor/materias.jsp");
-            redirect.forward(request, response);
+            request.setAttribute("message", "Materia eliminada");
+            request.setAttribute("type", "warning");
 
         } else if (action.equals("añadir")) {
             DaoMateria daoMateria = new DaoMateria();
 
             int id = Integer.parseInt(request.getParameter("id_b"));
-            daoMateria.addEmpleado(daoMateria.findOne(id), empleado);
+            daoMateria.addEmpleado(daoMateria.findOne(id).getId(), empleado.getId());
             request.setAttribute("message", "Materia añadida");
             request.setAttribute("type", "success");
-            redirect = request.getRequestDispatcher("views/profesor/agenda.jsp");
-            redirect.forward(request, response);
-        }
 
+        }
+        DaoMateria daoMateria = new DaoMateria();
+        ArrayList<Materia> materias = daoMateria.findAll();
+        request.setAttribute("materias", materias);
+
+        ArrayList<EmpleadoMateria> asesorias = daoMateria.findAllEmpleado(empleado.getId());
+        request.setAttribute("asesorias", asesorias);
+        for (EmpleadoMateria asesoria : asesorias) {
+            System.out.println(asesoria);
+        }
+        redirect = request.getRequestDispatcher("views/profesor/materias.jsp");
+        redirect.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
