@@ -21,11 +21,12 @@ public class Solicitud_Asesoria {
     private Estudiante estudiante;
     private String fecha;
     private int total;
+    private int status;
 
     public Solicitud_Asesoria() {
     }
 
-    public Solicitud_Asesoria(int id, Empleado empleado, Materia materia, String tema, Estudiante estudiante, String fecha, int total) {
+    public Solicitud_Asesoria(int id, Empleado empleado, Materia materia, String tema, Estudiante estudiante, String fecha, int total, int status) {
         this.id = id;
         this.empleado = empleado;
         this.materia = materia;
@@ -33,6 +34,7 @@ public class Solicitud_Asesoria {
         this.estudiante = estudiante;
         this.fecha = fecha;
         this.total = total;
+        this.status = status;
     }
 
     public int getId() {
@@ -91,10 +93,18 @@ public class Solicitud_Asesoria {
         this.total = total;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Solicitud_Asesoria{" + "id=" + id + ", empleado=" + empleado + ", materia=" + materia + ", tema=" + tema + ", estudiante=" + estudiante + ", fecha=" + fecha + ", total=" + total + '}';
+        return "Solicitud_Asesoria{" + "id=" + id + ", empleado=" + empleado + ", materia=" + materia + ", tema=" + tema + ", estudiante=" + estudiante + ", fecha=" + fecha + ", total=" + total + ", status=" + status + '}';
     }
-    
+
     
 }

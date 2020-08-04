@@ -10,12 +10,15 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mx.edu.utez.model.Dao;
 import mx.edu.utez.model.DaoInterface;
+import mx.edu.utez.model.disponibilidad.DaoDisponibilidad;
 import mx.edu.utez.model.empleado.DaoEmpleado;
 import mx.edu.utez.model.estudiante.DaoEstudiante;
+import mx.edu.utez.model.estudiante.Estudiante;
 import mx.edu.utez.model.materia.DaoMateria;
 
 /**
@@ -36,6 +39,7 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
             preparedStatement.setInt(4, obj.getEstudiante().getId());
             preparedStatement.setString(5, obj.getFecha());
             preparedStatement.setInt(6, obj.getTotal());
+            preparedStatement.setInt(7, obj.getStatus());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -96,7 +100,8 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
                         resultSet.getString("tema"),
                         daoEstudiante.findOne(resultSet.getInt("id_estudiante")),
                         resultSet.getString("fecha"),
-                        resultSet.getInt("total")
+                        resultSet.getInt("total"),
+                        resultSet.getInt("status")
                 );
             }
         } catch (SQLException ex) {
@@ -116,12 +121,30 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
         java.util.Date date = new java.util.Date();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
-        return fecha+" "+sdf.format(date);
+        return "" + sdf.format(date);
+    }
+
+    public ArrayList<Solicitud_Asesoria> alumnoAsesoria(int id) {
+        mySQLRepository(REPOSITORY, "solicitud_asesoriaEstudiante");
+        ArrayList<Solicitud_Asesoria> list = new ArrayList();
+        DaoSolicitud_Asesoria asesoria = new DaoSolicitud_Asesoria();
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(asesoria.findOne(resultSet.getInt("id_solicitud_asesoria")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoSolicitud_Asesoria.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return list;
     }
 
     
-    public ArrayList<Solicitud_Asesoria> alumnoAsesoria(int id ) {
-        mySQLRepository(REPOSITORY, "solicitud_asesoriaEstudiante");
+    public ArrayList<Solicitud_Asesoria> empleadoAsesoria(int id) {
+        mySQLRepository(REPOSITORY, "solicitud_asesoriaEmpleado");
         ArrayList<Solicitud_Asesoria> list = new ArrayList();
         DaoSolicitud_Asesoria asesoria = new DaoSolicitud_Asesoria();
         try {
@@ -139,9 +162,56 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
     }
     
     
+    public ArrayList<Solicitud_Asesoria> empleadoShowAsesoria(int id) {
+        mySQLRepository(REPOSITORY, "solicitud_asesoriaShowEmpleado");
+        ArrayList<Solicitud_Asesoria> list = new ArrayList();
+        DaoSolicitud_Asesoria asesoria = new DaoSolicitud_Asesoria();
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(asesoria.findOne(resultSet.getInt("id_solicitud_asesoria")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoSolicitud_Asesoria.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return list;
+    }
+
+    public boolean aceptarAsesoria(int id) {
+        mySQLRepository(REPOSITORY, "solicitud_asesoriaAceptar");
+        try {
+            preparedStatement.setInt(1, id);
+            status = preparedStatement.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoSolicitud_Asesoria.class.getName()).log(Level.SEVERE, null, ex);
+            status = false;
+        } finally {
+            closeAllConnections();
+        }
+        return status;
+    }
+    
+    
+    public boolean rechazarAsesoria(int id) {
+        mySQLRepository(REPOSITORY, "solicitud_asesoriaRechazada");
+        try {
+            preparedStatement.setInt(1, id);
+            status = preparedStatement.executeUpdate() == 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoSolicitud_Asesoria.class.getName()).log(Level.SEVERE, null, ex);
+            status = false;
+        } finally {
+            closeAllConnections();
+        }
+        return status;
+    }
+
     public static void main(String[] args) {
         DaoSolicitud_Asesoria dao = new DaoSolicitud_Asesoria();
-        for (Solicitud_Asesoria solicitud_Asesoria : dao.alumnoAsesoria(1)) {
+        for (Solicitud_Asesoria solicitud_Asesoria : dao.empleadoShowAsesoria(5)) {
             System.out.println(solicitud_Asesoria);
         }
     }

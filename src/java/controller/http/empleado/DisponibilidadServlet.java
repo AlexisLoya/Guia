@@ -25,6 +25,7 @@ import mx.edu.utez.model.empleado.DaoEmpleado;
 import mx.edu.utez.model.empleado.Empleado;
 import mx.edu.utez.model.rango_hora.DaoRango_Hora;
 import mx.edu.utez.model.rango_hora.Rango_Hora;
+import mx.edu.utez.model.usuario.Usuario;
 
 /**
  *
@@ -47,10 +48,34 @@ public class DisponibilidadServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
         RequestDispatcher redirect = null;
-        HttpSession sesion = request.getSession(true);
-            Empleado empleado = (Empleado) sesion.getAttribute("empleado");
+        HttpSession sesionUsuario = request.getSession(true);
+        Usuario usuario = (Usuario) sesionUsuario.getAttribute("usuario");
+        Empleado empleado = (Empleado) sesionUsuario.getAttribute("empleado");
         if (action == null) {
-            //iterar los dias en la aplicación
+            
+            
+        } else if (action.equals("regisotrarHorario")) {
+            int pdia = Integer.parseInt(request.getParameter("dia"));
+            DaoDia dia = new DaoDia();
+
+            int phora = Integer.parseInt(request.getParameter("hora"));
+            DaoRango_Hora hora = new DaoRango_Hora();
+
+            int pcuatrimestre = Integer.parseInt(request.getParameter("cuatrimestre"));
+            DaoCuatrimestre cuatrimestre = new DaoCuatrimestre();
+
+            //prueba
+            DaoEmpleado pp = new DaoEmpleado();
+            Disponibilidad disponibilidad = new Disponibilidad(0, empleado, dia.findOne(pdia), hora.findOne(phora), cuatrimestre.findOne(pcuatrimestre));
+            DaoDisponibilidad daoDisponibilidad = new DaoDisponibilidad();
+            daoDisponibilidad.add(disponibilidad);
+            request.setAttribute("message", "Horario agregado!");
+            request.setAttribute("type", "success");
+
+            
+
+        }
+        //iterar los dias en la aplicación
             DaoDia daoDia = new DaoDia();
             ArrayList<Dia> dias = daoDia.findAll();
             request.setAttribute("dias", dias);
@@ -66,52 +91,13 @@ public class DisponibilidadServlet extends HttpServlet {
             request.setAttribute("cuatrimestres", cuatrimestres);
 
             DaoDisponibilidad daoDisponibilidad = new DaoDisponibilidad();
-            ArrayList<Disponibilidad> asesorias = daoDisponibilidad.findEmpleado(2);
-            request.setAttribute("asesorias", asesorias);
-
-            redirect = request.getRequestDispatcher("views/profesor/disponibilidad.jsp");
-            redirect.forward(request, response);
-        } else if (action.equalsIgnoreCase("regisotrarHorario")) {
-            int pdia = Integer.parseInt(request.getParameter("dia"));
-            DaoDia dia = new DaoDia();
-
-            int phora = Integer.parseInt(request.getParameter("hora"));
-            DaoRango_Hora hora = new DaoRango_Hora();
-
-            int pcuatrimestre = Integer.parseInt(request.getParameter("cuatrimestre"));
-            DaoCuatrimestre cuatrimestre = new DaoCuatrimestre();
-
-            //prueba
-            DaoEmpleado pp = new DaoEmpleado();
-            Disponibilidad disponibilidad = new Disponibilidad(0, pp.findOne(4), dia.findOne(pdia), hora.findOne(phora), cuatrimestre.findOne(pcuatrimestre));
-            DaoDisponibilidad daoDisponibilidad = new DaoDisponibilidad();
-            daoDisponibilidad.add(disponibilidad);
-            request.setAttribute("message", "Horario agregado!");
-            request.setAttribute("type", "success");
-
-            //Volver a mostrar los datoss
-            //iterar los dias en la aplicación
-            DaoDia daoDia = new DaoDia();
-            ArrayList<Dia> dias = daoDia.findAll();
-            request.setAttribute("dias", dias);
-
-            //iterar las horas en la aplicación
-            DaoRango_Hora daoHora = new DaoRango_Hora();
-            ArrayList<Rango_Hora> horas = daoHora.findAll();
-            request.setAttribute("horas", horas);
-
-            //iterar los cuatrimestres en la aplicación
-            DaoCuatrimestre daoCutrimestre = new DaoCuatrimestre();
-            ArrayList<Cuatrimestre> cuatrimestres = daoCutrimestre.findAll();
-            request.setAttribute("cuatrimestres", cuatrimestres);
-
-            //iterar horarios
             ArrayList<Disponibilidad> asesorias = daoDisponibilidad.findEmpleado(empleado.getId());
             request.setAttribute("asesorias", asesorias);
 
             redirect = request.getRequestDispatcher("views/profesor/disponibilidad.jsp");
             redirect.forward(request, response);
-        }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

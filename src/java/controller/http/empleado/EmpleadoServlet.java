@@ -7,6 +7,7 @@ package controller.http.empleado;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import mx.edu.utez.model.empleado.Empleado;
+import mx.edu.utez.model.solicitud_asesoria.DaoSolicitud_Asesoria;
+import mx.edu.utez.model.solicitud_asesoria.Solicitud_Asesoria;
+import mx.edu.utez.model.usuario.Usuario;
 
 /**
  *
@@ -35,8 +40,18 @@ public class EmpleadoServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher redirect = null;
-        HttpSession session = request.getSession();
-        request.setAttribute("empleado", session.getAttribute("empleado"));
+        String action = request.getParameter("action");
+        HttpSession sesionUsuario = request.getSession(true);
+        Usuario usuario = (Usuario) sesionUsuario.getAttribute("usuario");
+        Empleado empleado = (Empleado) sesionUsuario.getAttribute("empleado");
+        DaoSolicitud_Asesoria daoSolicitud = new DaoSolicitud_Asesoria();
+        if(action == null){
+            ArrayList<Solicitud_Asesoria> aceptadas = daoSolicitud.empleadoShowAsesoria(empleado.getId());
+            request.setAttribute("aceptadas", aceptadas);
+            
+        }else if(action.equalsIgnoreCase("")){
+            
+        }
         redirect = request.getRequestDispatcher("views/profesor/agenda.jsp");
         redirect.forward(request, response);
     }

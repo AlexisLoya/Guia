@@ -186,8 +186,8 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
         Calendar fechaActual = Calendar.getInstance();
         Calendar fecha = Calendar.getInstance();
         fecha.set(Calendar.MONTH, Calendar.FEBRUARY);
-        Clave clave = new Clave(2, dao.generator(7), 1, "2020-06-25 10:33:44");
-        System.out.println(dao.searchOne("sih7p9q"));
+        Clave clave = new Clave(2, dao.generator(7), 1, "2020-08-4 10:33:44");
+        dao.add(clave);
         
 //        System.out.println(dao.findOne(2));
 //        System.out.println("Resultado: "+dao.checkClave(clave));

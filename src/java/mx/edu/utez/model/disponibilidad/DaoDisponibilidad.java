@@ -115,10 +115,8 @@ public class DaoDisponibilidad extends Dao implements DaoInterface<Disponibilida
     }
 
     public static void main(String[] args) {
-        
-        DaoDisponibilidad db = new DaoDisponibilidad();
-        for (Disponibilidad disponibilidad : db.findEmpleado(1)) {
-            System.out.println(disponibilidad);
-        }
+      
+         DaoDisponibilidad daoDisponibilidad = new DaoDisponibilidad();
+            System.out.println(daoDisponibilidad.findOne(8));
     }
 }

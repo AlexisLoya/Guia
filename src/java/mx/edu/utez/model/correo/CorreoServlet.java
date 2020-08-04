@@ -3,29 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.http.empleado;
+package mx.edu.utez.model.correo;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import mx.edu.utez.model.empleado.Empleado;
-import mx.edu.utez.model.solicitud_asesoria.DaoSolicitud_Asesoria;
-import mx.edu.utez.model.solicitud_asesoria.Solicitud_Asesoria;
-import mx.edu.utez.model.usuario.Usuario;
 
 /**
  *
  * @author alexl
  */
-@WebServlet(name = "SolicitudServlet", urlPatterns = {"/Solicitud"})
-public class SolicitudServlet extends HttpServlet {
+@WebServlet(name = "CorreoServlet", urlPatterns = {"/enviarCorreo"})
+public class CorreoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,40 +32,10 @@ public class SolicitudServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher redirect = null;
-        String action = request.getParameter("action");
-        HttpSession sesionUsuario = request.getSession(true);
-        Usuario usuario = (Usuario) sesionUsuario.getAttribute("usuario");
-        Empleado empleado = (Empleado) sesionUsuario.getAttribute("empleado");
-        DaoSolicitud_Asesoria daoSolicitud = new DaoSolicitud_Asesoria();
-
-        if (action == null) {
-            ArrayList<Solicitud_Asesoria> solicitudes = daoSolicitud.empleadoAsesoria(empleado.getId());
-            request.setAttribute("solicitudes", solicitudes);
-            redirect = request.getRequestDispatcher("views/profesor/solicitud.jsp");
-            redirect.forward(request, response);
-            
-        }else if (action.equals("aceptarAsesoria")){
-            int id_solicitud = Integer.parseInt(request.getParameter("id_solicitud"));
-            daoSolicitud.aceptarAsesoria(id_solicitud);
-            
-            request.setAttribute("message","Asesoría aceptada!");
-            request.setAttribute("type", "success");
-            
-            ArrayList<Solicitud_Asesoria> solicitudes = daoSolicitud.empleadoAsesoria(empleado.getId());
-            request.setAttribute("solicitudes", solicitudes);
-            
-            redirect = request.getRequestDispatcher("views/profesor/solicitud.jsp");
-            redirect.forward(request, response);
-       
-        }else if(action.equalsIgnoreCase("rechazarAsesoria")){
-            int id_solicitud = Integer.parseInt(request.getParameter("id_solicitud"));
-            daoSolicitud.rechazarAsesoria(id_solicitud);
-            
-            redirect = request.getRequestDispatcher("views/profesor/solicitud.jsp");
-            redirect.forward(request, response);
-        }
-
+        String correoDestino = request.getParameter("correo");
+        String mensaje = request.getParameter("mensaje");
+        Correo e = new Correo();
+        e.enviarMail(correoDestino, mensaje);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -88,6 +51,7 @@ public class SolicitudServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+       
     }
 
     /**
