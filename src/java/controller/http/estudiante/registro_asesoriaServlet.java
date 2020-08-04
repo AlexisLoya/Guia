@@ -7,7 +7,9 @@ package controller.http.estudiante;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,23 +58,103 @@ public class registro_asesoriaServlet extends HttpServlet {
         Estudiante estudiante = (Estudiante) sesionUsuario.getAttribute("estudiante");
         DaoMateria daoMateria = new DaoMateria();
         DaoEmpleado daoEmpleado = new DaoEmpleado();
-        int id_materia = 0;
-        int id_empleado = 0;
-        if (action == null) {
-            //Iterar materias 
 
-        } else if (action.equalsIgnoreCase("registrarAsesoria")) {
+        if (action == null) {
+            //Borrar atributos de la session
+            sesionUsuario.removeAttribute("empleados");
+            sesionUsuario.removeAttribute("selectMatera");
+            sesionUsuario.removeAttribute("disponibilidades");
+            sesionUsuario.removeAttribute("selectEmpleado");
+            sesionUsuario.removeAttribute("materias");
+
+            ArrayList<Materia> materias = daoMateria.findAll();
+            sesionUsuario.setAttribute("materias", materias);
+            redirect = request.getRequestDispatcher("views/alumno/registro_asesoria.jsp");
+            redirect.forward(request, response);
+
+        } else if (action.equals("formMaterias")) {
+            int id_materia = Integer.parseInt(request.getParameter("materia"));
+            ArrayList<EmpleadoMateria> empleados = daoMateria.findAllAsesorias(id_materia);
+            sesionUsuario.setAttribute("empleados", empleados);
+
+            Materia selectMatera = daoMateria.findOne(id_materia);
+            sesionUsuario.setAttribute("selectMatera", selectMatera);
+
+            //Redireacionar
+//            request.setAttribute("message", "empleados:" + empleados + "\nselectMatera: " + selectMatera);
+//            request.setAttribute("type", "success");
+            ArrayList<Materia> materias = daoMateria.findAll();
+            sesionUsuario.setAttribute("materias", materias);
+            redirect = request.getRequestDispatcher("views/alumno/registro_asesoria.jsp");
+            redirect.forward(request, response);
+
+        } else if (action.equals("formEmpleados")) {
+            int id_materia = Integer.parseInt(request.getParameter("materia"));
+            int id_empleado = Integer.parseInt(request.getParameter("empleado"));
+
+            ArrayList<EmpleadoMateria> empleados = daoMateria.findAllAsesorias(id_materia);
+            sesionUsuario.setAttribute("empleados", empleados);
+
+            DaoDisponibilidad daoDisponibilidad = new DaoDisponibilidad();
+            ArrayList<Disponibilidad> disponibilidades = daoDisponibilidad.findEmpleado(id_empleado);
+            sesionUsuario.setAttribute("disponibilidades", disponibilidades);
+
+            Empleado selectEmpleado = daoEmpleado.findOne(id_empleado);
+            sesionUsuario.setAttribute("selectEmpleado", selectEmpleado);
+
+            ArrayList<Materia> materias = daoMateria.findAll();
+            sesionUsuario.setAttribute("materias", materias);
+
+            //Redireacionar
+//            request.setAttribute("message", "llega! id_empleado: " + id_empleado + "|id_materia: " + id_materia + "|disponibilidades: " + disponibilidades);
+//            request.setAttribute("type", "success");
+            redirect = request.getRequestDispatcher("views/alumno/disponibilidad_asesoria.jsp");
+            redirect.forward(request, response);
+
+        } else if (action.equalsIgnoreCase("disponibilidad")) {
+
             //Tomar los paramentros
-            String empleado = request.getParameter("empleado");
-            String materia = request.getParameter("materia");
-            String horario = request.getParameter("horario");
+            int id_materia = Integer.parseInt(request.getParameter("materia"));
+            int id_empleado = Integer.parseInt(request.getParameter("empleado"));
+            int id_horario = Integer.parseInt(request.getParameter("disponibilidad"));
+            int status = 2;
             String tema = request.getParameter("tema");
 
             //Objetos necesarios
-            DaoEstudiante daoEstudiante = new DaoEstudiante();
             DaoSolicitud_Asesoria daoAsesoria = new DaoSolicitud_Asesoria();
+            DaoDisponibilidad daoDisponibilidad = new DaoDisponibilidad();
             // Construir la asesoría 
-            Solicitud_Asesoria solicitud = new Solicitud_Asesoria(0, daoEmpleado.findOne(Integer.parseInt(empleado)), daoMateria.findOne(Integer.parseInt(materia)), tema, estudiante, daoAsesoria.fechaActual(), 1);
+            String fecha = daoDisponibilidad.findOne(id_horario).getDia().getNombre() + "";
+            int add = 0;
+            switch (fecha) {
+                case "Lunes":
+                    add = 1;
+                    break;
+                case "Martes":
+                    add = 2;
+                    break;
+                case "Miercoles":
+                    add = 3;
+                    break;
+                case "Jueves":
+                    add = 4;
+                    break;
+                case "Viernes":
+                    add = 5;
+                    break;
+                case "Sabado":
+                    add = 5;
+                    break;
+                case "Domingo":
+                    add = 7;
+                    break;
+            }
+            Calendar c1 = Calendar.getInstance();
+            c1.add(Calendar.DAY_OF_WEEK, add);
+            java.sql.Date date = new Date(c1.getTimeInMillis());
+
+            Solicitud_Asesoria solicitud = new Solicitud_Asesoria(0, daoEmpleado.findOne(id_empleado), daoMateria.findOne(id_materia), tema, estudiante, date + "", 1, status);
+
             //Añadirla a la base de datos 
             daoAsesoria.add(solicitud);
 
@@ -80,37 +162,9 @@ public class registro_asesoriaServlet extends HttpServlet {
             request.setAttribute("message", "asesoría registrada correctamente!");
             request.setAttribute("type", "success");
 
-        } else if (action.equals("formMaterias")) {
-            id_materia = Integer.parseInt(request.getParameter("materia"));
-            ArrayList<EmpleadoMateria> empleados = daoMateria.findAllAsesorias(id_materia);
-            request.setAttribute("empleados", empleados);
-
-            Materia selectMatera = daoMateria.findOne(id_materia);
-            request.setAttribute("selectMatera", selectMatera);
-
-        } else if (action.equals("formEmpleados")) {
-
-            id_empleado = Integer.parseInt(request.getParameter("empleado"));
-            id_materia = Integer.parseInt(request.getParameter("id_materia"));
-            
-            ArrayList<EmpleadoMateria> empleados = daoMateria.findAllAsesorias(id_materia);
-            request.getSession().setAttribute("empleados", empleados);
-            DaoDisponibilidad daoDisponibilidad = new DaoDisponibilidad();
-            ArrayList<Disponibilidad> disponibilidades = daoDisponibilidad.findEmpleado(id_empleado);
-            request.getSession().setAttribute("disponibilidades", disponibilidades);
-
-            Empleado selectEmpleado = daoEmpleado.findOne(id_empleado);
-           request.getSession().setAttribute("selectEmpleado", selectEmpleado);
-           
-            //Redireacionar
-            request.setAttribute("message", "xd!");
-            request.setAttribute("type", "success");
-
+            redirect = request.getRequestDispatcher("/asesorias_pendientes");
+            redirect.forward(request, response);
         }
-        ArrayList<Materia> materias = daoMateria.findAll();
-        request.getSession().setAttribute("materias", materias);
-        redirect = request.getRequestDispatcher("views/alumno/registro_asesoria.jsp");
-        redirect.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

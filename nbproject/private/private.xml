@@ -3,12 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/materia/DaoMateria.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/materiaRepository.properties</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/controller/http/estudiante/registro_asesoriaServlet.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/disponibilidad/DaoDisponibilidad.java</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/profesor/agenda.jsp</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/correo/Correo.java</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/controller/http/empleado/SolicitudServlet.java</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/profesor/materias.jsp</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/profesor/canalizar.jsp</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/profesor/solicitud.jsp</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/clave/DaoClave.java</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/profesor/encuestas.jsp</file>
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/profesor/disponibilidad.jsp</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/alumno/registro_asesoria.jsp</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/profesor/perfil.jsp</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/solicitud_asesoria/DaoSolicitud_Asesoria.java</file>
         </group>
     </open-files>
 </project-private>
