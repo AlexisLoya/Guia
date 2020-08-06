@@ -163,7 +163,8 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado> {
 
     public static void main(String[] args) {
         DaoEmpleado daoEmpleado = new DaoEmpleado();
-        Empleado em = null;
-        System.out.println(em = daoEmpleado.findOne(daoEmpleado.autentificacion("marionava@utez.edu.mx","M123")));
+        for (Empleado empleado : daoEmpleado.findAll()) {
+            System.out.println(empleado);
+        }
     }
 }

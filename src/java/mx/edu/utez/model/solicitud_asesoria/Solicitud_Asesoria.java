@@ -5,6 +5,7 @@
  */
 package mx.edu.utez.model.solicitud_asesoria;
 
+import java.util.ArrayList;
 import mx.edu.utez.model.empleado.Empleado;
 import mx.edu.utez.model.estudiante.Estudiante;
 import mx.edu.utez.model.materia.Materia;
@@ -18,21 +19,23 @@ public class Solicitud_Asesoria {
     private Empleado empleado;
     private Materia materia;
     private String tema;
-    private Estudiante estudiante;
+    private ArrayList<Estudiante> estudiante;
     private String fecha;
+    private String hora;
     private int total;
     private int status;
 
     public Solicitud_Asesoria() {
     }
 
-    public Solicitud_Asesoria(int id, Empleado empleado, Materia materia, String tema, Estudiante estudiante, String fecha, int total, int status) {
+    public Solicitud_Asesoria(int id, Empleado empleado, Materia materia, String tema, ArrayList<Estudiante> estudiante, String fecha, String hora, int total, int status) {
         this.id = id;
         this.empleado = empleado;
         this.materia = materia;
         this.tema = tema;
         this.estudiante = estudiante;
         this.fecha = fecha;
+        this.hora = hora;
         this.total = total;
         this.status = status;
     }
@@ -69,11 +72,11 @@ public class Solicitud_Asesoria {
         this.tema = tema;
     }
 
-    public Estudiante getEstudiante() {
+    public ArrayList<Estudiante> getEstudiante() {
         return estudiante;
     }
 
-    public void setEstudiante(Estudiante estudiante) {
+    public void setEstudiante(ArrayList<Estudiante> estudiante) {
         this.estudiante = estudiante;
     }
 
@@ -83,6 +86,14 @@ public class Solicitud_Asesoria {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
     public int getTotal() {
@@ -103,8 +114,6 @@ public class Solicitud_Asesoria {
 
     @Override
     public String toString() {
-        return "Solicitud_Asesoria{" + "id=" + id + ", empleado=" + empleado + ", materia=" + materia + ", tema=" + tema + ", estudiante=" + estudiante + ", fecha=" + fecha + ", total=" + total + ", status=" + status + '}';
+        return "Solicitud_Asesoria{" + "id=" + id + ", empleado=" + empleado + ", materia=" + materia + ", tema=" + tema + ", estudiante=" + estudiante + ", fecha=" + fecha + ", hora=" + hora + ", total=" + total + ", status=" + status + '}';
     }
-
-    
 }

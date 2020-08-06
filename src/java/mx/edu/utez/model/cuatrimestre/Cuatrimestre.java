@@ -16,14 +16,16 @@ public class Cuatrimestre {
     private int id;
     private Periodo periodo;    
     private Anio anio;
+    private int status;
 
     public Cuatrimestre() {
     }
 
-    public Cuatrimestre(int id, Periodo periodo, Anio anio) {
+    public Cuatrimestre(int id, Periodo periodo, Anio anio, int status) {
         this.id = id;
         this.periodo = periodo;
         this.anio = anio;
+        this.status = status;
     }
 
     public int getId() {
@@ -50,9 +52,19 @@ public class Cuatrimestre {
         this.anio = anio;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Cuatrimestre{" + "id=" + id + ", periodo=" + periodo + ", anio=" + anio + '}';
+        return "Cuatrimestre{" + "id=" + id + ", periodo=" + periodo + ", anio=" + anio + ", status=" + status + '}';
     }
+
+    
     
 }

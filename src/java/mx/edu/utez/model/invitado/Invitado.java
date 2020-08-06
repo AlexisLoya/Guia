@@ -49,6 +49,11 @@ public class Invitado {
     public void setEstudiante(Estudiante estudiante) {
         this.estudiante = estudiante;
     }
+
+    @Override
+    public String toString() {
+        return "Invitado{" + "id=" + id + ", solicitud_asesoria=" + solicitud_asesoria + ", estudiante=" + estudiante + '}';
+    }
     
     
 }

@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import mx.edu.utez.model.Dao;
 import mx.edu.utez.model.DaoInterface;
 import mx.edu.utez.model.disponibilidad.DaoDisponibilidad;
+import mx.edu.utez.model.disponibilidad.Disponibilidad;
 import mx.edu.utez.model.empleado.DaoEmpleado;
 import mx.edu.utez.model.estudiante.DaoEstudiante;
 import mx.edu.utez.model.estudiante.Estudiante;
@@ -36,8 +37,8 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
             preparedStatement.setInt(1, obj.getEmpleado().getId());
             preparedStatement.setInt(2, obj.getMateria().getId());
             preparedStatement.setString(3, obj.getTema());
-            preparedStatement.setInt(4, obj.getEstudiante().getId());
-            preparedStatement.setString(5, obj.getFecha());
+            preparedStatement.setString(4, obj.getFecha());
+            preparedStatement.setString(5, obj.getHora());
             preparedStatement.setInt(6, obj.getTotal());
             preparedStatement.setInt(7, obj.getStatus());
             preparedStatement.executeUpdate();
@@ -89,21 +90,23 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
         try {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                DaoEmpleado daoEmpleado = new DaoEmpleado();
-                DaoMateria daoMateria = new DaoMateria();
-                DaoEstudiante daoEstudiante = new DaoEstudiante();
-                asesoria = new Solicitud_Asesoria(
-                        resultSet.getInt("id_solicitud_asesoria"),
-                        daoEmpleado.findOne(resultSet.getInt("id_empleado")),
-                        daoMateria.findOne(resultSet.getInt("id_materia")),
-                        resultSet.getString("tema"),
-                        daoEstudiante.findOne(resultSet.getInt("id_estudiante")),
-                        resultSet.getString("fecha"),
-                        resultSet.getInt("total"),
-                        resultSet.getInt("status")
-                );
+            asesoria = new Solicitud_Asesoria();
+            DaoEmpleado daoEmpleado = new DaoEmpleado();
+            DaoMateria daoMateria = new DaoMateria();
+            DaoEstudiante daoEstudiante = new DaoEstudiante();
+            ArrayList<Estudiante> estudiantes = new ArrayList<>();
+            while (resultSet.next()) {
+                asesoria.setId(resultSet.getInt("id_solicitud_asesoria"));
+                asesoria.setEmpleado(daoEmpleado.findOne(resultSet.getInt("id_empleado")));
+                asesoria.setMateria(daoMateria.findOne(resultSet.getInt("id_materia")));
+                asesoria.setTema(resultSet.getString("tema"));
+                asesoria.setFecha(resultSet.getString("fecha"));
+                asesoria.setHora(resultSet.getString("hora"));
+                asesoria.setTotal(resultSet.getInt("total"));
+                asesoria.setStatus(resultSet.getInt("status"));
+                estudiantes.add(daoEstudiante.findOne(resultSet.getInt("id_estudiante")));
             }
+            asesoria.setEstudiante(estudiantes);
         } catch (SQLException ex) {
             Logger.getLogger(DaoSolicitud_Asesoria.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -115,9 +118,7 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
     public String fechaActual() {
 
         Calendar year = Calendar.getInstance();
-        Date fecha;
-        fecha = new Date(year.getTimeInMillis());
-
+        Date fecha = new Date(year.getTimeInMillis());
         java.util.Date date = new java.util.Date();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
@@ -142,7 +143,6 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
         return list;
     }
 
-    
     public ArrayList<Solicitud_Asesoria> empleadoAsesoria(int id) {
         mySQLRepository(REPOSITORY, "solicitud_asesoriaEmpleado");
         ArrayList<Solicitud_Asesoria> list = new ArrayList();
@@ -160,8 +160,7 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
         }
         return list;
     }
-    
-    
+
     public ArrayList<Solicitud_Asesoria> empleadoShowAsesoria(int id) {
         mySQLRepository(REPOSITORY, "solicitud_asesoriaShowEmpleado");
         ArrayList<Solicitud_Asesoria> list = new ArrayList();
@@ -193,8 +192,7 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
         }
         return status;
     }
-    
-    
+
     public boolean rechazarAsesoria(int id) {
         mySQLRepository(REPOSITORY, "solicitud_asesoriaRechazada");
         try {
@@ -210,9 +208,14 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
     }
 
     public static void main(String[] args) {
-        DaoSolicitud_Asesoria dao = new DaoSolicitud_Asesoria();
-        for (Solicitud_Asesoria solicitud_Asesoria : dao.empleadoShowAsesoria(5)) {
-            System.out.println(solicitud_Asesoria);
-        }
+        DaoSolicitud_Asesoria daoAsesoria = new DaoSolicitud_Asesoria();
+
+//        Añadirla a la base de datos 
+       Solicitud_Asesoria object = daoAsesoria.findOne(1);
+            System.out.println(object);
+        
+       
     }
+    
+
 }

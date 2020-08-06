@@ -23,6 +23,8 @@ import mx.edu.utez.model.empleado.DaoEmpleado;
 import mx.edu.utez.model.empleado.Empleado;
 import mx.edu.utez.model.estudiante.DaoEstudiante;
 import mx.edu.utez.model.estudiante.Estudiante;
+import mx.edu.utez.model.invitado.DaoInvitado;
+import mx.edu.utez.model.invitado.Invitado;
 import mx.edu.utez.model.materia.DaoMateria;
 import mx.edu.utez.model.materia.EmpleadoMateria;
 import mx.edu.utez.model.materia.Materia;
@@ -123,8 +125,10 @@ public class registro_asesoriaServlet extends HttpServlet {
             //Objetos necesarios
             DaoSolicitud_Asesoria daoAsesoria = new DaoSolicitud_Asesoria();
             DaoDisponibilidad daoDisponibilidad = new DaoDisponibilidad();
+            Disponibilidad disponibilidad = daoDisponibilidad.findOne(id_horario);
             // Construir la asesoría 
-            String fecha = daoDisponibilidad.findOne(id_horario).getDia().getNombre() + "";
+            String fecha = disponibilidad.getDia().getNombre() + "";
+            String hora = disponibilidad.getRango_hora().getInicio() + " - " + disponibilidad.getRango_hora().getFin();
             int add = 0;
             switch (fecha) {
                 case "Lunes":
@@ -152,12 +156,15 @@ public class registro_asesoriaServlet extends HttpServlet {
             Calendar c1 = Calendar.getInstance();
             c1.add(Calendar.DAY_OF_WEEK, add);
             java.sql.Date date = new Date(c1.getTimeInMillis());
-
-            Solicitud_Asesoria solicitud = new Solicitud_Asesoria(0, daoEmpleado.findOne(id_empleado), daoMateria.findOne(id_materia), tema, estudiante, date + "", 1, status);
+            ArrayList<Estudiante> estudiantes = new ArrayList();
+            estudiantes.add(estudiante);
+            Solicitud_Asesoria solicitud = new Solicitud_Asesoria(0, daoEmpleado.findOne(id_empleado), daoMateria.findOne(id_materia), tema, estudiantes,date + "", hora, 1, status);
 
             //Añadirla a la base de datos 
             daoAsesoria.add(solicitud);
-
+            Invitado invitado = new Invitado(0,solicitud, estudiante);
+            DaoInvitado daoInvitado = new DaoInvitado();
+            daoInvitado.add(invitado);
             //Redireacionar
             request.setAttribute("message", "asesoría registrada correctamente!");
             request.setAttribute("type", "success");

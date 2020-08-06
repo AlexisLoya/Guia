@@ -28,6 +28,7 @@ public class DaoCuatrimestre extends Dao implements DaoInterface<Cuatrimestre> {
         try {
             preparedStatement.setInt(1, obj.getPeriodo().getId());
             preparedStatement.setInt(2, obj.getAnio().getId());
+            preparedStatement.setInt(3, obj.getStatus());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -81,7 +82,8 @@ public class DaoCuatrimestre extends Dao implements DaoInterface<Cuatrimestre> {
                 cuatrimestre = new Cuatrimestre(
                         resultSet.getInt("id_cuatrimestre"),
                         daoPeriodo.findOne(resultSet.getInt("id_periodo")),
-                        daoAnio.findOne(resultSet.getInt("id_anio")));
+                        daoAnio.findOne(resultSet.getInt("id_anio")),
+                        resultSet.getInt("status"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoCuatrimestre.class.getName()).log(Level.SEVERE, null, ex);

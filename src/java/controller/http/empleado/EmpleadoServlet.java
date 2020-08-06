@@ -45,13 +45,14 @@ public class EmpleadoServlet extends HttpServlet {
         Usuario usuario = (Usuario) sesionUsuario.getAttribute("usuario");
         Empleado empleado = (Empleado) sesionUsuario.getAttribute("empleado");
         DaoSolicitud_Asesoria daoSolicitud = new DaoSolicitud_Asesoria();
-        if(action == null){
-            ArrayList<Solicitud_Asesoria> aceptadas = daoSolicitud.empleadoShowAsesoria(empleado.getId());
-            request.setAttribute("aceptadas", aceptadas);
+        if (action == null) {
             
-        }else if(action.equalsIgnoreCase("")){
-            
+
+        } else if (action.equalsIgnoreCase("")) {
+
         }
+        ArrayList<Solicitud_Asesoria> aceptadas = daoSolicitud.empleadoShowAsesoria(empleado.getId());
+        request.setAttribute("aceptadas", aceptadas);
         redirect = request.getRequestDispatcher("views/profesor/agenda.jsp");
         redirect.forward(request, response);
     }

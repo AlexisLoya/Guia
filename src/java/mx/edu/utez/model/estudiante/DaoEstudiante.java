@@ -134,6 +134,35 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
         }
         return estudiante;
     }
+    
+    public Estudiante findOneMatricula(String matricula) {
+        //importante
+        mySQLRepository(REPOSITORY, "estudianteFindMatricula");
+        Estudiante estudiante = null;
+        try {
+            preparedStatement.setString(1, matricula);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                estudiante = new Estudiante(
+                        resultSet.getInt("id_estudiante"),
+                        new Persona(
+                                resultSet.getInt("id_persona"),
+                                resultSet.getString("nombre"),
+                                resultSet.getString("paterno"),
+                                resultSet.getString("materno"),
+                                resultSet.getString("sexo"),
+                                resultSet.getInt("status")),
+                        resultSet.getString("matricula"),
+                        resultSet.getString("correo"),
+                        "");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return estudiante;
+    }
 
     public int autentificacion(String email, String password) {
         //consulta
