@@ -169,7 +169,7 @@ public class registro_asesoriaServlet extends HttpServlet {
             request.setAttribute("message", "asesoría registrada correctamente!");
             request.setAttribute("type", "success");
 
-            redirect = request.getRequestDispatcher("/asesorias_pendientes");
+            redirect = request.getRequestDispatcher("views/alumno/disponibilidad_asesoria.jsp");
             redirect.forward(request, response);
         }
     }

@@ -15,6 +15,7 @@ import mx.edu.utez.model.estudiante.DaoEstudiante;
 import mx.edu.utez.model.estudiante.Estudiante;
 import mx.edu.utez.model.materia.DaoMateria;
 import mx.edu.utez.model.solicitud_asesoria.DaoSolicitud_Asesoria;
+import mx.edu.utez.model.solicitud_asesoria.Solicitud_Asesoria;
 
 /**
  *
@@ -143,8 +144,7 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
 //        }
 
         DaoInvitado daoInvitado = new DaoInvitado();
-        if (daoInvitado.estudianteRepetido(1, 3)) {
-            System.out.println("dddddd");
-        }
+
+        System.out.println(daoInvitado.add(new Invitado(0,new DaoSolicitud_Asesoria().findOne(1), new DaoEstudiante().findOne(2))));
     }
 }

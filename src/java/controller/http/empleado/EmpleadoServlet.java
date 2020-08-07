@@ -46,9 +46,8 @@ public class EmpleadoServlet extends HttpServlet {
         Empleado empleado = (Empleado) sesionUsuario.getAttribute("empleado");
         DaoSolicitud_Asesoria daoSolicitud = new DaoSolicitud_Asesoria();
         if (action == null) {
-            
 
-        } else if (action.equalsIgnoreCase("")) {
+        } else {
 
         }
         ArrayList<Solicitud_Asesoria> aceptadas = daoSolicitud.empleadoShowAsesoria(empleado.getId());

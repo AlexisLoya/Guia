@@ -3,22 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mx.edu.utez.model.correo;
+package controller.http.empleado;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import mx.edu.utez.model.empleado.Empleado;
+import mx.edu.utez.model.estudiante.Estudiante;
+import mx.edu.utez.model.solicitud_asesoria.DaoSolicitud_Asesoria;
+import mx.edu.utez.model.solicitud_asesoria.Solicitud_Asesoria;
+import mx.edu.utez.model.usuario.Usuario;
 
 /**
  *
  * @author alexl
  */
-@WebServlet(name = "CorreoServlet", urlPatterns = {"/enviarCorreo"})
-public class CorreoServlet extends HttpServlet {
+@WebServlet(name = "PaseLista", urlPatterns = {"/Asistencia"})
+public class PaseLista extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,10 +40,25 @@ public class CorreoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String correoDestino = request.getParameter("correo");
-        String mensaje = request.getParameter("mensaje");
-        Correo e = new Correo();
-        e.enviarMail(correoDestino, mensaje);
+        RequestDispatcher redirect = null;
+        String action = request.getParameter("action");
+
+        HttpSession sesionUsuario = request.getSession(true);
+        Usuario usuario = (Usuario) sesionUsuario.getAttribute("usuario");
+        Empleado empleado = (Empleado) sesionUsuario.getAttribute("empleado");
+        DaoSolicitud_Asesoria daoSolicitud = new DaoSolicitud_Asesoria();
+        if (action == null) {
+
+        }
+        int id_asesoria = Integer.parseInt(request.getParameter("id_asesoria"));
+        Solicitud_Asesoria asesoria = daoSolicitud.findOne(id_asesoria);
+        request.setAttribute("asesoria", asesoria);
+
+        ArrayList<Estudiante> estudiantes = asesoria.getEstudiante();
+        request.setAttribute("estudiantes", estudiantes);
+        
+        redirect = request.getRequestDispatcher("views/profesor/pase_lista.jsp");
+        redirect.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -51,7 +74,6 @@ public class CorreoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-       
     }
 
     /**

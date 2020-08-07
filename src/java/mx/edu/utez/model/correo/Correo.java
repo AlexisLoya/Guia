@@ -37,10 +37,9 @@ public class Correo {
      */
     public static String email = "GUIA.Integradora123@gmail.com";
     public static String contrasena = "GUIA123-Integradora";
+    public String asunto = "";
 
-    String asunto = "xd";
-
-    public void enviarMail(String correoDestino, String mensaje) {
+    public void enviarMail(String correoDestino, String mensaje, String asunto) {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -77,10 +76,10 @@ public class Correo {
 
     public static void main(String[] args) {
         // TODO code application logic here
-        String correoDestino = null;
-        String mensaje = null;
-        Correo e = new Correo();
-        e.enviarMail(correoDestino, mensaje);
+//        String correoDestino = null;
+//        String mensaje = null;
+//        Correo e = new Correo();
+//        e.enviarMail("20193tn151@utez.edu.mx", "llego???","asesoría cancelada");
 
 
     }

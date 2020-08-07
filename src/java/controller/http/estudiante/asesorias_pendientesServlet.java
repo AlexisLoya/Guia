@@ -55,7 +55,6 @@ public class asesorias_pendientesServlet extends HttpServlet {
         estudiante = (Estudiante) sesionUsuario.getAttribute("estudiante");
         DaoEstudiante dao = new DaoEstudiante();
         if (action == null) {
-
             //Iterar Asesorias
             DaoSolicitud_Asesoria daoAsesoria = new DaoSolicitud_Asesoria();
             DaoInvitado daoInvitado = new DaoInvitado();
@@ -82,11 +81,9 @@ public class asesorias_pendientesServlet extends HttpServlet {
                     request.setAttribute("message", "La persona con la matricula: " + matricula + " ha sido agregada" +  estudianteAdd.getId());
                     request.setAttribute("type", "success");
                 }
-
             } else {
                 request.setAttribute("message", "No se encontró a nadie con la matricula: " + matricula);
                 request.setAttribute("type", "warning");
-
             }
             ArrayList<Invitado> asesorias = daoInvitado.estudiantefindAll(estudiante.getId());
             request.setAttribute("asesorias", asesorias);
