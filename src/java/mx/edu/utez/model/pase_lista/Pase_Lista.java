@@ -14,16 +14,15 @@ import mx.edu.utez.model.solicitud_asesoria.Solicitud_Asesoria;
  */
 public class Pase_Lista {
     private int id;
-    private Solicitud_Asesoria solicitud_asesoria;
     private Invitado invitado;
     private int asistencia;
 
     public Pase_Lista() {
+        
     }
 
-    public Pase_Lista(int id, Solicitud_Asesoria solicitud_asesoria, Invitado invitado, int asistencia) {
+    public Pase_Lista(int id, Invitado invitado, int asistencia) {
         this.id = id;
-        this.solicitud_asesoria = solicitud_asesoria;
         this.invitado = invitado;
         this.asistencia = asistencia;
     }
@@ -34,14 +33,6 @@ public class Pase_Lista {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Solicitud_Asesoria getSolicitud_asesoria() {
-        return solicitud_asesoria;
-    }
-
-    public void setSolicitud_asesoria(Solicitud_Asesoria solicitud_asesoria) {
-        this.solicitud_asesoria = solicitud_asesoria;
     }
 
     public Invitado getInvitado() {
@@ -59,6 +50,13 @@ public class Pase_Lista {
     public void setAsistencia(int asistencia) {
         this.asistencia = asistencia;
     }
+
+    @Override
+    public String toString() {
+        return "Pase_Lista{" + "id=" + id + ", invitado=" + invitado + ", asistencia=" + asistencia + '}';
+    }
+
+    
     
     
     
