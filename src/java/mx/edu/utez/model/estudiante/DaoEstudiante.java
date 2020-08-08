@@ -199,6 +199,23 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
         }
         return false;
     }
+    
+    public boolean checkEmail(String email) {
+        //consulta
+        mySQLRepository(REPOSITORY, "checkEmail");
+        try {
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         DaoEstudiante estudianteRepo = new DaoEstudiante();

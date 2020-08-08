@@ -31,6 +31,7 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
         try {
             preparedStatement.setInt(1, obj.getSolicitud_asesoria().getId());
             preparedStatement.setInt(2, obj.getEstudiante().getId());
+            preparedStatement.setInt(3, obj.getAsistencia());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -51,7 +52,25 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
 
     @Override
     public boolean update(Invitado obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        mySQLRepository(REPOSITORY, "invitadoUpdate");
+        try {
+            if (obj.getAsistencia() == 1) {
+                int value= 0;
+                preparedStatement.setInt(1,value);
+                preparedStatement.setInt(2, obj.getEstudiante().getId());
+                status = preparedStatement.executeUpdate() == 0;
+            } else if(obj.getAsistencia() == 0) {
+                int value= 1;
+                preparedStatement.setInt(1,value);
+                preparedStatement.setInt(2, obj.getEstudiante().getId());
+                status = preparedStatement.executeUpdate() == 1;
+
+            }
+        } catch (SQLException ex) {
+            status = false;
+            Logger.getLogger(DaoInvitado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
     }
 
     @Override
@@ -85,7 +104,8 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
                         new DaoSolicitud_Asesoria().findOne(
                                 resultSet.getInt("id_solicitud_asesoria")),
                         new DaoEstudiante().findOne(resultSet.getInt(
-                                "id_estudiante"))
+                                "id_estudiante")),
+                        resultSet.getInt("asistencia")
                 );
             }
         } catch (SQLException ex) {
@@ -97,7 +117,7 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
     }
 
     public ArrayList<Invitado> estudiantefindAll(int id) {
-        mySQLRepository(REPOSITORY, "invitadoFindEstudiante");
+        mySQLRepository(REPOSITORY, "invitadoFindAllAsesoria");
         ArrayList<Invitado> list = new ArrayList<>();
         try {
             preparedStatement.setInt(1, id);
@@ -144,7 +164,11 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
 //        }
 
         DaoInvitado daoInvitado = new DaoInvitado();
+        System.out.println(new DaoEstudiante().findOne(3));
+        
+        System.out.println(new DaoInvitado().findOne(1));
+        System.out.println(new DaoInvitado().update(new DaoInvitado().findOne(1)));
+        
 
-        System.out.println(daoInvitado.add(new Invitado(0,new DaoSolicitud_Asesoria().findOne(1), new DaoEstudiante().findOne(2))));
     }
 }

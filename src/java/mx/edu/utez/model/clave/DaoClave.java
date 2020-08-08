@@ -174,11 +174,15 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
         return false;
     }
 
-    public long dateCaducidad(int cantidad) {
-        int numDias = (cantidad);
-        Calendar fecha = Calendar.getInstance();
-        fecha.add(Calendar.DATE, numDias);
-        return fecha.getTimeInMillis();
+    public String dateCaducidad(int cantidad) {
+      
+        Calendar year = Calendar.getInstance();
+        year.add(Calendar.DATE, cantidad);
+        Date fecha = new Date(year.getTimeInMillis());
+        java.util.Date date = new java.util.Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        return "" + sdf.format(fecha);
     }
 
     public static void main(String[] args) {
@@ -187,10 +191,10 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
         Calendar fecha = Calendar.getInstance();
         fecha.set(Calendar.MONTH, Calendar.FEBRUARY);
         Clave clave = new Clave(2, dao.generator(7), 1, "2020-08-4 10:33:44");
-        dao.add(clave);
+
         
-//        System.out.println(dao.findOne(2));
-//        System.out.println("Resultado: "+dao.checkClave(clave));
+        System.out.println(dao.dateCaducidad(1));
+        
 //        
     }
 

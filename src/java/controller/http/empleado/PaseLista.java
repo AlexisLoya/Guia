@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import mx.edu.utez.model.empleado.Empleado;
 import mx.edu.utez.model.estudiante.Estudiante;
+import mx.edu.utez.model.invitado.DaoInvitado;
+import mx.edu.utez.model.invitado.Invitado;
 import mx.edu.utez.model.pase_lista.DaoPase_Lista;
 import mx.edu.utez.model.pase_lista.Pase_Lista;
 import mx.edu.utez.model.solicitud_asesoria.DaoSolicitud_Asesoria;
@@ -51,6 +53,20 @@ public class PaseLista extends HttpServlet {
         DaoSolicitud_Asesoria daoSolicitud = new DaoSolicitud_Asesoria();
         if (action == null) {
 
+        } else if (action.equalsIgnoreCase("asistencia")) {
+            int id_estudiante = Integer.parseInt(request.getParameter("id_estudiante"));
+            int id_asesoria = Integer.parseInt(request.getParameter("id_asesoria"));
+
+            Solicitud_Asesoria asesoria = daoSolicitud.findOne(id_asesoria);
+            request.setAttribute("asesoria", asesoria);
+
+            DaoInvitado daoInvitado = new DaoInvitado();
+            ArrayList<Invitado> invitados = daoInvitado.estudiantefindAll(id_asesoria);
+            request.setAttribute("invitados", invitados);
+
+            redirect = request.getRequestDispatcher("views/profesor/pase_lista.jsp");
+            redirect.forward(request, response);
+
         } else if (action.equalsIgnoreCase("asistenciaAll")) {
             int id_asesoria = Integer.parseInt(request.getParameter("id_asesoria"));
             Solicitud_Asesoria asesoria = daoSolicitud.findOne(id_asesoria);
@@ -58,10 +74,10 @@ public class PaseLista extends HttpServlet {
 
             ArrayList<Estudiante> estudiantes = asesoria.getEstudiante();
             request.setAttribute("estudiantes", estudiantes);
-            
+
             DaoPase_Lista daoPase_Lista = new DaoPase_Lista();
             for (Estudiante estudiante : estudiantes) {
-               
+
             }
         }
 
@@ -69,8 +85,9 @@ public class PaseLista extends HttpServlet {
         Solicitud_Asesoria asesoria = daoSolicitud.findOne(id_asesoria);
         request.setAttribute("asesoria", asesoria);
 
-        ArrayList<Estudiante> estudiantes = asesoria.getEstudiante();
-        request.setAttribute("estudiantes", estudiantes);
+        DaoInvitado daoInvitado = new DaoInvitado();
+        ArrayList<Invitado> invitados = daoInvitado.estudiantefindAll(id_asesoria);
+        request.setAttribute("invitados", invitados);
 
         redirect = request.getRequestDispatcher("views/profesor/pase_lista.jsp");
         redirect.forward(request, response);

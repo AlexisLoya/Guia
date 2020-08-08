@@ -32,16 +32,16 @@
                                 <div class="col-lg-6">
                                     <div class="p-5">
                                         <div class="text-center">
-                                            
-                                                <c:if test="${message != null}">
-                                                    <div class="alert alert-warning mr-3 ml-3" role="alert">
-                                                        ${message}
-                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                </c:if>
-                                            
+
+                                            <c:if test="${message != null}">
+                                                <div class="alert alert-warning mr-3 ml-3" role="alert">
+                                                    ${message}
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            </c:if>
+                                            <a href=""><img src="<%=path%>/assets/img/logoGuiaV2.png" width="40" height="40" class="d-inline-block align-top mt-0 "></a>
                                             <h4 class="text-dark mb-4">Inicio de Sesión</h4>
 
                                         </div>
@@ -56,7 +56,7 @@
                                             </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Iniciar Sesión</button>
 
                                         </form>
-                                        <div class="text-center"><a class="small" href="">¿Olvidaste tu contraseña?</a></div>
+                                        <div class="text-center"><a class="small" href="<%=path%>/Recuperacion">¿Olvidaste tu contraseña?</a></div>
                                         <div class="text-center"><a class="small" href="<%=path%>/Registro">Registrate en la Aplicación</a></div>
                                         <div class="text-center"><a class="small" href="<%=path%>/Registro-E">Registrate en la Aplicación</a></div>
                                     </div>

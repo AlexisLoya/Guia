@@ -1,7 +1,6 @@
 //////////////////////Docente//////////////////////
 
 //Validaciones para el registro de un alumno
-
 function registroDocente(string){ 
     let nombre = document.getElementById("nombre").value;
     let paterno = document.getElementById("paterno").value;
@@ -86,6 +85,59 @@ function check(){//Valida la pagina cuando se seleccione el sexo
     }
 }
 
+//Funcion que valida si el correo es institucional y contraseñas iguales
+async function enviarRegistro(){
+	console.log("Validando...");
+	const result = await validar();
+	if (result=='todoBien') {
+		document.getElementById("formularioRegisttrar").submit();
+	}else{
+		if(result=='correoInvalido'){
+            Swal.fire({
+                icon: 'error',
+                title: 'EL CORREO NO ES DE LA UTEZ',
+                text: 'Favor de colocar un Email valido',
+            })
+        }else{
+            if(result=='contrseniaInvalida'){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'LAS CONTRASEÑAS NO COINCIDEN',
+                    text: 'Asegurate de ingresar las contraseñas correctas',
+                })
+            }
+        }
+	}
+}
+function validar(){
+	return new Promise(resolve =>{
+
+        let contr = document.getElementById("password").value;
+        let contrarepeat = document.getElementById("password_repeat").value;
+
+		let correo = document.getElementById('email').value;
+        correo = correo.substring((correo.length-11),correo.length);
+
+		if (correo == "utez.edu.mx" && contr == contrarepeat) {
+			setTimeout(()=>{
+				resolve('todoBien');
+			},500);
+		}else{
+			if(correo != "utez.edu.mx"){
+                setTimeout(()=>{
+                    resolve('correoInvalido');
+                },500);
+            }else{
+                if(contr != contrarepeat){
+                    setTimeout(()=>{
+                        resolve('contrseniaInvalida');
+                    },500);
+                }
+            }
+		}
+	});
+}
+
 function aceptarAsesoria(){
     Swal.fire({
         icon: 'success',
@@ -118,9 +170,8 @@ function enviarRechazo(){
     }
 }
 
-//Activar campos del perfil del alumno
+//Activar campos del perfil del docente
 function activarInputDocente(){
-    document.getElementById("usernameDocente").disabled=false;
     document.getElementById("emailDocente").disabled=false;
     document.getElementById("nombreDocente").disabled=false;
     document.getElementById("aPeternoDocente").disabled=false;
@@ -132,8 +183,7 @@ function ValidarDocentePerfil(string){
     let out = '';
     //Se añaden las letras validas
     let filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890áÁéÉíÍóÓúÚ@. ';//Caracteres validos
-    
-    let usuario = document.getElementById("username").value;
+
     let mail = document.getElementById("email").value;
     let nombre = document.getElementById("nombre").value;
     let paterno = document.getElementById("aPaterno").value;
@@ -168,15 +218,31 @@ function ValidarDocentePerfil(string){
     return out;
 }
 
-//Activa los inputs del perfil del docente para modificarlos
-function activarInput(){
-    document.getElementById("username").disabled=false;
-    document.getElementById("email").disabled=false;
-    document.getElementById("nombre").disabled=false;
-    document.getElementById("aPaterno").disabled=false;
-    document.getElementById("aMaterno").disabled=false;
-    document.getElementById("aMaterno").disabled=false;
-    document.getElementById("sexo").disabled=false;
+function sexoValidar(){
+    let mail = document.getElementById("email").value;
+    let nombre = document.getElementById("nombre").value;
+    let paterno = document.getElementById("aPaterno").value;
+    let materno = document.getElementById("aMaterno").value;
+    let sexo = document.getElementById("sexo").value;
+
+    if(matricula.length>0 && mail.length>0 && nombre.length>0 && paterno.length>0 && materno.length>0 && sexo.length>0){
+        
+        document.getElementById("btn").disabled=false;
+
+        nombre = nombre.trim();
+        paterno = paterno.trim();
+        materno = materno.trim();
+        mail = mail.trim();
+
+        nombre = nombre[0].toUpperCase() + nombre.slice(1);
+        paterno = paterno[0].toUpperCase() + paterno.slice(1);
+        materno = materno[0].toUpperCase() + materno.slice(1);
+        sexo = sexo[0].toUpperCase() + sexo.slice(1);
+        mail = mail.toLowerCase();
+
+    }else{
+        document.getElementById("btn").disabled=true;
+    }
 }
 
 async function guardarPerfilDocente(){
@@ -302,3 +368,11 @@ function validarRecuperarContra(){
 		}
 	});
 }
+
+//<script src = "http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+//<script src = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+$(document).ready(function() {
+    function disablePrev() { window.history.forward() }
+    window.onload = disablePrev();
+    window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+});

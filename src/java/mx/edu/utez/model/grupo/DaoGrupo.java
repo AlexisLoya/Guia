@@ -123,7 +123,9 @@ public class DaoGrupo extends Dao implements DaoInterface<Grupo> {
     
     public static void main(String[] args) {
         DaoGrupo daogrupo = new DaoGrupo();
-        System.out.println(daogrupo.grupoEstudiante(2,2));
+        for (Grupo grupo : daogrupo.findAll()) {
+            System.out.println(grupo);
+        }
         
 
     }

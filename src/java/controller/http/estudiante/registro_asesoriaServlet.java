@@ -107,9 +107,6 @@ public class registro_asesoriaServlet extends HttpServlet {
             ArrayList<Materia> materias = daoMateria.findAll();
             sesionUsuario.setAttribute("materias", materias);
 
-            //Redireacionar
-//            request.setAttribute("message", "llega! id_empleado: " + id_empleado + "|id_materia: " + id_materia + "|disponibilidades: " + disponibilidades);
-//            request.setAttribute("type", "success");
             redirect = request.getRequestDispatcher("views/alumno/disponibilidad_asesoria.jsp");
             redirect.forward(request, response);
 
@@ -162,7 +159,7 @@ public class registro_asesoriaServlet extends HttpServlet {
 
             //Añadirla a la base de datos 
             daoAsesoria.add(solicitud);
-            Invitado invitado = new Invitado(0,solicitud, estudiante);
+            Invitado invitado = new Invitado(0,solicitud, estudiante,0);
             DaoInvitado daoInvitado = new DaoInvitado();
             daoInvitado.add(invitado);
             //Redireacionar
