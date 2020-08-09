@@ -1,6 +1,6 @@
 //////////////////////Docente//////////////////////
 
-//Validaciones para el registro de un alumno
+//Validaciones para el registro de un docente
 function registroDocente(string){ 
     let nombre = document.getElementById("nombre").value;
     let paterno = document.getElementById("paterno").value;
@@ -172,10 +172,11 @@ function enviarRechazo(){
 
 //Activar campos del perfil del docente
 function activarInputDocente(){
-    document.getElementById("emailDocente").disabled=false;
-    document.getElementById("nombreDocente").disabled=false;
-    document.getElementById("aPeternoDocente").disabled=false;
-    document.getElementById("aMaternoDocente").disabled=false;
+    document.getElementById("email").disabled=false;
+    document.getElementById("nombre").disabled=false;
+    document.getElementById("paterno").disabled=false;
+    document.getElementById("materno").disabled=false;
+    document.getElementById("sexo").disabled=false;
 }
 
 //Validar camopos del perfil de Docente
@@ -186,8 +187,8 @@ function ValidarDocentePerfil(string){
 
     let mail = document.getElementById("email").value;
     let nombre = document.getElementById("nombre").value;
-    let paterno = document.getElementById("aPaterno").value;
-    let materno = document.getElementById("aMaterno").value;
+    let paterno = document.getElementById("paterno").value;
+    let materno = document.getElementById("materno").value;
     let sexo = document.getElementById("sexo").value;
 
     for (var i=0; i<string.length; i++){
@@ -196,7 +197,7 @@ function ValidarDocentePerfil(string){
         }
     }
 
-    if(usuario.length>0 && mail.length>0 && nombre.length>0 && paterno.length>0 && materno.length>0 && sexo.length>0){
+    if(mail.length>0 && nombre.length>0 && paterno.length>0 && materno.length>0 && sexo.length>0){
         
         nombre = nombre.trim();
         paterno = paterno.trim();
@@ -221,8 +222,8 @@ function ValidarDocentePerfil(string){
 function sexoValidar(){
     let mail = document.getElementById("email").value;
     let nombre = document.getElementById("nombre").value;
-    let paterno = document.getElementById("aPaterno").value;
-    let materno = document.getElementById("aMaterno").value;
+    let paterno = document.getElementById("paterno").value;
+    let materno = document.getElementById("materno").value;
     let sexo = document.getElementById("sexo").value;
 
     if(matricula.length>0 && mail.length>0 && nombre.length>0 && paterno.length>0 && materno.length>0 && sexo.length>0){
@@ -256,7 +257,7 @@ async function guardarPerfilDocente(){
             text: 'Datos guardados correctamente',
         })
 
-        document.getElementById("formPerfil").submit();
+        document.getElementById("guardarPerfilDocenteguardarPerfilDocente").submit();
         
 	}else{
 		Swal.fire({
@@ -345,7 +346,7 @@ function validarRecuperarContra(){
         let contr = document.getElementById("password").value;
         let contrarepeat = document.getElementById("password_repeat").value;
 
-        let correo = document.getElementById('correo').value;
+        let correo = document.getElementById('email').value;
         
         correo = correo.substring((correo.length-11),correo.length);
 

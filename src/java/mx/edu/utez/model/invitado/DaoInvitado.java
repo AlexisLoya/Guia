@@ -150,6 +150,61 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
         return result;
     }
 
+    
+    public Invitado findOneEstudiante(int id_solicitud, int id_estudiante) {
+        mySQLRepository(REPOSITORY, "invitadoFindEstudiante");
+        Invitado invitado = null;
+        try {
+            preparedStatement.setInt(1, id_solicitud);
+            preparedStatement.setInt(2, id_estudiante);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                invitado = new Invitado(
+                        resultSet.getInt("id_invitado"),
+                        new DaoSolicitud_Asesoria().findOne(
+                                resultSet.getInt("id_solicitud_asesoria")),
+                        new DaoEstudiante().findOne(resultSet.getInt(
+                                "id_estudiante")),
+                        resultSet.getInt("asistencia")
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoInvitado.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return invitado;
+    }
+
+    public boolean  Asistencia(Invitado obj){
+        mySQLRepository(REPOSITORY, "invitadoAsistencia");
+        try {
+            preparedStatement.setInt(1,obj.getId());
+            status = preparedStatement.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoInvitado.class.getName()).log(Level.SEVERE, null, ex);
+            status = false;
+        } finally {
+            closeAllConnections();
+        }
+        return status;
+    }
+            
+    
+    public boolean  Falta(Invitado obj){
+        mySQLRepository(REPOSITORY, "invitadoFalta");
+        try {
+            preparedStatement.setInt(1,obj.getId());
+            status = preparedStatement.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoInvitado.class.getName()).log(Level.SEVERE, null, ex);
+            status = false;
+        } finally {
+            closeAllConnections();
+        }
+        return status;
+    }
+            
     public static void main(String[] args) {
 //        int id_asesoria = Integer.parseInt("1");
 //        Estudiante estudianteAdd = new DaoEstudiante().findOneMatricula("20193TN147");

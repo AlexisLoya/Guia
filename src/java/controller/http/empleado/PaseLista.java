@@ -64,6 +64,13 @@ public class PaseLista extends HttpServlet {
             ArrayList<Invitado> invitados = daoInvitado.estudiantefindAll(id_asesoria);
             request.setAttribute("invitados", invitados);
 
+            Invitado invitado = daoInvitado.findOneEstudiante(id_asesoria, id_estudiante);
+            if (invitado.getAsistencia() == 1) {
+                daoInvitado.Falta(invitado);
+            } else {
+                daoInvitado.Asistencia(invitado);
+            }
+
             redirect = request.getRequestDispatcher("views/profesor/pase_lista.jsp");
             redirect.forward(request, response);
 

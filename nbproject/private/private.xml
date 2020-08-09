@@ -3,16 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/profesor/agenda.jsp</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/materia/DaoMateria.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/controller/http/estudiante/asesorias_pendientesServlet.java</file>
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/invitado/DaoInvitado.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/mx/edu/utez/model/estudiante/DaoEstudiante.java</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/controller/http/estudiante/registro_asesoriaServlet.java</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/profesor/solicitud.jsp</file>
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/controller/http/empleado/PaseLista.java</file>
             <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/invitadoRepository.properties</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/alumno/asesorias_pendientes.jsp</file>
-            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/src/java/controller/http/empleado/EmpleadoServlet.java</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/profesor/pase_lista.jsp</file>
+            <file>file:/C:/Users/alexl/Documents/NetBeansProjects/Guia/web/views/profesor/perfil.jsp</file>
         </group>
     </open-files>
 </project-private>
