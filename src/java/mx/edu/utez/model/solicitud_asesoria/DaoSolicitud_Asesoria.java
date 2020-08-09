@@ -211,7 +211,7 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
         DaoSolicitud_Asesoria daoAsesoria = new DaoSolicitud_Asesoria();
 
 //        Añadirla a la base de datos 
-       Solicitud_Asesoria object = daoAsesoria.findOne(1);
+       Solicitud_Asesoria object = daoAsesoria.findOne(2);
             System.out.println(object);
         
        

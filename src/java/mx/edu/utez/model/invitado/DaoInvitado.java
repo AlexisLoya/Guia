@@ -55,13 +55,13 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
         mySQLRepository(REPOSITORY, "invitadoUpdate");
         try {
             if (obj.getAsistencia() == 1) {
-                int value= 0;
-                preparedStatement.setInt(1,value);
+                int value = 0;
+                preparedStatement.setInt(1, value);
                 preparedStatement.setInt(2, obj.getEstudiante().getId());
                 status = preparedStatement.executeUpdate() == 0;
-            } else if(obj.getAsistencia() == 0) {
-                int value= 1;
-                preparedStatement.setInt(1,value);
+            } else if (obj.getAsistencia() == 0) {
+                int value = 1;
+                preparedStatement.setInt(1, value);
                 preparedStatement.setInt(2, obj.getEstudiante().getId());
                 status = preparedStatement.executeUpdate() == 1;
 
@@ -150,7 +150,6 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
         return result;
     }
 
-    
     public Invitado findOneEstudiante(int id_solicitud, int id_estudiante) {
         mySQLRepository(REPOSITORY, "invitadoFindEstudiante");
         Invitado invitado = null;
@@ -176,10 +175,10 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
         return invitado;
     }
 
-    public boolean  Asistencia(Invitado obj){
+    public boolean Asistencia(int id) {
         mySQLRepository(REPOSITORY, "invitadoAsistencia");
         try {
-            preparedStatement.setInt(1,obj.getId());
+            preparedStatement.setInt(1, id);
             status = preparedStatement.executeUpdate() == 1;
         } catch (SQLException ex) {
             Logger.getLogger(DaoInvitado.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,13 +188,12 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
         }
         return status;
     }
-            
-    
-    public boolean  Falta(Invitado obj){
+
+    public boolean Falta(int id) {
         mySQLRepository(REPOSITORY, "invitadoFalta");
         try {
-            preparedStatement.setInt(1,obj.getId());
-            status = preparedStatement.executeUpdate() == 1;
+            preparedStatement.setInt(1, id);
+            status = preparedStatement.executeUpdate() == 0;
         } catch (SQLException ex) {
             Logger.getLogger(DaoInvitado.class.getName()).log(Level.SEVERE, null, ex);
             status = false;
@@ -204,26 +202,11 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
         }
         return status;
     }
-            
+
     public static void main(String[] args) {
-//        int id_asesoria = Integer.parseInt("1");
-//        Estudiante estudianteAdd = new DaoEstudiante().findOneMatricula("20193TN147");
-//        Invitado invitado = new Invitado(0, new DaoSolicitud_Asesoria().findOne(id_asesoria), estudianteAdd);
-//        System.out.println(invitado);
-//        if (estudianteAdd.getId() != 0) {
-//            DaoInvitado daoInvitado = new DaoInvitado();
-//            System.out.println(daoInvitado.add(invitado));
-//
-//        } else {
-//            System.out.println("error");
-//        }
-
+        Invitado invitado = new Invitado(0, new DaoSolicitud_Asesoria().findOne(1), new DaoEstudiante().findOne(2), 1);
+        System.out.println(invitado);
         DaoInvitado daoInvitado = new DaoInvitado();
-        System.out.println(new DaoEstudiante().findOne(3));
-        
-        System.out.println(new DaoInvitado().findOne(1));
-        System.out.println(new DaoInvitado().update(new DaoInvitado().findOne(1)));
-        
-
+        daoInvitado.add(invitado);
     }
 }

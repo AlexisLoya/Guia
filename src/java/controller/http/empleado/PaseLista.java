@@ -56,20 +56,31 @@ public class PaseLista extends HttpServlet {
         } else if (action.equalsIgnoreCase("asistencia")) {
             int id_estudiante = Integer.parseInt(request.getParameter("id_estudiante"));
             int id_asesoria = Integer.parseInt(request.getParameter("id_asesoria"));
+            DaoInvitado daoInvitado = new DaoInvitado();
+
+            Invitado invitado = daoInvitado.findOneEstudiante(id_asesoria, id_estudiante);
+            daoInvitado.Asistencia(invitado.getId());
+            Solicitud_Asesoria asesoria = daoSolicitud.findOne(id_asesoria);
+            request.setAttribute("asesoria", asesoria);
+
+            ArrayList<Invitado> invitados = daoInvitado.estudiantefindAll(id_asesoria);
+            request.setAttribute("invitados", invitados);
+
+            redirect = request.getRequestDispatcher("views/profesor/pase_lista.jsp");
+            redirect.forward(request, response);
+        } else if (action.equalsIgnoreCase("falta")) {
+            int id_estudiante = Integer.parseInt(request.getParameter("id_estudiante"));
+            int id_asesoria = Integer.parseInt(request.getParameter("id_asesoria"));
+            DaoInvitado daoInvitado = new DaoInvitado();
+
+            Invitado invitado = daoInvitado.findOneEstudiante(id_asesoria, id_estudiante);
+            daoInvitado.Falta(invitado.getId());
 
             Solicitud_Asesoria asesoria = daoSolicitud.findOne(id_asesoria);
             request.setAttribute("asesoria", asesoria);
 
-            DaoInvitado daoInvitado = new DaoInvitado();
             ArrayList<Invitado> invitados = daoInvitado.estudiantefindAll(id_asesoria);
             request.setAttribute("invitados", invitados);
-
-            Invitado invitado = daoInvitado.findOneEstudiante(id_asesoria, id_estudiante);
-            if (invitado.getAsistencia() == 1) {
-                daoInvitado.Falta(invitado);
-            } else {
-                daoInvitado.Asistencia(invitado);
-            }
 
             redirect = request.getRequestDispatcher("views/profesor/pase_lista.jsp");
             redirect.forward(request, response);

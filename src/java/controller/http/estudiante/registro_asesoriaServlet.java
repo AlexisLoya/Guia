@@ -159,7 +159,7 @@ public class registro_asesoriaServlet extends HttpServlet {
 
             //Añadirla a la base de datos 
             daoAsesoria.add(solicitud);
-            Invitado invitado = new Invitado(0,solicitud, estudiante,0);
+            Invitado invitado = new Invitado(0,solicitud, estudiante,1);
             DaoInvitado daoInvitado = new DaoInvitado();
             daoInvitado.add(invitado);
             //Redireacionar

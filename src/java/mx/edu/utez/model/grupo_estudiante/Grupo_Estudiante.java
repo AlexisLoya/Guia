@@ -3,27 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mx.edu.utez.model.grupo_Tutor;
+package mx.edu.utez.model.grupo_estudiante;
 
-import mx.edu.utez.model.empleado.Empleado;
+import mx.edu.utez.model.estudiante.Estudiante;
 import mx.edu.utez.model.grupo.Grupo;
 
 /**
  *
  * @author alexl
  */
-public class Grupo_Tutor {
+public class Grupo_Estudiante {
     private int id;
     private Grupo grupo;
-    private Empleado empleado;
+    private Estudiante estudiante; 
 
-    public Grupo_Tutor() {
+    public Grupo_Estudiante() {
     }
 
-    public Grupo_Tutor(int id, Grupo grupo, Empleado empleado) {
+    public Grupo_Estudiante(int id, Grupo grupo, Estudiante estudiante) {
         this.id = id;
         this.grupo = grupo;
-        this.empleado = empleado;
+        this.estudiante = estudiante;
     }
 
     public int getId() {
@@ -42,17 +42,17 @@ public class Grupo_Tutor {
         this.grupo = grupo;
     }
 
-    public Empleado getEmpleado() {
-        return empleado;
+    public Estudiante getEstudiante() {
+        return estudiante;
     }
 
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
     }
 
     @Override
     public String toString() {
-        return "Grupo_Tutor{" + "id=" + id + ", grupo=" + grupo + ", empleado=" + empleado + '}';
+        return "Grupo_Estudiante{" + "id=" + id + ", grupo=" + grupo + ", estudiante=" + estudiante + '}';
     }
     
     
