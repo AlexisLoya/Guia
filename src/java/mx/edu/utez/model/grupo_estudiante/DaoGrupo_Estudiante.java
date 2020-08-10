@@ -72,7 +72,7 @@ public class DaoGrupo_Estudiante extends Dao implements DaoInterface<Grupo_Estud
 
     @Override
     public Grupo_Estudiante findOne(int id) {
-        mySQLRepository(REPOSITORY, "grupo_empleadoFindOne");
+        mySQLRepository(REPOSITORY, "grupo_estudianteFindOne");
         Grupo_Estudiante grupo_Estudiante = null;
         try {
             preparedStatement.setInt(1, id);
@@ -91,6 +91,25 @@ public class DaoGrupo_Estudiante extends Dao implements DaoInterface<Grupo_Estud
             closeAllConnections();
         }
         return grupo_Estudiante;
+    }
+    
+    
+     public ArrayList<Grupo_Estudiante> grupoEstudianteAll(int id) {
+        mySQLRepository(REPOSITORY, "grupoFindAllEstudiantes");
+        ArrayList<Grupo_Estudiante> list = new ArrayList<>();
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            DaoGrupo_Estudiante daoGrupo = new DaoGrupo_Estudiante();
+            while (resultSet.next()) {
+                list.add(daoGrupo.findOne(resultSet.getInt("id_grupo_estudiante")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoGrupo.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return list;
     }
     public static void main(String[] args) {
         DaoGrupo_Estudiante daoGrupo_Estudiante = new DaoGrupo_Estudiante();

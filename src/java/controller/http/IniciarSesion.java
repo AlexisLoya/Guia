@@ -75,6 +75,9 @@ public class IniciarSesion extends HttpServlet {
                 //Crear sesión para el empleado
                 String rol = "Profesor";
                 Empleado empleado = daoEmpleado.findOne(daoEmpleado.autentificacion(email, password));
+                if(empleado.getRoles().size()>1){
+                    
+                }
                 Usuario usuario = new Usuario(email, password, empleado.getPersona(), rol);
 
                 // Creación de Sesión para el usuario

@@ -13,6 +13,8 @@ import mx.edu.utez.model.Dao;
 import mx.edu.utez.model.DaoInterface;
 import mx.edu.utez.model.empleado.DaoEmpleado;
 import mx.edu.utez.model.grupo.DaoGrupo;
+import mx.edu.utez.model.grupo_estudiante.DaoGrupo_Estudiante;
+import mx.edu.utez.model.grupo_estudiante.Grupo_Estudiante;
 
 /**
  *
@@ -92,8 +94,36 @@ public class DaoGrupo_Tutor extends Dao implements DaoInterface<Grupo_Tutor> {
         return grupo_Tutor;
     } 
 
+        
+        public Grupo_Tutor findTutor(int id) {
+        mySQLRepository(REPOSITORY, "grupo_tutorFindTutor");
+        Grupo_Tutor grupo_Tutor = null;
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("entra");
+                DaoGrupo daoGrupo = new DaoGrupo();
+                DaoEmpleado daoEmpleado = new DaoEmpleado();
+                grupo_Tutor = new Grupo_Tutor(
+                        resultSet.getInt("id_grupo_tutor"),
+                        daoGrupo.findOne(resultSet.getInt("id_grupo")),
+                        daoEmpleado.findOne(resultSet.getInt("id_empleado")));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoGrupo_Tutor.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return grupo_Tutor;
+    } 
+        
     public static void main(String[] args) {
         DaoGrupo_Tutor daoGrupo_Tutor = new DaoGrupo_Tutor();
+        System.out.println(daoGrupo_Tutor.findOne(1));
+        System.out.println(daoGrupo_Tutor.findTutor(3));
+        
         for (Grupo_Tutor grupo_Tutor : daoGrupo_Tutor.findAll()) {
             System.out.println(grupo_Tutor);
         }

@@ -20,6 +20,8 @@ import mx.edu.utez.model.grupo.DaoGrupo;
 import mx.edu.utez.model.grupo.Grupo;
 import mx.edu.utez.model.grupo_Tutor.DaoGrupo_Tutor;
 import mx.edu.utez.model.grupo_Tutor.Grupo_Tutor;
+import mx.edu.utez.model.grupo_estudiante.DaoGrupo_Estudiante;
+import mx.edu.utez.model.grupo_estudiante.Grupo_Estudiante;
 import mx.edu.utez.model.usuario.Usuario;
 
 /**
@@ -62,11 +64,14 @@ public class GrupoTutor extends HttpServlet {
             Grupo_Tutor grupo_Tutor = new Grupo_Tutor(0, daoGrupo.findOne(id_grupo), empleado);
             DaoGrupo_Tutor daoGrupo_Tutor = new DaoGrupo_Tutor();
             daoGrupo_Tutor.add(grupo_Tutor);
-            
+
             request.setAttribute("message", "Grupo Asignado Correctamente");
             request.setAttribute("type", "success");
         }
-
+        DaoGrupo_Estudiante daoGrupo_Estudiante = new DaoGrupo_Estudiante();
+        ArrayList<Grupo_Estudiante> alumnos = daoGrupo_Estudiante.grupoEstudianteAll(3);
+        request.setAttribute("alumnos",alumnos);
+        
         redirect = request.getRequestDispatcher("views/profesor/grupo.jsp");
         redirect.forward(request, response);
     }

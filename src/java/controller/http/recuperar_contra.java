@@ -58,13 +58,13 @@ public class recuperar_contra extends HttpServlet {
                 request.setAttribute("type", "success");
 
                 request.setAttribute("validacion", "validacion");
-                redirect.forward(request, response);
-                redirect = request.getRequestDispatcher("recuperar_contrasenia.jsp");
+                request.setAttribute("email", "email");
+                
 
             } else {
                 request.setAttribute("message", "El correo: " + email + " no esta registrado");
                 request.setAttribute("type", "warning");
-                redirect = request.getRequestDispatcher("recuperar_contrasenia.jsp");
+
 
             }
             redirect = request.getRequestDispatcher("recuperar_contrasenia.jsp");

@@ -36,7 +36,9 @@
                                     <a href=""><img src="<%=path%>/assets/img/logoGuiaV2.png" width="40" height="40" class="d-inline-block align-top mt-0 "></a>
                                     <h4 class="text-dark mb-4">¡Recupera tu contraseña!</h4>
                                 </div>
+                                  
                                 <form class="user" action="Recuperacion" method="Post" id="recuperarContra">
+                                    <c:if test="${email == null}">
                                     <div class="form-group">
                                         <input type="hidden" name="action" value="validarCorreo">
                                         <input class="form-control form-control-user" type="email" id="correo" placeholder="Correo electronico" name="correo" onkeyup="this.value = recuperarContra(this.value)">
@@ -44,8 +46,8 @@
                                     <div class="container text-center">
                                         <span class="small text-center">Se enviará un correro con el código para restablecer tu contraseña</span>
                                     </div>
+                                    </c:if>
                                     <c:if test="${validacion == null}">
-                                </div>
                                 <div class="container">
                                     <button class="btn btn-primary btn-block text-white btn-user mb-4" type="submit" id="btn">Enviar</button>
                                 </div>
