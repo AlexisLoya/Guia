@@ -30,9 +30,9 @@ public class MySQLConnection {
 //    //Base de datos
 //    private static String dbName = "guiabd";
 //    //Usuario en Mysql
-//    private static String user = "guia";
+//    private static String user = "admin";
 //    //Contraseña en Mysql
-//    private static String password = "Guia123!";
+//    private static String password = "Ald@1234!";
 //    //Puerto
 //    private static String service = "3306";
 

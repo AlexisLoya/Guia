@@ -111,6 +111,22 @@ public class DaoGrupo_Estudiante extends Dao implements DaoInterface<Grupo_Estud
         }
         return list;
     }
+     public boolean updatePassword(String password,String email) {
+        mySQLRepository(REPOSITORY, "empleadoChange");
+        try {
+            preparedStatement.setString(1,password);
+            preparedStatement.setString(2,email);
+            status = preparedStatement.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+            status = false;
+        } finally {
+            closeAllConnections();
+        }
+        return status;
+    }
+     
+     
     public static void main(String[] args) {
         DaoGrupo_Estudiante daoGrupo_Estudiante = new DaoGrupo_Estudiante();
         for (Grupo_Estudiante grupo_Estudiante : daoGrupo_Estudiante.findAll()) {

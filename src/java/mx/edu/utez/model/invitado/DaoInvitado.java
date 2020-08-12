@@ -133,6 +133,24 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
         }
         return list;
     }
+    
+     public ArrayList<Invitado> InvitadofinLista(int id) {
+        mySQLRepository(REPOSITORY, "invitadoFindlista");
+        ArrayList<Invitado> list = new ArrayList<>();
+        try {
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            DaoInvitado daoInvitado = new DaoInvitado();
+            while (resultSet.next()) {
+                list.add(daoInvitado.findOne(resultSet.getInt("id_invitado")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoInvitado.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return list;
+    }
 
     public boolean estudianteRepetido(int solicitudAsesoriaId, int estudianteId) {
         boolean result = false;
@@ -203,10 +221,26 @@ public class DaoInvitado extends Dao implements DaoInterface<Invitado> {
         return status;
     }
 
+    
+     public boolean terminarAsistencia(int id) {
+        mySQLRepository(REPOSITORY, "invitadoTerminarAsistencia");
+        try {
+            preparedStatement.setInt(1, id);
+            status = preparedStatement.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoInvitado.class.getName()).log(Level.SEVERE, null, ex);
+            status = false;
+        } finally {
+            closeAllConnections();
+        }
+        return status;
+    }
+
     public static void main(String[] args) {
-        Invitado invitado = new Invitado(0, new DaoSolicitud_Asesoria().findOne(1), new DaoEstudiante().findOne(2), 1);
-        System.out.println(invitado);
+    
         DaoInvitado daoInvitado = new DaoInvitado();
-        daoInvitado.add(invitado);
+        for (Invitado invitado : daoInvitado.InvitadofinLista(21)) {
+            System.out.println(invitado);
+        }
     }
 }

@@ -207,6 +207,27 @@ public class DaoSolicitud_Asesoria extends Dao implements DaoInterface<Solicitud
         return status;
     }
 
+    public Date SumarRestarDiasFecha(Date fecha, int dias){//Añadir dias a una fecha
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        calendar.add(Calendar.DAY_OF_YEAR, dias);
+        
+        return (Date) calendar.getTime();
+        
+    }
+    
+      public String ObtenerFecha(){//Obtener la fecha actual
+        
+        Calendar year = Calendar.getInstance();
+        Date fecha = new Date(year.getTimeInMillis());
+        java.util.Date date = new java.util.Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+        
+        return "" + sdf.format(date);
+    }
+    
     public static void main(String[] args) {
         DaoSolicitud_Asesoria daoAsesoria = new DaoSolicitud_Asesoria();
 

@@ -217,11 +217,27 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
         return false;
     }
 
+     public boolean updatePassword(String password,String email) {
+        mySQLRepository(REPOSITORY, "estudianteChange");
+        try {
+            preparedStatement.setString(1,password);
+            preparedStatement.setString(2,email);
+            status = preparedStatement.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+            status = false;
+        } finally {
+            closeAllConnections();
+        }
+        return status;
+    }
+    
+    
     public static void main(String[] args) {
         DaoEstudiante estudianteRepo = new DaoEstudiante();
         DaoPersona personaRepo = new DaoPersona();
         Estudiante estudiante = estudianteRepo.findOne(1);
-        System.out.println(estudianteRepo.findOne(estudianteRepo.autentificacion("alexloy117@gmail.com", "123")));
+        System.out.println(new DaoEstudiante().updatePassword("3333", "20193tn151@utez.edu.mx"));
 
     }
 

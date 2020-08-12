@@ -78,8 +78,8 @@ public class Correo {
         // TODO code application logic here
 //        String correoDestino = null;
 //        String mensaje = null;
-//        Correo e = new Correo();
-//        e.enviarMail("20193tn151@utez.edu.mx", "llego???","asesoría cancelada");
+        Correo e = new Correo();
+        e.enviarMail("aldo.hernandez3105@gmail.com", "llego???","asesoría cancelada");
 
 
     }

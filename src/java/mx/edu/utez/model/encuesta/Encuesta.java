@@ -15,18 +15,24 @@ import mx.edu.utez.model.pase_lista.Pase_Lista;
 public class Encuesta {
 
     private int id;
-    private Pase_Lista pase_lista;
+    private Invitado invitado;
+    private int p1;
+    private int p2;
+    private int p3;
+    private int p4;
     private String opinion;
-    private int completada;
 
     public Encuesta() {
     }
 
-    public Encuesta(int id, Pase_Lista pase_lista, String opinion, int completada) {
+    public Encuesta(int id, Invitado invitado, int p1, int p2, int p3, int p4, String opinion) {
         this.id = id;
-        this.pase_lista = pase_lista;
+        this.invitado = invitado;
+        this.p1 = p1;
+        this.p2 = p2;
+        this.p3 = p3;
+        this.p4 = p4;
         this.opinion = opinion;
-        this.completada = completada;
     }
 
     public int getId() {
@@ -37,12 +43,44 @@ public class Encuesta {
         this.id = id;
     }
 
-    public Pase_Lista getPase_lista() {
-        return pase_lista;
+    public Invitado getInvitado() {
+        return invitado;
     }
 
-    public void setPase_lista(Pase_Lista pase_lista) {
-        this.pase_lista = pase_lista;
+    public void setInvitado(Invitado invitado) {
+        this.invitado = invitado;
+    }
+
+    public int getP1() {
+        return p1;
+    }
+
+    public void setP1(int p1) {
+        this.p1 = p1;
+    }
+
+    public int getP2() {
+        return p2;
+    }
+
+    public void setP2(int p2) {
+        this.p2 = p2;
+    }
+
+    public int getP3() {
+        return p3;
+    }
+
+    public void setP3(int p3) {
+        this.p3 = p3;
+    }
+
+    public int getP4() {
+        return p4;
+    }
+
+    public void setP4(int p4) {
+        this.p4 = p4;
     }
 
     public String getOpinion() {
@@ -53,12 +91,10 @@ public class Encuesta {
         this.opinion = opinion;
     }
 
-    public int getCompletada() {
-        return completada;
+    @Override
+    public String toString() {
+        return "Encuesta{" + "id=" + id + ", invitado=" + invitado + ", p1=" + p1 + ", p2=" + p2 + ", p3=" + p3 + ", p4=" + p4 + ", opinion=" + opinion + '}';
     }
 
-    public void setCompletada(int completada) {
-        this.completada = completada;
-    }
-
+   
 }

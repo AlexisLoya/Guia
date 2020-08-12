@@ -75,7 +75,7 @@ public class asesorias_pendientesServlet extends HttpServlet {
                     request.setAttribute("message", "La persona con la matricula: " + matricula + " ya esta registrada en esa asesoria");
                     request.setAttribute("type", "info");
                 } else {
-                    Invitado invitado = new Invitado(0,new DaoSolicitud_Asesoria().findOne(id_asesoria), estudianteAdd,0);
+                    Invitado invitado = new Invitado(0,new DaoSolicitud_Asesoria().findOne(id_asesoria), estudianteAdd,1);
                     daoInvitado.add(invitado);
 
                     request.setAttribute("message", "La persona con la matricula: " + matricula + " ha sido agregada" +  estudianteAdd.getId());

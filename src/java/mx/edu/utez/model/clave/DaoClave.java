@@ -38,7 +38,7 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
-              
+
                 return resultSet.getInt(1);
             }
         } catch (SQLException ex) {
@@ -71,30 +71,30 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
 
     @Override
     public ArrayList<Clave> findAll() {
-        mySQLRepository(REPOSITORY,"claveFindAll");
+        mySQLRepository(REPOSITORY, "claveFindAll");
         ArrayList<Clave> list = new ArrayList();
         try {
             resultSet = preparedStatement.executeQuery();
             DaoClave daoClave = new DaoClave();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 list.add(daoClave.findOne(resultSet.getInt("id_clave")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoClave.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             closeAllConnections();
         }
-       return list;
+        return list;
     }
 
     @Override
     public Clave findOne(int id) {
-        mySQLRepository(REPOSITORY,"claveFindOne");
+        mySQLRepository(REPOSITORY, "claveFindOne");
         Clave clave = null;
         try {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 clave = new Clave(
                         resultSet.getInt("id_clave"),
                         resultSet.getString("clave"),
@@ -103,7 +103,7 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
             }
         } catch (SQLException ex) {
             Logger.getLogger(DaoClave.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             closeAllConnections();
         }
         return clave;
@@ -141,7 +141,7 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
         return clave;
     }
 
-    public boolean checkClave(Clave obj){
+    public boolean checkClave(Clave obj) {
         mySQLRepository(REPOSITORY, "claveValidate");
         try {
             preparedStatement.setInt(1, obj.getId());
@@ -156,12 +156,12 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
                 } catch (ParseException ex) {
                     Logger.getLogger(DaoClave.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                System.out.println("Fecha Caducidad: "+fechaCaducidad.getTime());
-                System.out.println("Fecha Actual: "+fechaActual.getTime());
-                
+                System.out.println("Fecha Caducidad: " + fechaCaducidad.getTime());
+                System.out.println("Fecha Actual: " + fechaActual.getTime());
+
                 if (fechaCaducidad.getTimeInMillis() >= fechaActual.getTimeInMillis()) {
                     return true;
-                } 
+                }
             } else {
                 System.out.println("Error");
                 return false;
@@ -175,7 +175,7 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
     }
 
     public String dateCaducidad(int cantidad) {
-      
+
         Calendar year = Calendar.getInstance();
         year.add(Calendar.DATE, cantidad);
         Date fecha = new Date(year.getTimeInMillis());
@@ -190,11 +190,11 @@ public class DaoClave extends Dao implements DaoInterface<Clave> {
         Calendar fechaActual = Calendar.getInstance();
         Calendar fecha = Calendar.getInstance();
         fecha.set(Calendar.MONTH, Calendar.FEBRUARY);
-        Clave clave = new Clave(2, dao.generator(7), 1, "2020-08-4 10:33:44");
+        Clave clave = new Clave(2, dao.generator(7), 1, "2020-10-4 10:33:44");
+        dao.add(clave);
 
-        
-        System.out.println(dao.dateCaducidad(1));
-        
+//        System.out.println(dao.dateCaducidad(1));
+
 //        
     }
 

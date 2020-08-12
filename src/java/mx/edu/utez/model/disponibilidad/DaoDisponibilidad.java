@@ -46,7 +46,17 @@ public class DaoDisponibilidad extends Dao implements DaoInterface<Disponibilida
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     mySQLRepository(REPOSITORY, "disponibilidadDelete");
+        try {
+            preparedStatement.setInt(1, id);
+            status = preparedStatement.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoDisponibilidad.class.getName()).log(Level.SEVERE, null, ex);
+            status = false;
+        } finally {
+            closeAllConnections();
+        }
+        return status;
     }
 
     @Override
@@ -116,7 +126,6 @@ public class DaoDisponibilidad extends Dao implements DaoInterface<Disponibilida
 
     public static void main(String[] args) {
       
-         DaoDisponibilidad daoDisponibilidad = new DaoDisponibilidad();
-            System.out.println(daoDisponibilidad.findOne(8));
+        
     }
 }

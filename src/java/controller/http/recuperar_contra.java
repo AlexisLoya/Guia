@@ -50,7 +50,7 @@ public class recuperar_contra extends HttpServlet {
             if (daoEstudiante.checkEmail(email)) {
                 Correo correo = new Correo();
                 DaoClave daoClave = new DaoClave();
-                Clave clave = new Clave(0, daoClave.generator(8), 1, daoClave.dateCaducidad(1));
+                Clave clave = new Clave(0, daoClave.generator(8), 1, daoClave.dateCaducidad(0));
                 daoClave.add(clave);
                 correo.enviarMail(email, "Restablece tu contraseña utilizando el siguinte código: " + clave.getClave(), "Guia- Restablecimiento de contraseña");
 
@@ -59,20 +59,71 @@ public class recuperar_contra extends HttpServlet {
 
                 request.setAttribute("validacion", "validacion");
                 request.setAttribute("email", "email");
-                
+                request.setAttribute("correo", email);
+            } else if (daoEmpleado.checkEmail(email)) {
+                Correo correo = new Correo();
+                DaoClave daoClave = new DaoClave();
+                Clave clave = new Clave(0, daoClave.generator(8), 1, daoClave.dateCaducidad(0));
+                daoClave.add(clave);
+//                correo.enviarMail(email, "Restablece tu contraseña utilizando el siguinte código: " + clave.getClave(), "Guia- Restablecimiento de contraseña");
 
+                request.setAttribute("message", "Se ha enviado un codigo para restablecer tu contraseña al correo: " + email);
+                request.setAttribute("type", "success");
+
+                request.setAttribute("validacion", "validacion");
+                request.setAttribute("email", "email");
+                request.setAttribute("correo", email);
             } else {
                 request.setAttribute("message", "El correo: " + email + " no esta registrado");
                 request.setAttribute("type", "warning");
 
-
             }
             redirect = request.getRequestDispatcher("recuperar_contrasenia.jsp");
             redirect.forward(request, response);
+        } else if (action.equalsIgnoreCase("validarCodigo")) {
+            String codigo = request.getParameter("clave");
+            String correo = request.getParameter("correo");
+            DaoClave daoClave = new DaoClave();
+            Clave clave = daoClave.searchOne(codigo);
+            if (clave == null) {
+                request.setAttribute("email", "email");
+                request.setAttribute("message", "El codigo: " + codigo + " no es correcto");
+                request.setAttribute("type", "warning");
+                redirect = request.getRequestDispatcher("recuperar_contrasenia.jsp");
+                redirect.forward(request, response);
+            }
+            if (daoClave.checkClave(clave)) {
+                request.setAttribute("email", "email");
+                request.setAttribute("message", "Parece que el código: " + codigo + " a expirado");
+                request.setAttribute("type", "warning");
+                redirect = request.getRequestDispatcher("recuperar_contrasenia.jsp");
+                redirect.forward(request, response);
+            }
+            daoClave.delete(clave.getId());
+            request.setAttribute("email", "email");
+            request.setAttribute("message", "Ingresa una nueva contraseña!");
+            request.setAttribute("type", "success");
+            request.setAttribute("Cambiar", "Cambiar");
+            request.setAttribute("correo", correo);
+            redirect = request.getRequestDispatcher("recuperar_contrasenia.jsp");
+            redirect.forward(request, response);
+        } else if (action.equalsIgnoreCase(action)) {
+            String password = request.getParameter("password");
+            String correo = request.getParameter("correo");
+            DaoEstudiante daoEstudiante = new DaoEstudiante();
+            DaoEmpleado daoEmpleado = new DaoEmpleado();
+            if (daoEstudiante.checkEmail(correo)) {
+                daoEstudiante.updatePassword(password, correo);
+                
+            }else{
+                daoEmpleado.updatePassword(password, correo);
+            }
+            redirect = request.getRequestDispatcher("recuperar_contrasenia.jsp");
+                redirect.forward(request, response);
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

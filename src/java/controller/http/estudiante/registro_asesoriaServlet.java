@@ -151,14 +151,15 @@ public class registro_asesoriaServlet extends HttpServlet {
                     break;
             }
             Calendar c1 = Calendar.getInstance();
-            c1.add(Calendar.DAY_OF_WEEK, add);
+            c1.add(Calendar.DATE, add);
             java.sql.Date date = new Date(c1.getTimeInMillis());
             ArrayList<Estudiante> estudiantes = new ArrayList();
             estudiantes.add(estudiante);
             Solicitud_Asesoria solicitud = new Solicitud_Asesoria(0, daoEmpleado.findOne(id_empleado), daoMateria.findOne(id_materia), tema, estudiantes,date + "", hora, 1, status);
 
             //Añadirla a la base de datos 
-            daoAsesoria.add(solicitud);
+            int id = daoAsesoria.add(solicitud);
+            solicitud.setId(id);
             Invitado invitado = new Invitado(0,solicitud, estudiante,1);
             DaoInvitado daoInvitado = new DaoInvitado();
             daoInvitado.add(invitado);
@@ -166,7 +167,7 @@ public class registro_asesoriaServlet extends HttpServlet {
             request.setAttribute("message", "asesoría registrada correctamente!");
             request.setAttribute("type", "success");
 
-            redirect = request.getRequestDispatcher("views/alumno/disponibilidad_asesoria.jsp");
+            redirect = request.getRequestDispatcher("views/alumno/registro_asesoria.jsp");
             redirect.forward(request, response);
         }
     }

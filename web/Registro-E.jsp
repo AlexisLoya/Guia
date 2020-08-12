@@ -42,7 +42,7 @@
                                         </div>
                                     </c:if>
                                 </div>
-                                <form class="user" action="Registro-E" method="Post">
+                                <form class="user" action="Registro-E" method="Post" id="formularioRegisttrar">
                                     <input type="hidden" name="action" value="regisotroEmpleado">
                                     <div class="form-group"><input onkeyup="this.value = registroDocente(this.value)"  class="form-control form-control-user" type="text" id="nombre" placeholder="Nombre" name="nombre"></div>
                                     <div class="form-group row">
