@@ -49,6 +49,11 @@ public class Grupo_Tutor {
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
+
+    @Override
+    public String toString() {
+        return "Grupo_Tutor{" + "id=" + id + ", grupo=" + grupo + ", empleado=" + empleado + '}';
+    }
     
     
 }

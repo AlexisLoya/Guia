@@ -134,6 +134,35 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
         }
         return estudiante;
     }
+    
+    public Estudiante findOneMatricula(String matricula) {
+        //importante
+        mySQLRepository(REPOSITORY, "estudianteFindMatricula");
+        Estudiante estudiante = null;
+        try {
+            preparedStatement.setString(1, matricula);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                estudiante = new Estudiante(
+                        resultSet.getInt("id_estudiante"),
+                        new Persona(
+                                resultSet.getInt("id_persona"),
+                                resultSet.getString("nombre"),
+                                resultSet.getString("paterno"),
+                                resultSet.getString("materno"),
+                                resultSet.getString("sexo"),
+                                resultSet.getInt("status")),
+                        resultSet.getString("matricula"),
+                        resultSet.getString("correo"),
+                        "");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return estudiante;
+    }
 
     public int autentificacion(String email, String password) {
         //consulta
@@ -170,12 +199,45 @@ public class DaoEstudiante extends Dao implements DaoInterface<Estudiante> {
         }
         return false;
     }
+    
+    public boolean checkEmail(String email) {
+        //consulta
+        mySQLRepository(REPOSITORY, "checkEmail");
+        try {
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeAllConnections();
+        }
+        return false;
+    }
 
+     public boolean updatePassword(String password,String email) {
+        mySQLRepository(REPOSITORY, "estudianteChange");
+        try {
+            preparedStatement.setString(1,password);
+            preparedStatement.setString(2,email);
+            status = preparedStatement.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+            status = false;
+        } finally {
+            closeAllConnections();
+        }
+        return status;
+    }
+    
+    
     public static void main(String[] args) {
         DaoEstudiante estudianteRepo = new DaoEstudiante();
         DaoPersona personaRepo = new DaoPersona();
         Estudiante estudiante = estudianteRepo.findOne(1);
-        System.out.println(estudianteRepo.findOne(estudianteRepo.autentificacion("alexloy117@gmail.com", "123")));
+        System.out.println(new DaoEstudiante().updatePassword("3333", "20193tn151@utez.edu.mx"));
 
     }
 

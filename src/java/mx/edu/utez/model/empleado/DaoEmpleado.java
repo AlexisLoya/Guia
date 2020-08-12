@@ -142,12 +142,11 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado> {
         return 0;
     }
 
-    public boolean check(String email, String password) {
+    public boolean checkEmail(String email) {
         //consulta
-        mySQLRepository(REPOSITORY, "checkAccess");
+        mySQLRepository(REPOSITORY, "checkEmail");
         try {
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return true;
@@ -161,9 +160,25 @@ public class DaoEmpleado extends Dao implements DaoInterface<Empleado> {
         return false;
     }
 
+    public boolean updatePassword(String password,String email) {
+        mySQLRepository(REPOSITORY, "empleadoChange");
+        try {
+            preparedStatement.setString(1,password);
+            preparedStatement.setString(2,email);
+            status = preparedStatement.executeUpdate() == 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            status = false;
+        } finally {
+            closeAllConnections();
+        }
+        return status;
+    }
+    
     public static void main(String[] args) {
         DaoEmpleado daoEmpleado = new DaoEmpleado();
-        Empleado em = null;
-        System.out.println(em = daoEmpleado.findOne(daoEmpleado.autentificacion("marionava@utez.edu.mx","M123")));
+        for (Empleado empleado : daoEmpleado.findAll()) {
+            System.out.println(empleado);
+        }
     }
 }

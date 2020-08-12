@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * @author alexl
  */
 public class MySQLConnection {
-    //Lugar de conexión 
+    //Lugar de conexión Local
     private static String ipAddress = "localhost";
     //Base de datos
     private static String dbName = "guiabd";
@@ -24,6 +24,17 @@ public class MySQLConnection {
     private static String password = "";
     //Puerto
     private static String service = "3306";
+    
+//    //Lugar de conexión Servidor
+//    private static String ipAddress = "192.168.0.1";
+//    //Base de datos
+//    private static String dbName = "guiabd";
+//    //Usuario en Mysql
+//    private static String user = "admin";
+//    //Contraseña en Mysql
+//    private static String password = "Ald@1234!";
+//    //Puerto
+//    private static String service = "3306";
 
     public static Connection getConnection() throws SQLException {
         try {

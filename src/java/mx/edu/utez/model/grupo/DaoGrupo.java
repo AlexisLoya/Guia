@@ -17,6 +17,8 @@ import mx.edu.utez.model.cuatrimestre.Cuatrimestre;
 import mx.edu.utez.model.cuatrimestre.DaoCuatrimestre;
 import mx.edu.utez.model.grado.DaoGrado;
 import mx.edu.utez.model.grado.Grado;
+import mx.edu.utez.model.grupo_estudiante.DaoGrupo_Estudiante;
+import mx.edu.utez.model.grupo_estudiante.Grupo_Estudiante;
 
 /**
  *
@@ -120,11 +122,9 @@ public class DaoGrupo extends Dao implements DaoInterface<Grupo> {
         return 0;
     }
     
-    
+ 
     public static void main(String[] args) {
         DaoGrupo daogrupo = new DaoGrupo();
-        System.out.println(daogrupo.grupoEstudiante(2,2));
         
-
     }
 }

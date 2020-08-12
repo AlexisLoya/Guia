@@ -16,14 +16,16 @@ public class Invitado {
     private int id;
     private Solicitud_Asesoria solicitud_asesoria;
     private Estudiante estudiante;
+    private int asistencia;
 
     public Invitado() {
     }
 
-    public Invitado(int id, Solicitud_Asesoria solicitud_asesoria, Estudiante estudiante) {
+    public Invitado(int id, Solicitud_Asesoria solicitud_asesoria, Estudiante estudiante, int asistencia) {
         this.id = id;
         this.solicitud_asesoria = solicitud_asesoria;
         this.estudiante = estudiante;
+        this.asistencia = asistencia;
     }
 
     public int getId() {
@@ -49,6 +51,18 @@ public class Invitado {
     public void setEstudiante(Estudiante estudiante) {
         this.estudiante = estudiante;
     }
-    
+
+    public int getAsistencia() {
+        return asistencia;
+    }
+
+    public void setAsistencia(int asistencia) {
+        this.asistencia = asistencia;
+    }
+
+    @Override
+    public String toString() {
+        return "Invitado{" + "id=" + id + ", solicitud_asesoria=" + solicitud_asesoria + ", estudiante=" + estudiante + ", asistencia=" + asistencia + '}';
+    }
     
 }
